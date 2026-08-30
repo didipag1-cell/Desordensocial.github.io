@@ -56,8 +56,36 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     let fallbackFaceVisible = false;
 
-    let scrollAnimationFrame = null;
+let scrollAnimationFrame = null;
 
+
+/* =====================================================
+   ESTABILIDAD MÓVIL / iPHONE
+===================================================== */
+
+const isTouchDevice =
+    window.matchMedia(
+        "(pointer: coarse)"
+    ).matches;
+
+let hasSuccessfulCanvasFrame = false;
+
+let lastMobileGlitchStep = -1;
+
+
+/*
+   Guardamos el último frame bueno.
+
+   Si Safari falla durante UN frame de scroll,
+   mostramos el último frame correcto en vez
+   de volver repentinamente a face.svg.
+*/
+
+const backupCanvas =
+    document.createElement("canvas");
+
+const backupCtx =
+    backupCanvas.getContext("2d");
 
     /* =====================================================
        UTILIDADES
@@ -433,17 +461,45 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     function drawDatamosh(
-        progress = 0
+    progress = 0
+) {
+
+    if (
+        !canvas ||
+        !ctx ||
+        !faceSource ||
+        !faceSource.complete
     ) {
+        return;
+    }
+
+
+    /* =================================================
+       MÓVIL:
+       no generamos un glitch completamente nuevo
+       por cada píxel de scroll.
+
+       Lo dividimos en pasos pequeños y estables.
+    ================================================= */
+
+    if (isTouchDevice) {
+
+        const mobileStep =
+            Math.round(
+                progress * 45
+            );
 
         if (
-            !canvas ||
-            !ctx ||
-            !faceSource ||
-            !faceSource.complete
+            mobileStep ===
+            lastMobileGlitchStep
         ) {
             return;
         }
+
+        lastMobileGlitchStep =
+            mobileStep;
+
+    }
 
 
         const rect =
@@ -555,23 +611,73 @@ document.addEventListener("DOMContentLoaded", async () => {
         */
 
         const sourceWasDrawn =
-            drawSourceIntoCanvas(
-                cw,
-                ch
-            );
+    drawSourceIntoCanvas(
+        cw,
+        ch
+    );
 
 
-        if (!sourceWasDrawn) {
+if (!sourceWasDrawn) {
 
-            showFaceFallback(
-                progress
-            );
+    /*
+       Si ya conseguimos dibujar correctamente
+       al menos una vez, NO volvemos al SVG normal.
 
-            return;
-        }
+       Safari puede fallar un frame durante el scroll.
+       En ese caso recuperamos el último frame bueno.
+    */
 
+    if (
+        hasSuccessfulCanvasFrame &&
+        backupCanvas.width > 0 &&
+        backupCanvas.height > 0
+    ) {
+
+        ctx.clearRect(
+            0,
+            0,
+            cw,
+            ch
+        );
+
+        ctx.drawImage(
+            backupCanvas,
+            0,
+            0,
+            backupCanvas.width,
+            backupCanvas.height,
+            0,
+            0,
+            cw,
+            ch
+        );
 
         hideFaceFallback();
+
+        canvas.style.opacity =
+            "0.98";
+
+        return;
+    }
+
+
+    /*
+       Solo utilizamos el SVG directo
+       si Safari JAMÁS consiguió generar
+       el canvas.
+    */
+
+    showFaceFallback(
+        progress
+    );
+
+    return;
+}
+
+
+hasSuccessfulCanvasFrame = true;
+
+hideFaceFallback();
 
 
         /* =================================================
@@ -591,20 +697,54 @@ document.addEventListener("DOMContentLoaded", async () => {
                 );
 
         }
-        catch (error) {
+       catch (error) {
 
-            console.warn(
-                "No se pudo leer el canvas; usando la cara directa.",
-                error
-            );
+    console.warn(
+        "Safari no pudo leer un frame del canvas.",
+        error
+    );
 
-            showFaceFallback(
-                progress
-            );
 
-            return;
+    if (
+        hasSuccessfulCanvasFrame &&
+        backupCanvas.width > 0 &&
+        backupCanvas.height > 0
+    ) {
 
-        }
+        ctx.clearRect(
+            0,
+            0,
+            cw,
+            ch
+        );
+
+        ctx.drawImage(
+            backupCanvas,
+            0,
+            0,
+            backupCanvas.width,
+            backupCanvas.height,
+            0,
+            0,
+            cw,
+            ch
+        );
+
+        hideFaceFallback();
+
+        canvas.style.opacity =
+            "0.98";
+
+        return;
+    }
+
+
+    showFaceFallback(
+        progress
+    );
+
+    return;
+}
 
 
         const pixels =
@@ -984,6 +1124,45 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         ctx.restore();
 
+        /* =================================================
+   GUARDAR ÚLTIMO FRAME CORRECTO
+================================================= */
+
+if (
+    isTouchDevice &&
+    backupCtx
+) {
+
+    if (
+        backupCanvas.width !== cw ||
+        backupCanvas.height !== ch
+    ) {
+
+        backupCanvas.width =
+            cw;
+
+        backupCanvas.height =
+            ch;
+
+    }
+
+
+    backupCtx.clearRect(
+        0,
+        0,
+        cw,
+        ch
+    );
+
+
+    backupCtx.drawImage(
+        canvas,
+        0,
+        0
+    );
+
+}
+
     }
 
 
@@ -1149,17 +1328,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
 
 
-    if (
-        window.visualViewport
-    ) {
 
-        window.visualViewport
-            .addEventListener(
-                "resize",
-                requestScrollUpdate
-            );
-
-    }
 
 
     /*

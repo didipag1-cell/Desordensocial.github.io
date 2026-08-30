@@ -20,7 +20,7 @@
 ========================================================= */
 
 
-* {
+* { 
     margin: 0;
     padding: 0;
 
@@ -1106,6 +1106,35 @@ body {
     .site-cursor {
         display:
             none;
+    }
+
+}
+
+/* =========================================================
+   iPHONE / SAFARI — DATAMOSH ESTABLE
+========================================================= */
+
+@supports (-webkit-touch-callout: none) {
+
+    @media (max-width: 640px) {
+
+        .interviews-sticky {
+            height: 100svh;
+        }
+
+
+        .interviews-scroll {
+            height: 225svh;
+        }
+
+
+        #faceCanvas {
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+
+            transform-style: preserve-3d;
+        }
+
     }
 
 }
