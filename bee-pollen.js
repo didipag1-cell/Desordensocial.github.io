@@ -622,6 +622,280 @@
             const changeButton =
                 $("#usernameChange");
 
+
+            /* =================================================
+               ACCESO
+               @USERNAME + CONTRASEÑA
+            ================================================= */
+
+            const usernameTitle =
+                $("#usernameTitle");
+
+            const usernameDescription =
+                createPanel
+                    ?.querySelector(
+                        ".username-description"
+                    );
+
+            const usernameSubmit =
+                usernameForm
+                    ?.querySelector(
+                        'button[type="submit"]'
+                    );
+
+            let usernamePassword =
+                $("#usernamePassword");
+
+            let authSwitch =
+                $("#authSwitch");
+
+            let authMode =
+                "register";
+
+
+            if (
+                usernameInput &&
+                usernameForm
+            ) {
+
+                usernameInput.autocomplete =
+                    "username";
+
+            }
+
+
+            if (
+                !usernamePassword &&
+                usernameForm
+            ) {
+
+                const passwordField =
+                    document.createElement(
+                        "div"
+                    );
+
+                passwordField.className =
+                    "username-field";
+
+                passwordField.innerHTML =
+                    `
+                    <span>•</span>
+
+                    <input
+                        type="password"
+                        id="usernamePassword"
+                        minlength="8"
+                        autocomplete="new-password"
+                        placeholder="contraseña"
+                        required
+                    >
+                    `;
+
+
+                if (usernameError) {
+
+                    usernameError
+                        .insertAdjacentElement(
+                            "beforebegin",
+                            passwordField
+                        );
+
+                }
+                else if (usernameSubmit) {
+
+                    usernameSubmit
+                        .insertAdjacentElement(
+                            "beforebegin",
+                            passwordField
+                        );
+
+                }
+                else {
+
+                    usernameForm
+                        .appendChild(
+                            passwordField
+                        );
+
+                }
+
+
+                usernamePassword =
+                    passwordField
+                        .querySelector(
+                            "#usernamePassword"
+                        );
+
+            }
+
+
+            if (
+                !authSwitch &&
+                usernameForm
+            ) {
+
+                authSwitch =
+                    document.createElement(
+                        "button"
+                    );
+
+                authSwitch.type =
+                    "button";
+
+                authSwitch.id =
+                    "authSwitch";
+
+                authSwitch.className =
+                    "username-change";
+
+                usernameForm
+                    .appendChild(
+                        authSwitch
+                    );
+
+            }
+
+
+            function setAuthMode(
+                mode
+            ) {
+
+                authMode =
+                    mode === "login"
+                        ? "login"
+                        : "register";
+
+
+                if (usernameError) {
+
+                    usernameError.textContent =
+                        "";
+
+                }
+
+
+                if (usernamePassword) {
+
+                    usernamePassword.value =
+                        "";
+
+                    usernamePassword.autocomplete =
+                        authMode === "login"
+                            ? "current-password"
+                            : "new-password";
+
+                }
+
+
+                if (
+                    authMode ===
+                    "login"
+                ) {
+
+                    if (usernameTitle) {
+
+                        usernameTitle.textContent =
+                            "volver";
+
+                    }
+
+
+                    if (usernameDescription) {
+
+                        usernameDescription.textContent =
+                            "entra con tu @ y contraseña";
+
+                    }
+
+
+                    if (usernameSubmit) {
+
+                        usernameSubmit.textContent =
+                            "entrar";
+
+                    }
+
+
+                    if (authSwitch) {
+
+                        authSwitch.textContent =
+                            "crear un @ →";
+
+                    }
+
+                }
+                else {
+
+                    if (usernameTitle) {
+
+                        usernameTitle.textContent =
+                            "¿cómo quieres aparecer aquí?";
+
+                    }
+
+
+                    if (usernameDescription) {
+
+                        usernameDescription.textContent =
+                            "crea tu @ y una contraseña";
+
+                    }
+
+
+                    if (usernameSubmit) {
+
+                        usernameSubmit.textContent =
+                            "crear mi @";
+
+                    }
+
+
+                    if (authSwitch) {
+
+                        authSwitch.textContent =
+                            "ya tengo un @ →";
+
+                    }
+
+                }
+
+            }
+
+
+            authSwitch
+                ?.addEventListener(
+                    "click",
+                    () => {
+
+                        setAuthMode(
+                            authMode === "register"
+                                ? "login"
+                                : "register"
+                        );
+
+                        setTimeout(
+                            () =>
+                                usernameInput
+                                    ?.focus(),
+                            50
+                        );
+
+                    }
+                );
+
+
+            setAuthMode(
+                "register"
+            );
+
+
+            if (changeButton) {
+
+                changeButton.textContent =
+                    "cerrar sesión";
+
+            }
+
             const pollenPanel =
                 $("#pollenCreate");
 
@@ -721,131 +995,48 @@
             }
 
 
-            async function saveUsername(
-                rawValue
+            async function submitIdentity(
+                rawUsername,
+                rawPassword
             ) {
 
                 if (!hasSupabase()) {
 
                     return {
-                        data: null,
-                        error: new Error(
-                            "Supabase no está disponible."
-                        )
+                        data:
+                            null,
+
+                        error:
+                            new Error(
+                                "Supabase no está disponible."
+                            )
                     };
+
                 }
-
-
-                const username =
-                    String(rawValue || "")
-                        .trim()
-                        .replace(/^@+/, "")
-                        .toLowerCase();
 
 
                 if (
-                    username.length < 2 ||
-                    username.length > 30
+                    authMode ===
+                    "login"
                 ) {
-
-                    return {
-                        data: null,
-                        error: new Error(
-                            "el nombre debe tener entre 2 y 30 caracteres"
-                        )
-                    };
-                }
-
-
-                const currentProfile =
-                    await getProfile();
-
-
-                if (!currentProfile) {
 
                     return await window
                         .DesordenUser
-                        .createProfile(
-                            username
+                        .login(
+                            rawUsername,
+                            rawPassword
                         );
+
                 }
 
 
-                if (
-                    currentProfile.username ===
-                    username
-                ) {
+                return await window
+                    .DesordenUser
+                    .register(
+                        rawUsername,
+                        rawPassword
+                    );
 
-                    return {
-                        data: currentProfile,
-                        error: null
-                    };
-                }
-
-
-                const {
-                    data: owner,
-                    error: ownerError
-                } =
-                    await window.db
-                        .from("profiles")
-                        .select(
-                            "id, username"
-                        )
-                        .eq(
-                            "username",
-                            username
-                        )
-                        .maybeSingle();
-
-
-                if (ownerError) {
-
-                    return {
-                        data: null,
-                        error: ownerError
-                    };
-                }
-
-
-                if (
-                    owner &&
-                    owner.id !==
-                    currentProfile.id
-                ) {
-
-                    return {
-                        data: null,
-                        error: new Error(
-                            `@${username} ya está en uso`
-                        )
-                    };
-                }
-
-
-                const {
-                    data,
-                    error
-                } =
-                    await window.db
-                        .from("profiles")
-                        .update({
-                            username
-                        })
-                        .eq(
-                            "id",
-                            currentProfile.id
-                        )
-                        .select(
-                            "id, username"
-                        )
-                        .single();
-
-
-                return {
-                    data,
-                    error
-                };
             }
 
 
@@ -2131,7 +2322,8 @@
 
 
             /* =================================================
-               USERNAME
+               CUENTA
+               CREAR / ENTRAR / CERRAR SESIÓN
             ================================================= */
 
             usernameForm
@@ -2146,14 +2338,19 @@
 
                             usernameError.textContent =
                                 "";
+
                         }
 
 
                         const result =
-                            await saveUsername(
+                            await submitIdentity(
                                 usernameInput
                                     ?.value ||
-                                ""
+                                    "",
+
+                                usernamePassword
+                                    ?.value ||
+                                    ""
                             );
 
 
@@ -2165,9 +2362,20 @@
                                     result
                                         .error
                                         .message;
+
                             }
 
+
                             return;
+
+                        }
+
+
+                        if (usernamePassword) {
+
+                            usernamePassword.value =
+                                "";
+
                         }
 
 
@@ -2175,6 +2383,7 @@
 
                             createPanel.hidden =
                                 true;
+
                         }
 
 
@@ -2182,6 +2391,7 @@
 
                             returnPanel.hidden =
                                 false;
+
                         }
 
 
@@ -2189,7 +2399,9 @@
 
                             savedUsername.textContent =
                                 `@${result.data.username}`;
+
                         }
+
                     }
                 );
 
@@ -2199,41 +2411,55 @@
                     "click",
                     async () => {
 
-                        const profile =
-                            await getProfile();
+                        await window
+                            .DesordenUser
+                            .logout();
 
 
                         if (returnPanel) {
+
                             returnPanel.hidden =
                                 true;
+
                         }
 
 
                         if (createPanel) {
+
                             createPanel.hidden =
                                 false;
+
                         }
 
 
                         if (usernameInput) {
 
                             usernameInput.value =
-                                profile
-                                    ?.username ||
                                 "";
 
-                            setTimeout(
-                                () => {
-
-                                    usernameInput
-                                        .focus();
-
-                                    usernameInput
-                                        .select();
-                                },
-                                100
-                            );
                         }
+
+
+                        if (usernamePassword) {
+
+                            usernamePassword.value =
+                                "";
+
+                        }
+
+
+                        setAuthMode(
+                            "login"
+                        );
+
+
+                        setTimeout(
+                            () =>
+                                usernameInput
+                                    ?.focus(),
+                            100
+                        );
+
                     }
                 );
 

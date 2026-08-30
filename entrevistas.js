@@ -1,30 +1,17 @@
 /* =========================================================
    DESORDEN SOCIAL — ENTREVISTAS
-   entrevistas.js COMPLETO
+   entrevistas.js
+
+   - cara + datamosh responsive
+   - fallback seguro para móvil / Safari
+   - scroll de "let's talk to each other"
+   - chat Supabase
+   - usa la sesión nueva de DesordenUser
+   - NO crea usuarios anónimos
+   - cursor personalizado
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", async () => {
-
-
-    /* =====================================================
-       SUPABASE
-       PEGA AQUÍ LOS MISMOS DATOS QUE USA LA ABEJA
-    ===================================================== */
-
-    const SUPABASE_URL =
-        "https://vomccqnimuiysdabzslk.supabase.co";
-
-    const SUPABASE_ANON_KEY =
-        "sb_publishable_nTqXyHD94PGkkx8Bl6wN1Q_8JvHy_C9";
-
-
-    let supabaseClient = null;
-
-    let currentUser = null;
-
-    let currentUsername = null;
-
-
 
     /* =====================================================
        ELEMENTOS
@@ -58,30 +45,67 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("websiteField");
 
 
+    /* =====================================================
+       ESTADO
+    ===================================================== */
+
+    let currentUser = null;
+    let currentUsername = null;
+
+    let realtimeChannel = null;
+
+    let fallbackFaceVisible = false;
+
+    let scrollAnimationFrame = null;
+
 
     /* =====================================================
-       UTILIDAD
+       UTILIDADES
     ===================================================== */
 
     function clamp(value, min, max) {
-
         return Math.max(
             min,
             Math.min(max, value)
         );
-
     }
 
 
+    function getDb() {
+        return window.db || null;
+    }
+
+
+    function getFaceTransform(progress) {
+
+        /*
+           La cara empieza algo más abajo
+           y termina subiendo durante el scroll.
+        */
+
+        const faceStart = 9;
+        const faceEnd = -36;
+
+        const faceY =
+            faceStart +
+            (
+                faceEnd -
+                faceStart
+            ) *
+            progress;
+
+        return (
+            `translateX(-50%) ` +
+            `translateY(${faceY}vh)`
+        );
+    }
+
 
     /* =====================================================
-       =====================================================
-       DATAMOSH
-       =====================================================
+       CANVAS / DATAMOSH
     ===================================================== */
 
     let ctx = null;
-
 
     if (canvas) {
 
@@ -96,36 +120,369 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
+    function hideFaceFallback() {
 
-    function drawDatamosh(progress = 0) {
+        if (!faceSource) {
+            return;
+        }
+
+        fallbackFaceVisible = false;
+
+        /*
+           Volvemos a respetar el CSS original:
+           .face-source { display: none; }
+        */
+
+        faceSource.style.display = "";
+        faceSource.style.position = "";
+        faceSource.style.left = "";
+        faceSource.style.top = "";
+        faceSource.style.width = "";
+        faceSource.style.height = "";
+        faceSource.style.transform = "";
+        faceSource.style.mixBlendMode = "";
+        faceSource.style.opacity = "";
+        faceSource.style.pointerEvents = "";
+        faceSource.style.zIndex = "";
+
+        if (canvas) {
+            canvas.style.opacity = "";
+        }
+
+    }
+
+
+    function showFaceFallback(progress = 0) {
+
+        if (
+            !faceSource ||
+            !canvas
+        ) {
+            return;
+        }
+
+        fallbackFaceVisible = true;
+
+        /*
+           Si un móvil no consigue rasterizar el SVG
+           dentro del canvas, mostramos el propio SVG
+           en el mismo sitio.
+
+           Así nunca desaparece la cara completa.
+        */
+
+        const canvasStyles =
+            window.getComputedStyle(
+                canvas
+            );
+
+        const rect =
+            canvas.getBoundingClientRect();
+
+        faceSource.style.display =
+            "block";
+
+        faceSource.style.position =
+            "absolute";
+
+        faceSource.style.left =
+            "50%";
+
+        faceSource.style.top =
+            canvasStyles.top || "10vh";
+
+        faceSource.style.width =
+            `${Math.max(
+                1,
+                Math.round(rect.width)
+            )}px`;
+
+        faceSource.style.height =
+            "auto";
+
+        faceSource.style.transform =
+            getFaceTransform(
+                progress
+            );
+
+        faceSource.style.mixBlendMode =
+            "multiply";
+
+        faceSource.style.opacity =
+            "0.98";
+
+        faceSource.style.pointerEvents =
+            "none";
+
+        faceSource.style.zIndex =
+            "1";
+
+        canvas.style.opacity =
+            "0";
+
+    }
+
+
+    function canvasContainsVisibleFace(
+        imageData
+    ) {
+
+        if (
+            !imageData ||
+            !imageData.data ||
+            !imageData.data.length
+        ) {
+            return false;
+        }
+
+        const pixels =
+            imageData.data;
+
+        /*
+           El fondo que pintamos es:
+           rgb(236, 239, 49)
+
+           Si todo sigue prácticamente igual,
+           el SVG no llegó a dibujarse.
+        */
+
+        const step =
+            4 * 31;
+
+        for (
+            let i = 0;
+            i < pixels.length;
+            i += step
+        ) {
+
+            const r =
+                pixels[i];
+
+            const g =
+                pixels[i + 1];
+
+            const b =
+                pixels[i + 2];
+
+            const a =
+                pixels[i + 3];
+
+            if (
+                a > 0 &&
+                (
+                    Math.abs(r - 236) +
+                    Math.abs(g - 239) +
+                    Math.abs(b - 49)
+                ) >
+                18
+            ) {
+                return true;
+            }
+
+        }
+
+        return false;
+
+    }
+
+
+    function drawSourceIntoCanvas(
+        cw,
+        ch
+    ) {
+
+        if (
+            !ctx ||
+            !faceSource
+        ) {
+            return false;
+        }
+
+
+        const iw =
+            Number(
+                faceSource.naturalWidth
+            ) || 0;
+
+        const ih =
+            Number(
+                faceSource.naturalHeight
+            ) || 0;
+
+
+        try {
+
+            /*
+               Caso normal:
+               el navegador conoce el tamaño
+               intrínseco del SVG.
+            */
+
+            if (
+                iw > 0 &&
+                ih > 0
+            ) {
+
+                const sourceRatio =
+                    iw / ih;
+
+                const targetRatio =
+                    cw / ch;
+
+
+                let sx = 0;
+                let sy = 0;
+                let sw = iw;
+                let sh = ih;
+
+
+                if (
+                    sourceRatio >
+                    targetRatio
+                ) {
+
+                    sw =
+                        ih *
+                        targetRatio;
+
+                    sx =
+                        (iw - sw) /
+                        2;
+
+                }
+                else {
+
+                    sh =
+                        iw /
+                        targetRatio;
+
+                    sy =
+                        (ih - sh) /
+                        2;
+
+                }
+
+
+                ctx.drawImage(
+                    faceSource,
+
+                    sx,
+                    sy,
+                    sw,
+                    sh,
+
+                    0,
+                    0,
+                    cw,
+                    ch
+                );
+
+            }
+            else {
+
+                /*
+                   Fallback de rasterización:
+                   algunos WebKit/Safari pueden
+                   no dar dimensiones intrínsecas
+                   fiables para ciertos SVG.
+
+                   Intentamos dibujarlo directamente.
+                */
+
+                ctx.drawImage(
+                    faceSource,
+                    0,
+                    0,
+                    cw,
+                    ch
+                );
+
+            }
+
+
+            /*
+               Comprobamos que realmente apareció
+               información visual en el canvas.
+            */
+
+            const probe =
+                ctx.getImageData(
+                    0,
+                    0,
+                    cw,
+                    ch
+                );
+
+            return canvasContainsVisibleFace(
+                probe
+            );
+
+        }
+        catch (error) {
+
+            console.warn(
+                "No se pudo rasterizar face.svg en el canvas:",
+                error
+            );
+
+            return false;
+
+        }
+
+    }
+
+
+    function drawDatamosh(
+        progress = 0
+    ) {
 
         if (
             !canvas ||
             !ctx ||
             !faceSource ||
-            !faceSource.complete ||
-            !faceSource.naturalWidth
+            !faceSource.complete
         ) {
             return;
         }
 
 
+        const rect =
+            canvas.getBoundingClientRect();
+
+
         const displayWidth =
-            canvas.clientWidth || 800;
-
-
-        const displayHeight =
-            Math.round(
-                displayWidth * 1.34
+            Math.max(
+                1,
+                rect.width ||
+                canvas.clientWidth ||
+                800
             );
 
 
         /*
-            Canvas interno pequeño =
-            pixelación más visible.
+           Conservamos la proporción visual
+           que ya tenía la pieza.
         */
 
-        const internalScale = 0.43;
+        const displayHeight =
+            Math.round(
+                displayWidth *
+                1.34
+            );
+
+
+        /*
+           Canvas interno pequeño =
+           pixelación más visible y menos
+           carga para móviles.
+        */
+
+        const internalScale =
+            window.matchMedia(
+                "(max-width: 640px)"
+            ).matches
+                ? 0.48
+                : 0.43;
 
 
         const cw =
@@ -148,10 +505,32 @@ document.addEventListener("DOMContentLoaded", async () => {
             );
 
 
-        canvas.width = cw;
+        /*
+           Cambiar width/height limpia el canvas
+           y restablece su estado.
+        */
 
-        canvas.height = ch;
+        if (
+            canvas.width !== cw
+        ) {
+            canvas.width = cw;
+        }
 
+        if (
+            canvas.height !== ch
+        ) {
+            canvas.height = ch;
+        }
+
+
+        ctx.globalAlpha = 1;
+
+        ctx.clearRect(
+            0,
+            0,
+            cw,
+            ch
+        );
 
 
         /* fondo amarillo */
@@ -167,82 +546,65 @@ document.addEventListener("DOMContentLoaded", async () => {
         );
 
 
+        /*
+           Dibujar SVG.
 
-        /* =================================================
-           AJUSTAR FACE.SVG AL CANVAS
-        ================================================= */
+           Si Safari/iOS no puede hacerlo,
+           enseñamos el SVG directamente
+           en lugar de dejar una pantalla vacía.
+        */
 
-        const iw =
-            faceSource.naturalWidth;
-
-        const ih =
-            faceSource.naturalHeight;
-
-
-        const sourceRatio =
-            iw / ih;
-
-        const targetRatio =
-            cw / ch;
+        const sourceWasDrawn =
+            drawSourceIntoCanvas(
+                cw,
+                ch
+            );
 
 
-        let sx = 0;
-        let sy = 0;
-        let sw = iw;
-        let sh = ih;
+        if (!sourceWasDrawn) {
 
+            showFaceFallback(
+                progress
+            );
 
-        if (
-            sourceRatio >
-            targetRatio
-        ) {
-
-            sw =
-                ih *
-                targetRatio;
-
-            sx =
-                (iw - sw) / 2;
-
-        } else {
-
-            sh =
-                iw /
-                targetRatio;
-
-            sy =
-                (ih - sh) / 2;
-
+            return;
         }
 
 
-        ctx.drawImage(
-            faceSource,
-
-            sx,
-            sy,
-            sw,
-            sh,
-
-            0,
-            0,
-            cw,
-            ch
-        );
-
+        hideFaceFallback();
 
 
         /* =================================================
            CONVERTIR TODO A LOS DOS COLORES
         ================================================= */
 
-        const imageData =
-            ctx.getImageData(
-                0,
-                0,
-                cw,
-                ch
+        let imageData = null;
+
+        try {
+
+            imageData =
+                ctx.getImageData(
+                    0,
+                    0,
+                    cw,
+                    ch
+                );
+
+        }
+        catch (error) {
+
+            console.warn(
+                "No se pudo leer el canvas; usando la cara directa.",
+                error
             );
+
+            showFaceFallback(
+                progress
+            );
+
+            return;
+
+        }
 
 
         const pixels =
@@ -266,27 +628,28 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
             const luminance =
-
                 (
                     0.299 * r +
                     0.587 * g +
                     0.114 * b
-                ) / 255;
+                ) /
+                255;
 
 
             const darkness =
                 Math.pow(
-                    1 - luminance,
+                    1 -
+                    luminance,
                     0.78
                 );
 
 
             /*
-                amarillo:
-                236 239 49
+               amarillo:
+               236 239 49
 
-                rojo:
-                215 58 47
+               rojo:
+               215 58 47
             */
 
             pixels[i] =
@@ -314,7 +677,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         );
 
 
-
         /* =================================================
            DATAMOSH — DESPLAZAMIENTO DE BLOQUES
         ================================================= */
@@ -332,10 +694,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         const maxShift =
-            Math.floor(
-                cw *
-                0.10 *
-                intensity
+            Math.max(
+                1,
+                Math.floor(
+                    cw *
+                    0.10 *
+                    intensity
+                )
             );
 
 
@@ -346,11 +711,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         ) {
 
             const sliceHeight =
-                Math.floor(
-                    5 +
-                    Math.random() *
-                    ch *
-                    0.07
+                Math.max(
+                    1,
+                    Math.floor(
+                        5 +
+                        Math.random() *
+                        ch *
+                        0.07
+                    )
                 );
 
 
@@ -393,15 +761,17 @@ document.addEventListener("DOMContentLoaded", async () => {
                     y
                 );
 
-            } catch (error) {
+            }
+            catch (error) {
 
-                // simplemente saltamos
-                // un bloque inválido
+                /*
+                   Un bloque inválido no debe
+                   romper toda la animación.
+                */
 
             }
 
         }
-
 
 
         /* =================================================
@@ -424,14 +794,16 @@ document.addEventListener("DOMContentLoaded", async () => {
             const width =
                 Math.floor(
                     5 +
-                    Math.random() * 28
+                    Math.random() *
+                    28
                 );
 
 
             const height =
                 Math.floor(
                     4 +
-                    Math.random() * 25
+                    Math.random() *
+                    25
                 );
 
 
@@ -440,7 +812,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                     Math.random() *
                     Math.max(
                         1,
-                        cw - width
+                        cw -
+                        width
                     )
                 );
 
@@ -450,7 +823,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                     Math.random() *
                     Math.max(
                         1,
-                        ch - height
+                        ch -
+                        height
                     )
                 );
 
@@ -489,19 +863,21 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 ctx.putImageData(
                     fragment,
-
                     x + offsetX,
                     y + offsetY
                 );
 
-            } catch (error) {
+            }
+            catch (error) {
 
-                // ignoramos fragmento
+                /*
+                   Ignoramos únicamente
+                   el fragmento inválido.
+                */
 
             }
 
         }
-
 
 
         /* =================================================
@@ -524,7 +900,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             const size =
                 Math.floor(
                     3 +
-                    Math.random() * 14
+                    Math.random() *
+                    14
                 );
 
 
@@ -533,7 +910,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                     Math.random() *
                     Math.max(
                         1,
-                        cw - size
+                        cw -
+                        size
                     )
                 );
 
@@ -543,27 +921,23 @@ document.addEventListener("DOMContentLoaded", async () => {
                     Math.random() *
                     Math.max(
                         1,
-                        ch - size
+                        ch -
+                        size
                     )
                 );
 
 
-            /*
-                Alternamos los dos colores.
-            */
-
             ctx.fillStyle =
-
-                Math.random() > 0.5
-
+                Math.random() >
+                0.5
                     ? "#d73a2f"
-
                     : "#ecef31";
 
 
             ctx.globalAlpha =
                 0.32 +
-                Math.random() * 0.35;
+                Math.random() *
+                0.35;
 
 
             ctx.fillRect(
@@ -579,9 +953,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         ctx.globalAlpha = 1;
 
 
-
         /* =================================================
-           SCANLINES MUY SUAVES
+           SCANLINES SUAVES
         ================================================= */
 
         ctx.save();
@@ -614,17 +987,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-
     /* =====================================================
-       =====================================================
        SCROLL
-       =====================================================
     ===================================================== */
-
-    let scrollAnimationFrame =
-        null;
-
-
 
     function updateScroll() {
 
@@ -646,9 +1011,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         const maxScroll =
-
-            section.offsetHeight -
-            window.innerHeight;
+            Math.max(
+                0,
+                section.offsetHeight -
+                window.innerHeight
+            );
 
 
         const current =
@@ -660,51 +1027,36 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         const progress =
-
             maxScroll > 0
-
                 ? current /
                   maxScroll
-
                 : 0;
 
 
+        /* cara */
 
-        /* =================================================
-           CARA
-
-           empieza arriba / cortada
-           y termina completamente revelada
-        ================================================= */
-
-        const faceStart =
-            9;
-
-        const faceEnd =
-            -36;
-
-
-        const faceY =
-
-            faceStart +
-            (
-                faceEnd -
-                faceStart
-            ) *
-            progress;
+        const faceTransform =
+            getFaceTransform(
+                progress
+            );
 
 
         canvas.style.transform =
-
-            `translateX(-50%) translateY(${faceY}vh)`;
-
+            faceTransform;
 
 
-        /* =================================================
-           TEXTO
+        if (
+            fallbackFaceVisible &&
+            faceSource
+        ) {
 
-           empieza ARRIBA y acaba ABAJO.
-        ================================================= */
+            faceSource.style.transform =
+                faceTransform;
+
+        }
+
+
+        /* texto */
 
         const startTop =
             window.innerHeight *
@@ -721,7 +1073,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         const finalTop =
-
             window.innerHeight -
             textHeight -
             bottomSpace;
@@ -736,8 +1087,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         talk.style.transform =
-
-            `translateY(${totalTravel * progress}px)`;
+            `translateY(${
+                totalTravel *
+                progress
+            }px)`;
 
 
         talk.style.opacity =
@@ -749,7 +1102,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         );
 
     }
-
 
 
     function requestScrollUpdate() {
@@ -770,7 +1122,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-
     window.addEventListener(
         "scroll",
         requestScrollUpdate,
@@ -780,29 +1131,105 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
 
 
-
     window.addEventListener(
         "resize",
         requestScrollUpdate
     );
 
 
+    window.addEventListener(
+        "orientationchange",
+        requestScrollUpdate
+    );
+
+
+    window.addEventListener(
+        "pageshow",
+        requestScrollUpdate
+    );
+
 
     if (
-        faceSource
+        window.visualViewport
     ) {
+
+        window.visualViewport
+            .addEventListener(
+                "resize",
+                requestScrollUpdate
+            );
+
+    }
+
+
+    /*
+       Esperamos a que la imagen esté realmente
+       disponible antes de pintar.
+
+       decode() ayuda especialmente en móviles,
+       pero si no está disponible o falla,
+       seguimos usando el evento load.
+    */
+
+    if (faceSource) {
+
+        const startFace =
+            async () => {
+
+                if (
+                    typeof faceSource.decode ===
+                    "function"
+                ) {
+
+                    try {
+                        await faceSource.decode();
+                    }
+                    catch (error) {
+                        /*
+                           El evento load / complete
+                           sigue siendo suficiente.
+                        */
+                    }
+
+                }
+
+                requestScrollUpdate();
+
+            };
+
 
         if (
             faceSource.complete
         ) {
 
-            requestScrollUpdate();
+            await startFace();
 
-        } else {
+        }
+        else {
 
             faceSource.addEventListener(
                 "load",
-                requestScrollUpdate
+                startFace,
+                {
+                    once: true
+                }
+            );
+
+
+            faceSource.addEventListener(
+                "error",
+                () => {
+
+                    console.error(
+                        "No se pudo cargar la imagen de la cara:",
+                        faceSource.currentSrc ||
+                        faceSource.src
+                    );
+
+                },
+                {
+                    once: true
+                }
             );
 
         }
@@ -810,92 +1237,118 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
+    /*
+       Pintado inicial aunque el navegador
+       no haya generado ningún scroll.
+    */
 
-    /* =====================================================
-       =====================================================
-       SUPABASE
-       =====================================================
-    ===================================================== */
-
-    const credentialsReady =
-
-        SUPABASE_URL &&
-        SUPABASE_ANON_KEY &&
-
-        !SUPABASE_URL.includes(
-            "PEGA_AQUI"
-        ) &&
-
-        !SUPABASE_ANON_KEY.includes(
-            "PEGA_AQUI"
-        );
-
-
-
-    if (
-        credentialsReady &&
-        window.supabase
-    ) {
-
-        supabaseClient =
-            window.supabase.createClient(
-
-                SUPABASE_URL,
-                SUPABASE_ANON_KEY,
-
-                {
-                    auth: {
-
-                        persistSession:
-                            true,
-
-                        autoRefreshToken:
-                            true,
-
-                        detectSessionInUrl:
-                            true
-
-                    }
-                }
-
-            );
-
-    } else {
-
-        console.warn(
-            "Supabase no está configurado en entrevistas.js"
-        );
-
-    }
-
+    requestScrollUpdate();
 
 
     /* =====================================================
-       USUARIO DE LA ABEJA
+       IDENTIDAD — NUEVO SISTEMA @ + CONTRASEÑA
+
+       Esta página NO crea sesiones anónimas.
+       Usa la misma sesión que user-session.js.
     ===================================================== */
 
     async function loadBeeUser() {
 
-        if (!supabaseClient) {
+        currentUser = null;
+        currentUsername = null;
+
+
+        /*
+           Ruta principal:
+           usar la API compartida del nuevo sistema.
+        */
+
+        if (
+            window.DesordenUser
+        ) {
+
+            try {
+
+                const user =
+                    await window
+                        .DesordenUser
+                        .getCurrentUser();
+
+
+                if (
+                    !user ||
+                    user.is_anonymous
+                ) {
+                    return false;
+                }
+
+
+                const profile =
+                    await window
+                        .DesordenUser
+                        .getProfile();
+
+
+                if (
+                    !profile?.username
+                ) {
+                    return false;
+                }
+
+
+                currentUser =
+                    user;
+
+                currentUsername =
+                    profile.username;
+
+
+                return true;
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Error leyendo la sesión de DesordenUser:",
+                    error
+                );
+
+                return false;
+
+            }
+
+        }
+
+
+        /*
+           Fallback:
+           si DesordenUser no está cargado,
+           leemos una sesión permanente existente.
+           Nunca creamos una sesión anónima.
+        */
+
+        const db =
+            getDb();
+
+
+        if (!db) {
+
+            console.warn(
+                "Supabase no está disponible en entrevistas.js"
+            );
 
             return false;
 
         }
 
 
-
-        /* ---------------------------------------------
-           SESIÓN EXISTENTE
-        --------------------------------------------- */
-
         const {
             data: sessionData,
             error: sessionError
         } =
-            await supabaseClient
+            await db
                 .auth
                 .getSession();
-
 
 
         if (sessionError) {
@@ -910,85 +1363,37 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
 
-
-        let session =
-            sessionData?.session ||
+        const user =
+            sessionData
+                ?.session
+                ?.user ||
             null;
 
 
-
-        /* ---------------------------------------------
-           SI NO HAY SESIÓN:
-           usuario anónimo
-        --------------------------------------------- */
-
-        if (!session) {
-
-            const {
-                data,
-                error
-            } =
-                await supabaseClient
-                    .auth
-                    .signInAnonymously();
-
-
-
-            if (error) {
-
-                console.error(
-                    "No se pudo iniciar sesión anónima:",
-                    error
-                );
-
-                return false;
-
-            }
-
-
-            session =
-                data?.session ||
-                null;
-
-        }
-
-
-
-        currentUser =
-            session?.user ||
-            null;
-
-
-
-        if (!currentUser) {
-
+        if (
+            !user ||
+            user.is_anonymous
+        ) {
             return false;
-
         }
 
-
-
-        /* ---------------------------------------------
-           BUSCAR USERNAME DE LA ABEJA
-        --------------------------------------------- */
 
         const {
             data: profile,
             error: profileError
         } =
-            await supabaseClient
-
-                .from("profiles")
-
-                .select("username")
-
+            await db
+                .from(
+                    "profiles"
+                )
+                .select(
+                    "username"
+                )
                 .eq(
                     "id",
-                    currentUser.id
+                    user.id
                 )
-
                 .maybeSingle();
-
 
 
         if (profileError) {
@@ -1003,23 +1408,18 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
 
-
-        currentUsername =
-            profile?.username ||
-            null;
-
-
-
-        if (!currentUsername) {
-
-            console.log(
-                "El usuario aún no ha elegido username con la abeja."
-            );
-
+        if (
+            !profile?.username
+        ) {
             return false;
-
         }
 
+
+        currentUser =
+            user;
+
+        currentUsername =
+            profile.username;
 
 
         return true;
@@ -1027,19 +1427,28 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
+    /*
+       Si la abeja crea, recupera o cierra
+       una sesión mientras esta página está abierta,
+       actualizamos aquí la identidad.
+    */
+
+    window.addEventListener(
+        "desorden:user-ready",
+        () => {
+            loadBeeUser();
+        }
+    );
+
 
     /* =====================================================
-       =====================================================
-       CHAT
-       =====================================================
+       CHAT — UTILIDADES
     ===================================================== */
-
 
     function messageOffset(seed) {
 
         const value =
             String(seed);
-
 
         let hash = 0;
 
@@ -1054,108 +1463,119 @@ document.addEventListener("DOMContentLoaded", async () => {
                 (
                     hash * 31 +
                     value.charCodeAt(i)
-                ) >>> 0;
+                ) >>>
+                0;
 
         }
 
 
         /*
-            posiciones entre 3% y 52%
+           Escritorio:
+           mantiene la dispersión original.
+
+           Móvil:
+           reducimos el desplazamiento para que
+           ningún mensaje salga del viewport.
         */
 
+        const isMobile =
+            window.matchMedia(
+                "(max-width: 640px)"
+            ).matches;
+
+        const baseOffset =
+            isMobile
+                ? 2
+                : 3;
+
+        const spread =
+            isMobile
+                ? 17
+                : 50;
+
         return (
-            3 +
+            baseOffset +
             (
-                hash % 50
+                hash %
+                spread
             )
         );
 
     }
 
 
-
-    function cleanUsername(username) {
+    function cleanUsername(
+        username
+    ) {
 
         if (!username) {
-
             return "@usuario";
-
         }
 
 
-        return username.startsWith("@")
-
-            ? username
-
-            : `@${username}`;
+        return username
+            .startsWith("@")
+                ? username
+                : `@${username}`;
 
     }
 
 
-
-    /* =====================================================
-       OBTENER USERNAMES EN BLOQUE
-    ===================================================== */
-
-    async function getUsernameMap(rows) {
+    async function getUsernameMap(
+        rows
+    ) {
 
         const map =
             new Map();
 
 
+        const db =
+            getDb();
+
+
         if (
-            !supabaseClient ||
+            !db ||
             !rows?.length
         ) {
-
             return map;
-
         }
 
 
         const ids =
             [
                 ...new Set(
-
                     rows
-
                         .map(
                             row =>
                                 row.created_by
                         )
-
-                        .filter(Boolean)
-
+                        .filter(
+                            Boolean
+                        )
                 )
             ];
 
 
-
         if (!ids.length) {
-
             return map;
-
         }
-
 
 
         const {
             data,
             error
         } =
-            await supabaseClient
-
-                .from("profiles")
-
+            await db
+                .from(
+                    "profiles"
+                )
                 .select(
                     "id,username"
                 )
-
                 .in(
                     "id",
                     ids
                 );
-
 
 
         if (error) {
@@ -1168,7 +1588,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             return map;
 
         }
-
 
 
         data?.forEach(
@@ -1188,7 +1607,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-
     /* =====================================================
        RENDER MENSAJE
     ===================================================== */
@@ -1200,15 +1618,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     ) {
 
         if (!stream) {
-
             return;
-
         }
 
 
-
         /*
-            evitar duplicados realtime
+           evitar duplicados de realtime
         */
 
         if (
@@ -1216,11 +1631,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 `[data-message-id="${row.id}"]`
             )
         ) {
-
             return;
-
         }
-
 
 
         const article =
@@ -1237,7 +1649,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             row.id;
 
 
-
         if (animate) {
 
             article.classList.add(
@@ -1247,12 +1658,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
 
-
         article.style.setProperty(
             "--x",
-            `${messageOffset(row.id)}%`
+            `${messageOffset(
+                row.id
+            )}%`
         );
-
 
 
         const nameElement =
@@ -1271,7 +1682,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             );
 
 
-
         const messageElement =
             document.createElement(
                 "p"
@@ -1283,7 +1693,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         messageElement.textContent =
-            row.message || "";
+            row.message ||
+            "";
 
 
         article.append(
@@ -1299,47 +1710,44 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-
     /* =====================================================
        CARGAR MENSAJES
     ===================================================== */
 
     async function loadMessages() {
 
+        const db =
+            getDb();
+
+
         if (
-            !supabaseClient ||
+            !db ||
             !stream
         ) {
-
             return;
-
         }
-
 
 
         const {
             data: rows,
             error
         } =
-            await supabaseClient
-
+            await db
                 .from(
                     "interview_chat"
                 )
-
                 .select(
                     "id,created_by,message,created_at"
                 )
-
                 .order(
                     "created_at",
                     {
                         ascending: true
                     }
                 )
-
-                .limit(100);
-
+                .limit(
+                    100
+                );
 
 
         if (error) {
@@ -1354,17 +1762,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
 
-
         stream.innerHTML =
             "";
-
 
 
         const usernameMap =
             await getUsernameMap(
                 rows
             );
-
 
 
         rows.forEach(
@@ -1393,106 +1798,112 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-
     /* =====================================================
        REALTIME
     ===================================================== */
 
     function startRealtime() {
 
-        if (!supabaseClient) {
+        const db =
+            getDb();
 
+
+        if (!db) {
             return;
-
         }
 
 
-
-        supabaseClient
-
-            .channel(
-                "desorden-interview-chat"
-            )
-
-            .on(
-
-                "postgres_changes",
-
-                {
-                    event: "INSERT",
-
-                    schema: "public",
-
-                    table:
-                        "interview_chat"
-                },
-
-                async payload => {
+        if (realtimeChannel) {
+            return;
+        }
 
 
-                    const row =
-                        payload.new;
+        realtimeChannel =
+            db
+                .channel(
+                    "desorden-interview-chat"
+                )
+                .on(
+                    "postgres_changes",
+
+                    {
+                        event:
+                            "INSERT",
+
+                        schema:
+                            "public",
+
+                        table:
+                            "interview_chat"
+                    },
+
+                    async payload => {
+
+                        const row =
+                            payload.new;
 
 
-                    let username =
-                        null;
-
-
-
-                    if (
-                        row.created_by ===
-                        currentUser?.id
-                    ) {
-
-                        username =
-                            currentUsername;
-
-                    } else {
-
-
-                        const {
-                            data
-                        } =
-                            await supabaseClient
-
-                                .from(
-                                    "profiles"
-                                )
-
-                                .select(
-                                    "username"
-                                )
-
-                                .eq(
-                                    "id",
-                                    row.created_by
-                                )
-
-                                .maybeSingle();
-
-
-                        username =
-                            data?.username ||
+                        let username =
                             null;
 
+
+                        if (
+                            row.created_by ===
+                            currentUser?.id
+                        ) {
+
+                            username =
+                                currentUsername;
+
+                        }
+                        else {
+
+                            const {
+                                data,
+                                error
+                            } =
+                                await db
+                                    .from(
+                                        "profiles"
+                                    )
+                                    .select(
+                                        "username"
+                                    )
+                                    .eq(
+                                        "id",
+                                        row.created_by
+                                    )
+                                    .maybeSingle();
+
+
+                            if (error) {
+
+                                console.error(
+                                    "No se pudo cargar el username del mensaje:",
+                                    error
+                                );
+
+                            }
+
+
+                            username =
+                                data?.username ||
+                                null;
+
+                        }
+
+
+                        renderMessage(
+                            row,
+                            username,
+                            true
+                        );
+
                     }
-
-
-
-                    renderMessage(
-                        row,
-                        username,
-                        true
-                    );
-
-                }
-
-            )
-
-            .subscribe();
+                )
+                .subscribe();
 
     }
-
 
 
     /* =====================================================
@@ -1505,16 +1916,16 @@ document.addEventListener("DOMContentLoaded", async () => {
             "input",
             () => {
 
-
                 messageInput.style.height =
                     "auto";
 
 
                 messageInput.style.height =
-
-                    Math.min(
-                        messageInput.scrollHeight,
-                        180
+                    (
+                        Math.min(
+                            messageInput.scrollHeight,
+                            180
+                        )
                     ) +
                     "px";
 
@@ -1524,13 +1935,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-
     /* =====================================================
-       ENVIAR
+       ENVIAR MENSAJE
     ===================================================== */
 
     let lastSend = 0;
-
 
 
     if (form) {
@@ -1539,28 +1948,25 @@ document.addEventListener("DOMContentLoaded", async () => {
             "submit",
             async event => {
 
-
                 event.preventDefault();
 
 
-
                 /*
-                    honeypot
+                   honeypot
                 */
 
                 if (
                     websiteField?.value
                 ) {
-
                     return;
-
                 }
 
 
+                const db =
+                    getDb();
 
-                if (
-                    !supabaseClient
-                ) {
+
+                if (!db) {
 
                     console.error(
                         "Supabase no está conectado."
@@ -1571,48 +1977,37 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }
 
 
-
                 const message =
                     messageInput
                         ?.value
                         .trim();
 
 
-
                 if (!message) {
-
                     return;
-
                 }
 
 
-
-                /* -----------------------------------------
-                   CARGAR USUARIO DE LA ABEJA
-                ----------------------------------------- */
+                /*
+                   Recuperamos la identidad permanente
+                   del sistema de la abeja.
+                */
 
                 const userReady =
                     await loadBeeUser();
 
 
-
                 if (!userReady) {
 
-
                     console.warn(
-                        "No se puede enviar porque este visitante todavía no tiene un username de Desorden Social."
+                        "No se puede enviar: falta iniciar sesión con un @ de Desorden Social."
                     );
 
-
-                    /*
-                        Le damos una pista SIN meter
-                        otro formulario de identidad.
-                    */
 
                     if (messageInput) {
 
                         messageInput.placeholder =
-                            "elige primero tu usuario con la abeja...";
+                            "entra primero con tu @ usando la abeja...";
 
                     }
 
@@ -1622,10 +2017,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }
 
 
-
-                /* -----------------------------------------
-                   PEQUEÑO COOLDOWN
-                ----------------------------------------- */
+                /*
+                   pequeño cooldown
+                */
 
                 const now =
                     Date.now();
@@ -1636,9 +2030,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     lastSend <
                     2500
                 ) {
-
                     return;
-
                 }
 
 
@@ -1646,24 +2038,16 @@ document.addEventListener("DOMContentLoaded", async () => {
                     now;
 
 
-
-                /* -----------------------------------------
-                   INSERT
-                ----------------------------------------- */
-
                 const {
                     data,
                     error
                 } =
-                    await supabaseClient
-
+                    await db
                         .from(
                             "interview_chat"
                         )
-
                         .insert(
                             {
-
                                 created_by:
                                     currentUser.id,
 
@@ -1672,16 +2056,12 @@ document.addEventListener("DOMContentLoaded", async () => {
                                         0,
                                         500
                                     )
-
                             }
                         )
-
                         .select(
                             "id,created_by,message,created_at"
                         )
-
                         .single();
-
 
 
                 if (error) {
@@ -1696,11 +2076,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }
 
 
-
                 /*
-                    Lo dibujamos ya.
-                    Si realtime llega después,
-                    renderMessage evita duplicarlo.
+                   Lo dibujamos inmediatamente.
+                   Si realtime llega después,
+                   renderMessage evita el duplicado.
                 */
 
                 renderMessage(
@@ -1708,7 +2087,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                     currentUsername,
                     true
                 );
-
 
 
                 messageInput.value =
@@ -1728,12 +2106,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-
     /* =====================================================
-       INICIAR SUPABASE / CHAT
+       INICIAR CHAT
     ===================================================== */
 
-    if (supabaseClient) {
+    if (
+        getDb()
+    ) {
 
         await loadBeeUser();
 
@@ -1742,13 +2121,18 @@ document.addEventListener("DOMContentLoaded", async () => {
         startRealtime();
 
     }
+    else {
 
+        console.warn(
+            "Supabase no está disponible en entrevistas.js. " +
+            "Comprueba que supabase-config.js cargue antes."
+        );
+
+    }
 
 
     /* =====================================================
-       =====================================================
        CURSOR
-       =====================================================
     ===================================================== */
 
     if (
@@ -1758,14 +2142,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         ).matches
     ) {
 
-
         let mouseX = 0;
-
         let mouseY = 0;
 
         let cursorFrame =
             null;
-
 
 
         function paintCursor() {
@@ -1784,11 +2165,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
 
-
         document.addEventListener(
             "mousemove",
             event => {
-
 
                 mouseX =
                     event.clientX;
@@ -1822,7 +2201,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         );
 
 
-
         document.addEventListener(
             "mouseleave",
             () => {
@@ -1836,5 +2214,109 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     }
 
-
 });
+/* =========================================================
+   ABEJA — SOLO EN LA ZONA DEL CHAT
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        const bee =
+            document.getElementById("bee");
+
+        const chatSection =
+            document.querySelector(
+                ".conversation-section"
+            );
+
+
+        if (
+            !bee ||
+            !chatSection
+        ) {
+            return;
+        }
+
+
+        function updateBeeVisibility() {
+
+            const chatRect =
+                chatSection
+                    .getBoundingClientRect();
+
+
+            /*
+               La abeja aparece únicamente
+               cuando hemos entrado completamente
+               en la zona amarilla del chat.
+            */
+
+            const showBee =
+                chatRect.top <= 0;
+
+
+            if (showBee) {
+
+                bee.style.opacity =
+                    "1";
+
+                bee.style.visibility =
+                    "visible";
+
+                bee.style.pointerEvents =
+                    "auto";
+
+            }
+            else {
+
+                bee.style.opacity =
+                    "0";
+
+                bee.style.visibility =
+                    "hidden";
+
+                bee.style.pointerEvents =
+                    "none";
+
+            }
+
+        }
+
+
+        /*
+           La escondemos desde el principio
+           para evitar que haga un pequeño flash
+           al cargar la página.
+        */
+
+        bee.style.opacity =
+            "0";
+
+        bee.style.visibility =
+            "hidden";
+
+        bee.style.pointerEvents =
+            "none";
+
+
+        window.addEventListener(
+            "scroll",
+            updateBeeVisibility,
+            {
+                passive: true
+            }
+        );
+
+
+        window.addEventListener(
+            "resize",
+            updateBeeVisibility
+        );
+
+
+        updateBeeVisibility();
+
+    }
+);

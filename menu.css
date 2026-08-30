@@ -742,3 +742,326 @@ button {
     }
 }
 
+/* =========================================================
+   OCULTAR ETIQUETAS PEQUEÑAS
+   Conserva el espacio original para no mover los títulos.
+========================================================= */
+
+.folder-kicker {
+    visibility: hidden;
+}
+
+
+
+/* =========================================================
+   AJUSTE FINAL — TÍTULOS MÁS ARRIBA
+   No cambia tamaños ni perspectiva.
+========================================================= */
+
+.folder-kicker {
+    display: none !important;
+}
+
+.folder-copy {
+    top: 8px !important;
+}
+
+@media (max-width: 620px) {
+
+    .folder-copy {
+        top: 7px !important;
+    }
+
+}
+
+
+/* =========================================================
+   BOTONES — SIN CAMBIAR LA ESTÉTICA
+========================================================= */
+
+@media (hover: hover) and (pointer: fine) {
+
+    .menu-folder.is-open .folder-object {
+        pointer-events: auto !important;
+    }
+
+}
+
+@media (hover: none), (pointer: coarse) {
+
+    .menu-folder {
+        pointer-events: none !important;
+    }
+
+    .folder-face,
+    .folder-tab {
+        pointer-events: auto !important;
+        touch-action: manipulation;
+    }
+
+    .folder-object {
+        pointer-events: none !important;
+    }
+
+}
+
+/* =========================================================
+   AJUSTE FINAL — SOLO TÍTULO
+   - sin kicker
+   - sin texto pequeño
+   - título centrado en la parte visible de cada carpeta
+========================================================= */
+
+.folder-kicker,
+.folder-copy p {
+    display: none !important;
+}
+
+
+/*
+   Las primeras cuatro carpetas:
+   centramos el título dentro de la franja que queda visible
+   antes de que empiece la siguiente carpeta.
+*/
+
+.folder-copy {
+    top: 0 !important;
+
+    height:
+        calc(
+            var(--folder-step) -
+            40px
+        );
+
+    display: flex;
+    align-items: center;
+
+    width:
+        min(
+            520px,
+            62%
+        );
+}
+
+
+.folder-copy h2 {
+    font-size:
+        clamp(
+            38px,
+            5.4vw,
+            64px
+        ) !important;
+
+    line-height: .9 !important;
+
+    margin: 0;
+}
+
+
+/*
+   La última carpeta no tiene otra encima tapándola,
+   así que el título se centra en toda su zona visible.
+*/
+
+.folder-info .folder-copy {
+    height: 100%;
+}
+
+
+.folder-info .folder-copy h2 {
+    font-size:
+        clamp(
+            54px,
+            7vw,
+            88px
+        ) !important;
+}
+
+
+/* =========================================================
+   MÓVIL
+========================================================= */
+
+@media (max-width: 620px) {
+
+    .folder-copy {
+        top: 0 !important;
+
+        height:
+            calc(
+                var(--folder-step) -
+                36px
+            );
+
+        width: 67%;
+    }
+
+
+    .folder-copy h2 {
+        font-size:
+            clamp(
+                32px,
+                10.5vw,
+                46px
+            ) !important;
+    }
+
+
+    .folder-info .folder-copy {
+        height: 100%;
+    }
+
+
+    .folder-info .folder-copy h2 {
+        font-size:
+            clamp(
+                48px,
+                15vw,
+                69px
+            ) !important;
+    }
+
+}
+
+/* =========================================================
+   CORRECCIÓN FINAL — POSICIÓN DE LOS TÍTULOS
+========================================================= */
+
+/* fuera todo el texto secundario */
+.folder-kicker,
+.folder-copy p {
+    display: none !important;
+}
+
+
+/*
+   El título se centra en la franja de carpeta
+   que realmente queda visible antes de la siguiente.
+*/
+.folder-copy,
+.folder-info .folder-copy {
+
+    top: 40px !important;
+
+    height: var(--folder-step) !important;
+
+    display: flex;
+    align-items: center;
+
+    width: min(430px, 56%) !important;
+}
+
+
+/* mismo tamaño para TODAS, incluido info */
+.folder-copy h2,
+.folder-info .folder-copy h2 {
+
+    margin: 0 !important;
+
+    font-size:
+        clamp(
+            47px,
+            7vw,
+            88px
+        ) !important;
+
+    line-height: .82 !important;
+}
+
+
+/* =========================================================
+   MÓVIL
+========================================================= */
+
+@media (max-width: 620px) {
+
+    .folder-copy,
+    .folder-info .folder-copy {
+
+        top: 36px !important;
+
+        height: var(--folder-step) !important;
+
+        width: 60% !important;
+    }
+
+
+    .folder-copy h2,
+    .folder-info .folder-copy h2 {
+
+        font-size:
+            clamp(
+                48px,
+                15vw,
+                69px
+            ) !important;
+
+        line-height: .82 !important;
+    }
+
+}
+/* =========================================================
+   CURSOR ACTUAL — DESORDEN SOCIAL
+   contraste automático sobre cualquier fondo
+========================================================= */
+
+@media (pointer: fine) {
+
+    html,
+    body,
+    body *,
+    a,
+    button {
+        cursor: none !important;
+    }
+
+
+    .custom-cursor {
+        position: fixed !important;
+
+        top: 0;
+        left: 0;
+
+        z-index: 999999 !important;
+
+        pointer-events: none !important;
+
+        mix-blend-mode: difference !important;
+        isolation: auto !important;
+
+        transform:
+            translate(-50%, -50%);
+    }
+
+
+    .custom-cursor img {
+        display: block;
+
+        width: 100%;
+        height: 100%;
+
+        object-fit: contain;
+
+        /*
+           La estrella se vuelve clara/oscura
+           automáticamente según el fondo.
+        */
+        filter:
+            brightness(0)
+            invert(1)
+            !important;
+
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+}
+
+
+@media (pointer: coarse) {
+
+    .custom-cursor {
+        display: none !important;
+    }
+
+}

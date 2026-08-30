@@ -951,25 +951,43 @@ body {
 
     .chat-entry {
         width:
-            67vw;
+            72vw;
+
+        max-width:
+            100%;
 
         /*
-            JS seguirá cambiando --x,
-            pero lo mantenemos dentro
-            del viewport.
+            Cinturón de seguridad:
+            incluso si llega un --x grande,
+            el mensaje no puede escaparse
+            por la derecha del móvil.
         */
+        margin-left:
+            min(
+                var(--x),
+                16vw
+            );
     }
 
 
     .chat-entry-name {
         font-size:
-            9px;
+            10px;
+
+        opacity:
+            0.82;
     }
 
 
     .chat-entry-message {
         font-size:
             19px;
+
+        line-height:
+            1.12;
+
+        overflow-wrap:
+            break-word;
     }
 
 

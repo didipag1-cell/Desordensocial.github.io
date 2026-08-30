@@ -2710,3 +2710,34 @@ button {
     }
 
 }
+
+/* =========================================================
+   NUDOS SIN CONEXIONES
+
+   No se desplazan al hacer hover.
+   Conservan su posición/inclinación y solo crecen.
+========================================================= */
+
+@media (hover: hover) and (pointer: fine) {
+
+    .is-unconnected-node:hover {
+        transform:
+            var(--desorden-base-transform, none)
+            scale(1.06)
+            !important;
+    }
+
+}
+
+
+/* =========================================================
+   PRIMER TAP EN MÓVIL
+========================================================= */
+
+@media (hover: none), (pointer: coarse) {
+
+    .is-mobile-node-armed {
+        z-index: 50 !important;
+    }
+
+}

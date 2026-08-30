@@ -4,49 +4,50 @@
 
    Aquí viven las conexiones creadas por Diana.
    Las conexiones de visitantes se guardarán aparte.
-   ========================================================= */
+========================================================= */
 
 window.DESORDEN_NETWORK = {
 
     nodes: [
 
         {
-    id: "almodovar",
+            id: "almodovar",
 
-    type: "editorial",
+            type: "editorial",
 
-    title: "Pedro Almodóvar",
+            title: "Pedro Almodóvar",
 
-    text: "",
+            text: "",
 
-    image: "",
+            image: "",
 
-    url: "",
+            url: "",
 
-    caption: "",
+            caption: "",
 
-    x: 260,
-    y: 260
-}
+            x: 260,
+            y: 260
+        },
 
-       {
-    id: "roche-bobois",
+        {
+            id: "roche-bobois",
 
-    type: "editorial",
+            type: "editorial",
 
-    title: "Roche Bobois",
+            title: "Roche Bobois",
 
-    text: "",
+            text: "",
 
-    image: "",
+            image: "",
 
-    url: "",
+            url: "",
 
-    caption: "",
+            caption: "",
 
-    x: 560,
-    y: 330
-}
+            x: 560,
+            y: 330
+        },
+
         {
             id: "furniture",
             title: "furniture que me gusta",

@@ -606,8 +606,9 @@ img {
             var(--red) 0%,
             var(--red) 52%,
 
-            #ffffff 52%,
-            #ffffff 100%
+             var(--pink),
+             var(--pink) 100%
+
         );
 
     overflow: hidden;
@@ -702,7 +703,7 @@ img {
 .perfect-days {
     width: 100%;
 
-    background: #ffffff;
+    background: var(--pink);
 
     color: #090909;
 
@@ -1398,27 +1399,32 @@ img {
 .photo-book-copy-area {
     position: relative;
 
-    min-height: 570px;
+    min-height: 0;
 
     display: flex;
+    flex-direction: column;
 
-    align-items: flex-start;
-    justify-content: center;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .book-vector {
-    position: absolute;
+    position: relative;
 
     z-index: 1;
 
-    left: 6%;
-    top: -8%;
+    order: 2;
+
+    left: auto;
+    top: auto;
+
+    display: block;
 
     width: 90%;
-
     max-width: none;
-
     height: auto;
+
+    margin-top: 18px;
 
     pointer-events: none;
 }
@@ -1427,6 +1433,8 @@ img {
     position: relative;
 
     z-index: 2;
+
+    order: 1;
 
     width:
         min(
@@ -2210,8 +2218,8 @@ img {
             to bottom,
             var(--red) 0%,
             var(--red) 52%,
-            #ffffff 52%,
-            #ffffff 100%
+            #f500d8 52%,
+            #f500d8 100%
         ) !important;
 }
 
@@ -2220,305 +2228,7 @@ img {
 .screen-page,
 .screen-first,
 .screen-second {
-    background: #ffffff !important;
-}
-
-
-/* =========================================================
-   =========================================================
-   PERFECT DAYS — PANTALLAS GRANDES
-   =========================================================
-========================================================= */
-
-@media (min-width: 1101px) {
-
-    .perfect-days {
-        width: 100% !important;
-
-        padding:
-            42px
-            0
-            120px !important;
-
-        background: #ffffff !important;
-
-        overflow: visible !important;
-    }
-
-
-    /*
-       Aprovechamos prácticamente TODO
-       el ancho de una pantalla grande.
-    */
-
-    .perfect-inner {
-        width: 94vw !important;
-        max-width: 1750px !important;
-
-        margin: 0 auto !important;
-    }
-
-
-    .perfect-heading {
-        margin:
-            0
-            0
-            70px
-            3% !important;
-    }
-
-
-    .perfect-heading h2 {
-        font-size:
-            clamp(
-                78px,
-                6.7vw,
-                128px
-            ) !important;
-    }
-
-
-    .perfect-heading span {
-        font-size:
-            clamp(
-                20px,
-                1.45vw,
-                29px
-            ) !important;
-    }
-
-
-    /* =====================================================
-       ADIÓS A LAS POSICIONES ABSOLUTAS
-
-       Esto evita que una imagen termine
-       ocupando el lugar de un texto.
-    ===================================================== */
-
-    .perfect-layout {
-        position: static !important;
-
-        width: 100% !important;
-        height: auto !important;
-
-        display: grid !important;
-
-        grid-template-columns:
-            repeat(12, minmax(0, 1fr)) !important;
-
-        grid-auto-rows: auto !important;
-
-        column-gap:
-            clamp(
-                25px,
-                2.4vw,
-                48px
-            ) !important;
-
-        row-gap:
-            clamp(
-                38px,
-                4vw,
-                75px
-            ) !important;
-
-        align-items: start !important;
-    }
-
-
-    .perfect-copy,
-    .perfect-img,
-    .perfect-question {
-        position: static !important;
-
-        top: auto !important;
-        right: auto !important;
-        bottom: auto !important;
-        left: auto !important;
-
-        max-width: none !important;
-    }
-
-
-    /* =====================================================
-       TEXTO
-
-       Un poco mayor, pero no hacemos
-       del texto el protagonista.
-    ===================================================== */
-
-    .perfect-copy {
-        font-size:
-            clamp(
-                15px,
-                0.95vw,
-                18px
-            ) !important;
-
-        line-height: 1.08 !important;
-    }
-
-
-    /* =====================================================
-       FILA SUPERIOR
-    ===================================================== */
-
-    .perfect-copy-one {
-        grid-column: 1 / 5 !important;
-        grid-row: 1 !important;
-
-        width: 100% !important;
-    }
-
-
-    /*
-       FOTO GRANDE DERECHA
-    */
-
-    .perfect-img-three {
-        grid-column: 7 / 13 !important;
-        grid-row: 1 / 4 !important;
-
-        width: 100% !important;
-        height: auto !important;
-
-        align-self: start !important;
-    }
-
-
-    /*
-       FOTO PEQUEÑA, pero ahora con
-       suficiente presencia visual.
-    */
-
-    .perfect-img-one {
-        grid-column: 2 / 5 !important;
-        grid-row: 2 !important;
-
-        width: 100% !important;
-        height: auto !important;
-    }
-
-
-    /*
-       FOTO IZQUIERDA 2
-    */
-
-    .perfect-img-two {
-        grid-column: 1 / 4 !important;
-        grid-row: 3 !important;
-
-        width: 100% !important;
-        height: auto !important;
-    }
-
-
-    /* =====================================================
-       TEXTO HORIZONTAL CENTRAL
-    ===================================================== */
-
-    .perfect-copy-two {
-        grid-column: 5 / 13 !important;
-        grid-row: 4 !important;
-
-        width: 100% !important;
-
-        align-self: center !important;
-    }
-
-
-    /* =====================================================
-       SEGUNDA MITAD
-    ===================================================== */
-
-    .perfect-copy-three {
-        grid-column: 1 / 5 !important;
-        grid-row: 5 !important;
-
-        width: 100% !important;
-
-        margin: 20px 0 0 !important;
-    }
-
-
-    /*
-       GRAN RETRATO
-    */
-
-    .perfect-img-four {
-        grid-column: 7 / 13 !important;
-        grid-row: 5 / 8 !important;
-
-        width: 100% !important;
-        height: auto !important;
-    }
-
-
-    .perfect-question {
-        grid-column: 1 / 5 !important;
-        grid-row: 6 !important;
-
-        margin:
-            10px
-            0
-            10px
-            0 !important;
-
-        font-size:
-            clamp(
-                27px,
-                1.8vw,
-                36px
-            ) !important;
-
-        line-height: 1 !important;
-    }
-
-
-    .perfect-copy-four {
-        grid-column: 1 / 5 !important;
-        grid-row: 7 !important;
-
-        width: 100% !important;
-
-        margin: 0 !important;
-    }
-
-
-    /* =====================================================
-       FINAL
-
-       Foto otra vez más grande para evitar
-       ese hueco enorme de la captura.
-    ===================================================== */
-
-    .perfect-img-five {
-        grid-column: 2 / 5 !important;
-        grid-row: 8 !important;
-
-        width: 100% !important;
-        height: auto !important;
-
-        margin: 0 !important;
-    }
-
-
-    .perfect-copy-five {
-        grid-column: 5 / 9 !important;
-        grid-row: 8 !important;
-
-        width: 100% !important;
-
-        margin:
-            clamp(
-                30px,
-                4vw,
-                70px
-            )
-            0
-            0 !important;
-    }
-
+    background: #f500d8 !important;
 }
 
 
@@ -2739,6 +2449,427 @@ img {
                 72vw,
                 1300px
             ) !important;
+    }
+
+}
+/* =========================================================
+   EN BÚSQUEDA DEL AMOR
+========================================================= */
+
+.love-editorial {
+    position: relative;
+
+    width: 100%;
+
+    background: #ffffff;
+    color: #111111;
+
+    padding:
+        clamp(100px, 13vw, 190px)
+        0
+        clamp(130px, 16vw, 230px);
+}
+
+
+.love-page {
+    width:
+        min(
+            1080px,
+            calc(100% - 80px)
+        );
+
+    margin: 0 auto;
+}
+
+
+/* título pequeño como en la referencia */
+
+.love-title {
+    margin:
+        0
+        0
+        55px
+        12%;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size:
+        clamp(
+            14px,
+            1.15vw,
+            18px
+        );
+
+    font-weight: 400;
+
+    line-height: 1;
+
+    text-transform: lowercase;
+}
+
+
+/* =========================================================
+   PRIMERA FOTO + TEXTO
+========================================================= */
+
+.love-intro {
+    display: grid;
+
+    grid-template-columns:
+        minmax(230px, 38%)
+        minmax(190px, 25%);
+
+    gap:
+        clamp(
+            50px,
+            7vw,
+            105px
+        );
+
+    align-items: start;
+
+    margin-left: 11%;
+}
+
+
+.love-photo {
+    margin: 0;
+}
+
+
+.love-photo img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+}
+
+
+.love-photo-1 {
+    width: 100%;
+}
+
+
+.love-intro-text {
+    padding-top: 15px;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size:
+        clamp(
+            8px,
+            .72vw,
+            10px
+        );
+
+    line-height: 1.28;
+}
+
+
+.love-intro-text p {
+    margin:
+        0
+        0
+        13px;
+}
+
+
+/* =========================================================
+   TEXTO HORIZONTAL
+========================================================= */
+
+.love-text {
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size:
+        clamp(
+            8px,
+            .72vw,
+            10px
+        );
+
+    line-height: 1.32;
+}
+
+
+.love-text p {
+    margin:
+        0
+        0
+        11px;
+}
+
+
+.love-text-1 {
+    width: 68%;
+
+    margin:
+        52px
+        auto
+        75px;
+}
+
+
+/* =========================================================
+   IMAGEN CENTRAL GRANDE
+========================================================= */
+
+.love-photo-2 {
+    width: 72%;
+
+    margin:
+        0
+        auto
+        75px;
+}
+
+
+/* =========================================================
+   TEXTO FINAL
+========================================================= */
+
+.love-text-2 {
+    width: 68%;
+
+    margin:
+        0
+        auto;
+}
+
+
+/* =========================================================
+   REELS / ALFOMBRAS
+========================================================= */
+
+.reels-editorial {
+    position: relative;
+
+    width: 100%;
+
+    min-height:
+        clamp(
+            900px,
+            120vh,
+            1350px
+        );
+
+    background:
+        #f500d8;
+
+    color:
+        #111111;
+
+    overflow: hidden;
+}
+
+
+.reels-text {
+    width:
+        clamp(
+            125px,
+            14vw,
+            180px
+        );
+
+    margin-left:
+        clamp(
+            80px,
+            21vw,
+            330px
+        );
+
+    padding-top:
+        clamp(
+            210px,
+            30vh,
+            360px
+        );
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size:
+        clamp(
+            11px,
+            .9vw,
+            14px
+        );
+
+    line-height: 1.12;
+}
+
+
+.reels-text p {
+    margin:
+        0
+        0
+        14px;
+}
+
+
+/*
+   Las preguntas no se convierten en titulares.
+   Siguen sintiéndose como pensamientos dentro
+   de la misma columna.
+*/
+
+.reels-text p:not(:first-child) {
+    margin-bottom: 12px;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .love-page {
+        width:
+            min(
+                100% - 50px,
+                760px
+            );
+    }
+
+
+    .love-intro {
+        margin-left: 5%;
+
+        grid-template-columns:
+            42%
+            32%;
+
+        gap: 9%;
+    }
+
+
+    .love-text-1,
+    .love-text-2 {
+        width: 82%;
+    }
+
+
+    .love-photo-2 {
+        width: 84%;
+    }
+
+
+    .reels-text {
+        margin-left: 18vw;
+    }
+
+}
+
+
+/* =========================================================
+   MÓVIL
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .love-editorial {
+        padding:
+            85px
+            0
+            120px;
+    }
+
+
+    .love-page {
+        width:
+            calc(
+                100% -
+                36px
+            );
+    }
+
+
+    .love-title {
+        margin:
+            0
+            0
+            38px
+            8%;
+
+        font-size: 13px;
+    }
+
+
+    .love-intro {
+        grid-template-columns:
+            48%
+            42%;
+
+        gap: 7%;
+
+        margin-left: 0;
+    }
+
+
+    .love-intro-text,
+    .love-text {
+        font-size: 7.5px;
+
+        line-height: 1.3;
+    }
+
+
+    .love-text-1 {
+        width: 94%;
+
+        margin:
+            42px
+            auto
+            55px;
+    }
+
+
+    .love-photo-2 {
+        width: 100%;
+
+        margin-bottom: 55px;
+    }
+
+
+    .love-text-2 {
+        width: 94%;
+    }
+
+
+    /* REELS */
+
+    .reels-editorial {
+        min-height: 105vh;
+    }
+
+
+    .reels-text {
+        width: 128px;
+
+        margin-left: 21vw;
+
+        padding-top: 27vh;
+
+        font-size: 10px;
+
+        line-height: 1.08;
+    }
+
+
+    .reels-text p {
+        margin-bottom: 11px;
     }
 
 }

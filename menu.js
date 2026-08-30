@@ -1,5 +1,15 @@
 /* =========================================================
    DESORDEN SOCIAL — MENÚ COMPACTO
+   INTERACCIÓN FINAL
+
+   ESCRITORIO
+   - hover en pestaña: abre la carpeta
+   - se queda abierta hasta entrar en otra pestaña
+     o salir del stack
+   - cuando está abierta, el símbolo entra
+
+   MÓVIL / TÁCTIL
+   - tocar cualquier zona visible de color entra
 ========================================================= */
 
 (() => {
@@ -22,8 +32,14 @@
         );
 
 
+    const desktopQuery =
+        window.matchMedia(
+            "(hover: hover) and (pointer: fine)"
+        );
+
+
     /* =====================================================
-       CURSOR
+       CURSOR — ORIGINAL
     ===================================================== */
 
     if (
@@ -77,7 +93,7 @@
 
                 if (
                     event.target.closest(
-                        "a, button, .folder-tab"
+                        "a, button, .folder-tab, .folder-object"
                     )
                 ) {
 
@@ -97,7 +113,7 @@
 
                 if (
                     event.target.closest(
-                        "a, button, .folder-tab"
+                        "a, button, .folder-tab, .folder-object"
                     )
                 ) {
 
@@ -114,18 +130,72 @@
 
 
     /* =====================================================
-       HOVER SOLO EN LA PESTAÑA
+       UTILIDAD — DESTINO DE CADA CARPETA
+    ===================================================== */
 
-       El cuerpo de la carpeta NO activa nada.
-       Así puedes mover el cursor por el negro,
-       salir de una carpeta y entrar en otra sin
-       que una capa enorme se quede atrapando el ratón.
+    function getDestination(
+        folder
+    ) {
+
+        if (
+            folder.matches(
+                "a[href]"
+            )
+        ) {
+
+            return folder.href;
+
+        }
+
+
+        /*
+           Fallback por seguridad.
+           Actualmente ??? ya es un <a>,
+           pero lo dejamos por si acaso.
+        */
+
+        if (
+            folder.classList.contains(
+                "folder-kiwi"
+            )
+        ) {
+
+            return "entrevistas.html";
+
+        }
+
+
+        return null;
+
+    }
+
+
+    function enterFolder(
+        folder
+    ) {
+
+        const destination =
+            getDestination(
+                folder
+            );
+
+
+        if (!destination) {
+            return;
+        }
+
+
+        window.location.href =
+            destination;
+
+    }
+
+
+    /* =====================================================
+       PREVIEW EN ESCRITORIO
     ===================================================== */
 
     let openFolder =
-        null;
-
-    let closeTimer =
         null;
 
 
@@ -156,19 +226,40 @@
                     ".folder-tab"
                 );
 
+            const face =
+                folder.querySelector(
+                    ".folder-face"
+                );
+
+            const object =
+                folder.querySelector(
+                    ".folder-object"
+                );
+
 
             if (!tab) {
                 return;
             }
 
 
+            /*
+               ESCRITORIO:
+               pasar por la pestaña abre.
+
+               NO cerramos al salir de la pestaña.
+               Esto permite mover el cursor hasta
+               el símbolo sin que desaparezca.
+            */
+
             tab.addEventListener(
                 "mouseenter",
                 () => {
 
-                    clearTimeout(
-                        closeTimer
-                    );
+                    if (
+                        !desktopQuery.matches
+                    ) {
+                        return;
+                    }
 
 
                     closeAll();
@@ -186,44 +277,10 @@
             );
 
 
-            tab.addEventListener(
-                "mouseleave",
-                () => {
-
-                    /*
-                       Un pelín de margen para que no
-                       parpadee si rozas el borde.
-                    */
-
-                    closeTimer =
-                        setTimeout(
-                            () => {
-
-                                if (
-                                    openFolder ===
-                                    folder
-                                ) {
-
-                                    folder.classList.remove(
-                                        "is-open"
-                                    );
-
-
-                                    openFolder =
-                                        null;
-
-                                }
-
-                            },
-                            90
-                        );
-
-                }
-            );
-
-
             /*
-               La pestaña sigue siendo el enlace real.
+               ESCRITORIO:
+               la pestaña sigue entrando directamente
+               si haces click sobre ella.
             */
 
             tab.addEventListener(
@@ -231,19 +288,114 @@
                 event => {
 
                     if (
-                        folder.matches(
-                            "a[href]"
-                        )
+                        !desktopQuery.matches
                     ) {
-
-                        event.preventDefault();
-
-
-                        window.location.href =
-                            folder.href;
-
+                        return;
                     }
 
+
+                    event.preventDefault();
+                    event.stopPropagation();
+
+
+                    enterFolder(
+                        folder
+                    );
+
+                }
+            );
+
+
+            /*
+               ESCRITORIO:
+               cuando la carpeta está abierta,
+               el símbolo es el botón interior.
+            */
+
+            object
+                ?.addEventListener(
+                    "click",
+                    event => {
+
+                        if (
+                            !desktopQuery.matches ||
+                            !folder.classList.contains(
+                                "is-open"
+                            )
+                        ) {
+                            return;
+                        }
+
+
+                        event.preventDefault();
+                        event.stopPropagation();
+
+
+                        enterFolder(
+                            folder
+                        );
+
+                    }
+                );
+
+
+            /*
+               MÓVIL:
+               tocar cualquier zona visible del cuerpo
+               de color entra directamente.
+            */
+
+            face
+                ?.addEventListener(
+                    "click",
+                    event => {
+
+                        if (
+                            desktopQuery.matches
+                        ) {
+                            return;
+                        }
+
+
+                        event.preventDefault();
+                        event.stopPropagation();
+
+
+                        enterFolder(
+                            folder
+                        );
+
+                    }
+                );
+
+
+            /*
+               MÓVIL:
+               la pestaña también entra directamente.
+            */
+
+            tab.addEventListener(
+                "touchend",
+                event => {
+
+                    if (
+                        desktopQuery.matches
+                    ) {
+                        return;
+                    }
+
+
+                    event.preventDefault();
+                    event.stopPropagation();
+
+
+                    enterFolder(
+                        folder
+                    );
+
+                },
+                {
+                    passive: false
                 }
             );
 
@@ -252,7 +404,124 @@
 
 
     /* =====================================================
-       MOVIMIENTO 3D SUTIL DEL CONJUNTO
+       HIT AREAS SIN CAMBIAR EL DISEÑO
+    ===================================================== */
+
+    function syncHitAreas() {
+
+        folders.forEach(
+            folder => {
+
+                const face =
+                    folder.querySelector(
+                        ".folder-face"
+                    );
+
+                const object =
+                    folder.querySelector(
+                        ".folder-object"
+                    );
+
+
+                if (
+                    desktopQuery.matches
+                ) {
+
+                    /*
+                       Igual que el original:
+                       el cuerpo no atrapa el cursor.
+                    */
+
+                    folder.style.pointerEvents =
+                        "none";
+
+
+                    if (face) {
+
+                        face.style.pointerEvents =
+                            "none";
+
+                    }
+
+
+                    if (object) {
+
+                        object.style.pointerEvents =
+                            folder.classList.contains(
+                                "is-open"
+                            )
+                                ? "auto"
+                                : "none";
+
+                    }
+
+                }
+                else {
+
+                    /*
+                       Móvil:
+                       activamos solo las zonas VISIBLES
+                       de color, no el rectángulo transparente
+                       completo de la carpeta.
+                    */
+
+                    folder.style.pointerEvents =
+                        "none";
+
+
+                    if (face) {
+
+                        face.style.pointerEvents =
+                            "auto";
+
+                    }
+
+
+                    if (object) {
+
+                        object.style.pointerEvents =
+                            "none";
+
+                    }
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /*
+       Cada vez que se abre una carpeta
+       actualizamos el símbolo clicable.
+    */
+
+    const observer =
+        new MutationObserver(
+            syncHitAreas
+        );
+
+
+    folders.forEach(
+        folder => {
+
+            observer.observe(
+                folder,
+                {
+                    attributes: true,
+                    attributeFilter: [
+                        "class"
+                    ]
+                }
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       MOVIMIENTO 3D ORIGINAL DEL CONJUNTO
     ===================================================== */
 
     if (
@@ -272,6 +541,7 @@
                         window.innerWidth -
                         .5
                     );
+
 
                 const y =
                     (
@@ -297,8 +567,8 @@
 
 
     /*
-       Si sales del bloque entero hacia el negro,
-       siempre se resetea.
+       Al salir del conjunto hacia el negro,
+       cerramos el preview.
     */
 
     stack
@@ -306,14 +576,38 @@
             "mouseleave",
             () => {
 
-                clearTimeout(
-                    closeTimer
-                );
+                if (
+                    desktopQuery.matches
+                ) {
 
+                    closeAll();
+                    syncHitAreas();
 
-                closeAll();
+                }
 
             }
         );
+
+
+    if (
+        typeof desktopQuery
+            .addEventListener ===
+        "function"
+    ) {
+
+        desktopQuery.addEventListener(
+            "change",
+            () => {
+
+                closeAll();
+                syncHitAreas();
+
+            }
+        );
+
+    }
+
+
+    syncHitAreas();
 
 })();
