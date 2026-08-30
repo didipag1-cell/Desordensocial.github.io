@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>??? — Desorden Social</title>
+
+    <link
+        rel="stylesheet"
+        href="entrevistas.css"
+    >
+
+</head>
+
+
+<body class="entrevistas-page">
+
+
+    <!-- ==========================================
+         VOLVER
+    =========================================== -->
+
+    <a
+        href="index.html"
+        class="back-arrow"
+        aria-label="Volver"
+    >
+        ←
+    </a>
+
+
+
+    <main>
+
+
+        <!-- ==========================================
+             01 — DATAMOSH / INTRO
+        =========================================== -->
+
+        <section
+            class="interviews-scroll"
+            id="interviewsScroll"
+        >
+
+
+            <div class="interviews-sticky">
+
+
+                <!-- textura -->
+
+                <div class="bg-noise"></div>
+
+                <div class="bg-halftone"></div>
+
+
+
+                <!-- marca casi invisible -->
+
+                <div
+                    class="ghost ghost-1"
+                    aria-hidden="true"
+                >
+                    DESORDEN SOCIAL
+                </div>
+
+
+                <div
+                    class="ghost ghost-2"
+                    aria-hidden="true"
+                >
+                    DESORDEN SOCIAL
+                </div>
+
+
+
+                <!-- CARA -->
+
+                <div
+                    class="face-wrap"
+                    id="faceWrap"
+                >
+
+
+                    <img
+                        id="faceSource"
+                        class="face-source"
+                        src="assets/entrevistas/face.svg"
+                        alt=""
+                    >
+
+
+                    <canvas
+                        id="faceCanvas"
+                        aria-hidden="true"
+                    ></canvas>
+
+
+                </div>
+
+
+
+                <!-- ÚNICO TEXTO -->
+
+                <div
+                    class="talk"
+                    id="talkBlock"
+                >
+
+                    <h1>
+                        let’s talk<br>
+                        to each other
+                    </h1>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ==========================================
+             02 — CONVERSACIÓN
+        =========================================== -->
+
+        <section class="conversation-section">
+
+
+            <!-- fondo fantasma -->
+
+            <div
+                class="conversation-ghost"
+                aria-hidden="true"
+            >
+                desorden social
+            </div>
+
+
+
+            <!-- mensajes -->
+
+            <div
+                class="conversation-stream"
+                id="conversationStream"
+                aria-live="polite"
+            ></div>
+
+
+
+            <!-- ======================================
+                 ESCRIBIR
+            ======================================= -->
+
+            <form
+    class="conversation-form"
+    id="conversationForm"
+    autocomplete="off"
+>
+
+    <div class="form-message-row">
+
+        <textarea
+            id="chatMessage"
+            class="chat-message"
+            maxlength="500"
+            rows="1"
+            placeholder="di algo..."
+            aria-label="Mensaje"
+            required
+        ></textarea>
+
+        <button
+            class="chat-send"
+            type="submit"
+            aria-label="Enviar mensaje"
+        >
+            ↵
+        </button>
+
+    </div>
+
+    <input
+        class="website-field"
+        id="websiteField"
+        type="text"
+        tabindex="-1"
+        autocomplete="off"
+        aria-hidden="true"
+    >
+
+</form>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- ==========================================
+         CURSOR
+    =========================================== -->
+
+    <div
+        class="site-cursor"
+        id="siteCursor"
+        aria-hidden="true"
+    >
+
+        <img
+            src="assets/cursor/cursor.svg"
+            alt=""
+        >
+
+    </div>
+
+
+
+    <!-- SUPABASE -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <script src="entrevistas.js"></script>
+
+
+</body>
+
+</html>

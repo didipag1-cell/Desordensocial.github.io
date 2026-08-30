@@ -1,0 +1,46 @@
+/* =========================================================
+   DESORDEN SOCIAL — CURSOR GLOBAL
+   CONTRASTE POR DIFERENCIA
+========================================================= */
+
+@media (pointer: fine) {
+
+    .custom-cursor {
+        pointer-events: none !important;
+
+        /*
+           ESTE es el efecto que nos gustaba.
+           Se mezcla con los píxeles reales de debajo.
+        */
+        mix-blend-mode: difference !important;
+
+        /*
+           Evitamos aislarlo del resto de la página.
+        */
+        isolation: auto !important;
+
+        z-index: 999999 !important;
+    }
+
+
+    .custom-cursor img {
+        display: block !important;
+
+        width: 100% !important;
+        height: 100% !important;
+
+        object-fit: contain !important;
+
+        /*
+           Convertimos primero la estrella a BLANCO.
+           Difference hace después el resto.
+        */
+        filter:
+            brightness(0)
+            invert(1) !important;
+
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+}

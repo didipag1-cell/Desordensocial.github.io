@@ -1,0 +1,1757 @@
+/* =========================================================
+   DESORDEN SOCIAL — INFO
+========================================================= */
+
+
+:root {
+
+    --paper: #f4f0e8;
+
+    --ink: #161616;
+
+    --red: #d7483f;
+
+    --blue: #155db4;
+
+    --yellow: #f0d13e;
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+
+* {
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+    width: 100%;
+
+    min-height: 100%;
+}
+
+
+html {
+    background: var(--paper);
+}
+
+
+body {
+    background: var(--paper);
+
+    color: var(--ink);
+
+    overflow-x: hidden;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+
+
+/* =========================================================
+   VOLVER
+
+   OCULTO EN LA PRIMERA PANTALLA
+========================================================= */
+
+
+/* =========================================================
+   FLECHA
+   NO EXISTE VISUALMENTE EN EL HERO
+========================================================= */
+
+.back-arrow {
+    position: fixed;
+
+    top: 20px;
+    left: 24px;
+
+    z-index: 999999;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-family:
+        "Times New Roman",
+        Times,
+        serif;
+
+    font-size: 30px;
+
+    line-height: 1;
+
+    mix-blend-mode: difference;
+
+
+    opacity: 0 !important;
+
+    visibility: hidden !important;
+
+    pointer-events: none !important;
+
+
+    transition:
+        opacity 0.35s ease,
+        visibility 0.35s ease,
+        transform 0.2s ease;
+}
+
+
+body.has-left-hero .back-arrow {
+    opacity: 0.8 !important;
+
+    visibility: visible !important;
+
+    pointer-events: auto !important;
+}
+
+
+body.has-left-hero .back-arrow:hover {
+    opacity: 1 !important;
+
+    transform: translateX(-4px);
+}
+
+
+body.has-left-hero .back-arrow:hover {
+
+    opacity: 1;
+
+    transform:
+        translateX(-4px);
+
+}
+/* =========================================================
+   ABEJA
+   OCULTA DURANTE TODA LA PRIMERA PANTALLA
+========================================================= */
+
+body:not(.has-left-hero) #bee {
+    opacity: 0 !important;
+
+    visibility: hidden !important;
+
+    pointer-events: none !important;
+}
+
+
+body.has-left-hero #bee {
+    opacity: 1 !important;
+
+    visibility: visible !important;
+
+    pointer-events: auto !important;
+
+    transition:
+        opacity 0.4s ease,
+        visibility 0.4s ease;
+}
+
+
+/* =========================================================
+   HERO GENERAL
+========================================================= */
+
+
+.info-hero {
+
+    position: relative;
+
+    width: 100%;
+
+    background: #111111;
+
+}
+
+
+
+/* =========================================================
+   PRIMERA PANTALLA
+
+   EXACTAMENTE 100VH
+   SOLO NEGRO + TEXTO
+========================================================= */
+
+
+.hero-stage {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 100vh;
+
+    height: 100dvh;
+
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+
+    padding: 40px;
+
+
+    background: #111111;
+
+
+    text-align: center;
+
+}
+
+
+
+/* =========================================================
+   TEXTO HERO
+========================================================= */
+
+
+.hero-stage h1 {
+
+    width: 100%;
+
+    max-width: 900px;
+
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+
+    font-size:
+        clamp(
+            32px,
+            5vw,
+            72px
+        );
+
+
+    font-weight: 700;
+
+
+    line-height: 0.95;
+
+
+    letter-spacing: -0.04em;
+
+
+    color: #ffffff;
+
+
+    text-transform: lowercase;
+
+}
+
+
+
+/* =========================================================
+   TRANSICIÓN NEGRO → PAPEL
+
+   IMPORTANTE:
+   EMPIEZA DESPUÉS DE LOS PRIMEROS 100VH.
+========================================================= */
+
+
+.hero-fade {
+
+    position: relative;
+
+
+    width: 100%;
+
+
+    height:
+        clamp(
+            180px,
+            22vw,
+            320px
+        );
+
+
+    background:
+        linear-gradient(
+            to bottom,
+
+            #111111 0%,
+
+            #111111 7%,
+
+            #181817 18%,
+
+            #292825 30%,
+
+            #45423d 43%,
+
+            #6d6860 55%,
+
+            #999289 67%,
+
+            #c2bab0 79%,
+
+            #dfd9d0 89%,
+
+            var(--paper) 100%
+        );
+
+}
+
+
+
+/* =========================================================
+   ÚNICA SUPERFICIE
+========================================================= */
+
+
+.about-flow {
+
+    position: relative;
+
+
+    width: 100%;
+
+
+    background:
+        var(--paper);
+
+
+    overflow: hidden;
+
+}
+
+
+
+/* =========================================================
+   GESTOS DE COLOR
+========================================================= */
+
+
+.paint {
+
+    position: absolute;
+
+
+    z-index: 0;
+
+
+    pointer-events: none;
+
+}
+
+
+
+/* azul */
+
+
+.paint-blue {
+
+    top: 260px;
+
+    right: -5%;
+
+
+    width: 34vw;
+
+    max-width: 520px;
+
+
+    height: 95px;
+
+
+    background:
+        var(--blue);
+
+
+    transform:
+        rotate(-5deg);
+
+
+    clip-path:
+        polygon(
+            2% 18%,
+            100% 0,
+            95% 80%,
+            7% 100%,
+            0 63%
+        );
+
+}
+
+
+
+/* amarillo */
+
+
+.paint-yellow {
+
+    top: 1680px;
+
+    left: -7%;
+
+
+    width: 30vw;
+
+    max-width: 470px;
+
+
+    height: 145px;
+
+
+    background:
+        var(--yellow);
+
+
+    transform:
+        rotate(5deg);
+
+
+    clip-path:
+        polygon(
+            3% 8%,
+            96% 0,
+            100% 72%,
+            15% 100%,
+            0 76%
+        );
+
+}
+
+
+
+/* rojo */
+
+
+.paint-red {
+
+    top: 2850px;
+
+    right: -8%;
+
+
+    width: 31vw;
+
+    max-width: 470px;
+
+
+    height: 90px;
+
+
+    background:
+        var(--red);
+
+
+    transform:
+        rotate(7deg);
+
+
+    clip-path:
+        polygon(
+            0 25%,
+            96% 0,
+            100% 68%,
+            10% 100%
+        );
+
+}
+
+
+
+/* =========================================================
+   SECCIONES
+========================================================= */
+
+
+.flow-section {
+
+    position: relative;
+
+
+    z-index: 2;
+
+
+    width: 100%;
+
+
+    padding-left:
+        clamp(
+            32px,
+            8vw,
+            135px
+        );
+
+
+    padding-right:
+        clamp(
+            32px,
+            8vw,
+            135px
+        );
+
+}
+
+
+
+/* =========================================================
+   MINI LABEL
+========================================================= */
+
+
+.tiny-label {
+
+    display: block;
+
+
+    margin-bottom: 15px;
+
+
+    font-size: 9px;
+
+
+    font-weight: 400;
+
+
+    line-height: 1;
+
+
+    letter-spacing: 0.13em;
+
+
+    text-transform: uppercase;
+
+}
+
+
+
+/* =========================================================
+   TÍTULOS
+========================================================= */
+
+
+.section-heading h2 {
+
+    margin: 0;
+
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+
+    font-size:
+        clamp(
+            52px,
+            8vw,
+            126px
+        );
+
+
+    font-weight: 800;
+
+
+    line-height: 0.83;
+
+
+    letter-spacing: -0.07em;
+
+
+    text-transform: lowercase;
+
+}
+
+
+
+/* =========================================================
+   TEXTO GENERAL
+========================================================= */
+
+
+.body-copy {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+
+    font-size:
+        clamp(
+            12px,
+            0.96vw,
+            14px
+        );
+
+
+    font-weight: 400;
+
+
+    line-height: 1.42;
+
+}
+
+
+.body-copy p {
+
+    margin-bottom: 16px;
+
+}
+
+
+.body-copy p:last-child {
+
+    margin-bottom: 0;
+
+}
+
+
+
+/* =========================================================
+   01 — INTRO
+========================================================= */
+
+
+.intro-section {
+
+    padding-top:
+        clamp(
+            110px,
+            12vw,
+            190px
+        );
+
+
+    padding-bottom:
+        clamp(
+            150px,
+            18vw,
+            270px
+        );
+
+}
+
+
+.intro-section .section-heading {
+
+    width: 66%;
+
+    margin-left: 5%;
+
+}
+
+
+
+/* =========================================================
+   TEXTO + ANIMACIÓN
+========================================================= */
+
+
+.intro-composition {
+
+    width: 83%;
+
+
+    margin:
+        clamp(
+            100px,
+            13vw,
+            185px
+        )
+        auto
+        0;
+
+
+    display: grid;
+
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(150px, 0.3fr);
+
+
+    gap:
+        clamp(
+            65px,
+            11vw,
+            170px
+        );
+
+
+    align-items: center;
+
+}
+
+
+.intro-copy {
+
+    max-width: 660px;
+
+}
+
+
+
+/* =========================================================
+   ANIMACIÓN — TAMAÑO FIJO
+========================================================= */
+
+.stop-motion {
+    width: 100%;
+    max-width: 210px;
+
+    /*
+       El contenedor siempre conserva
+       exactamente esta proporción.
+    */
+    aspect-ratio: 4 / 3;
+
+    margin: 0;
+
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.stop-motion img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    /*
+       Mantiene cada imagen completa
+       sin deformarla.
+    */
+    object-fit: contain;
+
+    object-position: center;
+}
+
+
+
+/* =========================================================
+   NO TIENE FINAL
+========================================================= */
+
+
+.no-ending {
+
+    width:
+        min(
+            650px,
+            65%
+        );
+
+
+    margin:
+        clamp(
+            130px,
+            16vw,
+            220px
+        )
+        7%
+        0;
+
+
+    font-size:
+        clamp(
+            35px,
+            5vw,
+            72px
+        );
+
+
+    font-weight: 800;
+
+
+    line-height: 0.9;
+
+
+    letter-spacing: -0.055em;
+
+}
+
+
+
+/* =========================================================
+   02 — CÓMO FUNCIONA
+========================================================= */
+
+
+.how-section {
+
+    padding-top:
+        clamp(
+            140px,
+            17vw,
+            260px
+        );
+
+
+    padding-bottom:
+        clamp(
+            180px,
+            21vw,
+            320px
+        );
+
+}
+
+
+.how-heading {
+
+    width: 70%;
+
+    margin-left: 25%;
+
+}
+
+
+
+/* =========================================================
+   PASOS
+========================================================= */
+
+
+.steps {
+
+    width: 87%;
+
+
+    margin:
+        clamp(
+            100px,
+            13vw,
+            180px
+        )
+        auto
+        0;
+
+
+    display: grid;
+
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0, 1fr)
+        );
+
+
+    gap:
+        clamp(
+            25px,
+            4vw,
+            60px
+        );
+
+}
+
+
+.step {
+
+    position: relative;
+
+}
+
+
+.step p {
+
+    font-size:
+        clamp(
+            12px,
+            0.96vw,
+            14px
+        );
+
+
+    font-weight: 400;
+
+
+    line-height: 1.4;
+
+}
+
+
+
+/* =========================================================
+   NÚMEROS + AUREOLA ROJA
+========================================================= */
+
+
+.step-number {
+
+    position: relative;
+
+
+    z-index: 1;
+
+
+    width: 90px;
+
+    height: 90px;
+
+
+    margin-bottom: 38px;
+
+
+    display: flex;
+
+
+    align-items: center;
+
+    justify-content: center;
+
+
+    font-size:
+        clamp(
+            45px,
+            5vw,
+            68px
+        );
+
+
+    font-weight: 400;
+
+
+    line-height: 1;
+
+}
+
+
+.step-number::before {
+
+    content: "";
+
+
+    position: absolute;
+
+
+    z-index: -1;
+
+
+    width: 125px;
+
+    height: 125px;
+
+
+    border-radius: 50%;
+
+
+    background:
+        radial-gradient(
+            circle,
+
+            rgba(215,72,63,0.48) 0%,
+
+            rgba(215,72,63,0.30) 32%,
+
+            rgba(215,72,63,0.13) 53%,
+
+            rgba(215,72,63,0) 73%
+        );
+
+
+    filter:
+        blur(3px);
+
+}
+
+
+.step:nth-child(2)
+.step-number::before {
+
+    transform:
+        scale(1.15, 0.83)
+        rotate(15deg);
+
+}
+
+
+.step:nth-child(3)
+.step-number::before {
+
+    transform:
+        scale(0.87, 1.18)
+        rotate(-12deg);
+
+}
+
+
+.step:nth-child(4)
+.step-number::before {
+
+    transform:
+        scale(1.08, 0.95)
+        rotate(8deg);
+
+}
+
+
+
+/* =========================================================
+   SELECCIÓN DE REVISTA
+========================================================= */
+
+
+.edition-copy {
+
+    width:
+        min(
+            350px,
+            38%
+        );
+
+
+    margin:
+        clamp(
+            100px,
+            12vw,
+            170px
+        )
+        8%
+        0
+        auto;
+
+}
+
+
+
+/* =========================================================
+   03 — QUIÉN ESTÁ DETRÁS
+========================================================= */
+
+
+.creator-section {
+
+    padding-top:
+        clamp(
+            130px,
+            16vw,
+            240px
+        );
+
+
+    padding-bottom:
+        clamp(
+            150px,
+            18vw,
+            270px
+        );
+
+}
+
+
+.creator-heading {
+
+    width: 72%;
+
+
+    margin-left: 8%;
+
+}
+
+
+
+/* =========================================================
+   FOTO + TEXTO
+========================================================= */
+
+
+.creator-composition {
+
+    width: 84%;
+
+
+    margin:
+        clamp(
+            100px,
+            13vw,
+            185px
+        )
+        auto
+        0;
+
+
+    display: grid;
+
+
+    grid-template-columns:
+        minmax(240px, 0.75fr)
+        minmax(0, 1fr);
+
+
+    gap:
+        clamp(
+            70px,
+            11vw,
+            170px
+        );
+
+
+    align-items: start;
+
+}
+
+
+
+/* =========================================================
+   FOTO
+========================================================= */
+
+
+.creator-photo {
+
+    width: 100%;
+
+
+    max-width: 430px;
+
+
+    margin: 0;
+
+}
+
+
+.creator-photo img {
+
+    display: block;
+
+
+    width: 100%;
+
+
+    height: auto;
+
+
+    object-fit: cover;
+
+}
+
+
+
+/* =========================================================
+   BIO
+========================================================= */
+
+
+.creator-copy {
+
+    width: 100%;
+
+
+    max-width: 630px;
+
+}
+
+
+
+/* =========================================================
+   PORTFOLIO
+========================================================= */
+
+
+.portfolio-link {
+
+    display: inline-block;
+
+
+    margin-top: 27px;
+
+
+    color: inherit;
+
+
+    font-size:
+        clamp(
+            12px,
+            0.96vw,
+            14px
+        );
+
+
+    font-weight: 400;
+
+
+    text-decoration: underline;
+
+
+    text-underline-offset: 5px;
+
+}
+
+
+
+/* =========================================================
+   FIRMA
+========================================================= */
+
+
+.signature {
+
+    margin-top:
+        clamp(
+            60px,
+            7vw,
+            100px
+        );
+
+
+    text-align: right;
+
+
+    font-family:
+        "Times New Roman",
+        Times,
+        serif;
+
+
+    font-size:
+        clamp(
+            20px,
+            2.2vw,
+            30px
+        );
+
+
+    font-style: italic;
+
+}
+
+
+
+/* =========================================================
+   FINAL PERSONAL
+========================================================= */
+
+
+.attention-ending {
+
+    width:
+        min(
+            600px,
+            70%
+        );
+
+
+    margin:
+        clamp(
+            130px,
+            16vw,
+            225px
+        )
+        auto
+        0;
+
+
+    text-align: center;
+
+}
+
+
+.attention-ending p:first-child {
+
+    width:
+        min(
+            310px,
+            100%
+        );
+
+
+    margin:
+        0 auto
+        22px;
+
+
+    font-size:
+        clamp(
+            12px,
+            0.96vw,
+            14px
+        );
+
+
+    line-height: 1.4;
+
+}
+
+
+.attention-ending p:last-child {
+
+    font-size:
+        clamp(
+            44px,
+            7vw,
+            100px
+        );
+
+
+    font-weight: 800;
+
+
+    line-height: 0.84;
+
+
+    letter-spacing: -0.065em;
+
+}
+
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+
+.about-footer {
+
+    position: relative;
+
+
+    z-index: 3;
+
+
+    width: 100%;
+
+
+    min-height: 280px;
+
+
+    display: flex;
+
+
+    flex-direction: column;
+
+
+    align-items: center;
+
+
+    justify-content: center;
+
+
+    gap: 4px;
+
+
+    padding:
+        80px 30px;
+
+
+    text-align: center;
+
+}
+
+
+.about-footer p:first-child {
+
+    font-size:
+        clamp(
+            26px,
+            4vw,
+            54px
+        );
+
+
+    font-weight: 800;
+
+
+    line-height: 0.9;
+
+
+    letter-spacing: -0.04em;
+
+}
+
+
+.about-footer p:last-child {
+
+    font-size:
+        clamp(
+            12px,
+            1vw,
+            15px
+        );
+
+
+    font-weight: 400;
+
+}
+
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+
+@media (max-width: 900px) {
+
+
+    .intro-section .section-heading,
+    .creator-heading {
+
+        width: 80%;
+
+        margin-left: 0;
+
+    }
+
+
+    .intro-composition {
+
+        width: 90%;
+
+
+        grid-template-columns:
+            minmax(0, 1fr)
+            160px;
+
+
+        gap: 55px;
+
+    }
+
+
+    .steps {
+
+        grid-template-columns:
+            1fr 1fr;
+
+
+        gap:
+            85px 55px;
+
+    }
+
+
+    .creator-composition {
+
+        width: 90%;
+
+
+        grid-template-columns:
+            minmax(210px, 0.65fr)
+            minmax(0, 1fr);
+
+
+        gap: 60px;
+
+    }
+
+}
+
+
+
+/* =========================================================
+   MÓVIL
+========================================================= */
+
+
+@media (max-width: 650px) {
+
+
+    .hero-stage {
+
+        padding: 24px;
+
+    }
+
+
+    .hero-fade {
+
+        height: 180px;
+
+    }
+
+
+    .flow-section {
+
+        padding-left: 23px;
+
+        padding-right: 23px;
+
+    }
+
+
+    .intro-section .section-heading,
+    .how-heading,
+    .creator-heading {
+
+        width: 100%;
+
+        margin-left: 0;
+
+    }
+
+
+    .section-heading h2 {
+
+        font-size:
+            clamp(
+                48px,
+                15vw,
+                84px
+            );
+
+    }
+
+
+    /* intro */
+
+
+    .intro-composition {
+
+        width: 100%;
+
+
+        grid-template-columns:
+            1fr;
+
+
+        gap: 65px;
+
+
+        margin-top: 75px;
+
+    }
+
+
+    .stop-motion {
+
+        width: 38%;
+
+
+        min-width: 125px;
+
+
+        justify-self: end;
+
+    }
+
+
+    .no-ending {
+
+        width: 100%;
+
+
+        margin-left: 0;
+
+    }
+
+
+    /* pasos */
+
+
+    .steps {
+
+        width: 100%;
+
+
+        grid-template-columns:
+            1fr 1fr;
+
+
+        gap:
+            80px 35px;
+
+    }
+
+
+    .step-number {
+
+        width: 70px;
+
+        height: 70px;
+
+
+        margin-bottom: 25px;
+
+    }
+
+
+    .step-number::before {
+
+        width: 100px;
+
+        height: 100px;
+
+    }
+
+
+    .edition-copy {
+
+        width: 70%;
+
+
+        margin-right: 0;
+
+    }
+
+
+    /* creadora */
+
+
+    .creator-composition {
+
+        width: 100%;
+
+
+        grid-template-columns:
+            1fr;
+
+
+        gap: 65px;
+
+
+        margin-top: 80px;
+
+    }
+
+
+    .creator-photo {
+
+        width: 68%;
+
+    }
+
+
+    .attention-ending {
+
+        width: 100%;
+
+    }
+
+}
+
+
+
+/* =========================================================
+   CURSOR
+
+   SE MANTIENE COMO EN EL RESTO DE LA WEB
+========================================================= */
+
+
+@media (pointer: fine) {
+
+
+    html,
+    body,
+    body *,
+    a,
+    button {
+
+        cursor: none !important;
+
+    }
+
+
+    .custom-cursor {
+
+        position: fixed;
+
+
+        top: 0;
+
+        left: 0;
+
+
+        z-index: 999999 !important;
+
+
+        width: 140px;
+
+        height: 140px;
+
+
+        pointer-events: none;
+
+
+        transform:
+            translate(-50%, -50%);
+
+
+        will-change:
+            left,
+            top,
+            transform;
+
+
+        mix-blend-mode:
+            difference !important;
+
+
+        isolation:
+            auto !important;
+
+    }
+
+
+    .custom-cursor img {
+
+        display: block;
+
+
+        width: 100%;
+
+        height: 100%;
+
+
+        object-fit: contain;
+
+
+        filter:
+            brightness(0)
+            invert(1) !important;
+
+
+        opacity: 1 !important;
+
+
+        visibility: visible !important;
+
+    }
+
+
+    .custom-cursor.is-hovering {
+
+        transform:
+            translate(-50%, -50%)
+            rotate(10deg)
+            scale(0.72);
+
+    }
+
+
+    .custom-cursor.is-clicking {
+
+        transform:
+            translate(-50%, -50%)
+            scale(0.8);
+
+    }
+
+}
+
+
+@media (pointer: coarse) {
+
+    .custom-cursor {
+        display: none;
+    }
+
+}

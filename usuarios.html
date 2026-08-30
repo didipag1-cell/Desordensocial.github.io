@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Usuarios — Desorden Social</title>
+
+    <link
+        rel="stylesheet"
+        href="usuarios.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="bee-pollen.css"
+        href="cursor-global.css">
+    
+</head>
+
+
+<body>
+
+    <a
+        href="index.html"
+        class="back-home"
+        aria-label="Volver"
+    >
+        ←
+    </a>
+
+
+    <main class="users-library">
+
+        <!-- =========================================
+             PRIMERA PANTALLA
+        ========================================== -->
+
+        <section class="users-landing">
+
+            <p class="users-label">
+                DESORDEN SOCIAL / USUARIOS
+            </p>
+
+
+            <div class="search-zone">
+
+                <form
+                    class="user-search"
+                    id="userSearchForm"
+                    autocomplete="off"
+                >
+
+                    <span
+                        class="search-at"
+                        aria-hidden="true"
+                    >
+                        @
+                    </span>
+
+                    <input
+                        type="text"
+                        id="userSearchInput"
+                        maxlength="30"
+                        spellcheck="false"
+                        placeholder="busca un usuario"
+                        aria-label="Buscar usuario"
+                    >
+
+                    <button
+                        type="submit"
+                        class="search-submit"
+                    >
+                        buscar
+                    </button>
+
+
+                    <div
+                        class="user-suggestions"
+                        id="userSuggestions"
+                        hidden
+                    ></div>
+
+                </form>
+
+
+                <p
+                    class="library-message"
+                    id="libraryMessage"
+                    aria-live="polite"
+                >
+                    escribe un nombre o elige uno de abajo
+                </p>
+
+            </div>
+
+
+            <!-- NUBE DE USUARIOS -->
+
+            <section
+                class="people-index"
+                id="peopleIndex"
+                aria-label="Usuarios"
+            >
+
+                <div
+                    class="people-index-list"
+                    id="peopleIndexList"
+                ></div>
+
+            </section>
+
+        </section>
+
+
+        <!-- =========================================
+             ARCHIVO DEL USUARIO
+        ========================================== -->
+
+        <section
+            class="user-archive"
+            id="userArchive"
+            hidden
+        >
+
+            <div class="archive-heading">
+
+                <p class="archive-label">
+                    archivo de
+                </p>
+
+                <h1 id="archiveUsername"></h1>
+
+                <p class="archive-count">
+                    <span id="archiveCount">0</span>
+                    aportaciones
+                </p>
+
+            </div>
+
+
+            <div
+                class="user-gallery"
+                id="userGallery"
+            ></div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================
+         VISOR DE UNA APORTACIÓN
+    ========================================== -->
+
+    <div
+        class="contribution-viewer"
+        id="contributionViewer"
+        aria-hidden="true"
+    >
+
+        <div
+            class="viewer-backdrop"
+            data-close-viewer
+        ></div>
+
+
+        <article class="viewer-sheet">
+
+            <button
+                class="viewer-close"
+                type="button"
+                data-close-viewer
+                aria-label="Cerrar"
+            >
+                ×
+            </button>
+
+
+            <p
+                class="viewer-user"
+                id="viewerUser"
+            ></p>
+
+            <p
+                class="viewer-type"
+                id="viewerType"
+            ></p>
+
+            <h2 id="viewerTitle"></h2>
+
+
+            <img
+                class="viewer-cover"
+                id="viewerCover"
+                alt=""
+                hidden
+            >
+
+
+            <div
+                class="viewer-body"
+                id="viewerBody"
+            ></div>
+
+
+            <div
+                class="viewer-attachments"
+                id="viewerAttachments"
+            ></div>
+
+
+            <a
+                class="viewer-external"
+                id="viewerExternal"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                hidden
+            >
+                abrir enlace ↗
+            </a>
+
+        </article>
+
+    </div>
+
+
+    <!-- CURSOR PERSONALIZADO -->
+
+    <div
+        class="custom-cursor"
+        id="customCursor"
+        aria-hidden="true"
+    >
+        <img
+            src="assets/cursor/cursor.svg"
+            alt=""
+        >
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="supabase-config.js"></script>
+    <script src="user-session.js"></script>
+
+    <script src="usuarios.js"></script>
+
+    <script src="bee-pollen.js"></script>
+
+</body>
+</html>

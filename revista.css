@@ -1,0 +1,2744 @@
+/* =========================================================
+   DESORDEN SOCIAL — REVISTA
+   CSS COMPLETO
+========================================================= */
+
+:root {
+    --red: #ff1108;
+    --white: #ffffff;
+    --black: #000000;
+    --perfect: #ffffff;
+    --pink: #f300df;
+    --book-pink: #f4c7df;
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+html {
+    background: var(--red);
+}
+
+body {
+    overflow-x: hidden;
+
+    background: var(--red);
+    color: white;
+
+    font-family:
+        "Inter",
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+
+/* =========================================================
+   FLECHA
+========================================================= */
+
+.back-arrow {
+    position: fixed;
+
+    top: 18px;
+    left: 20px;
+
+    z-index: 999999;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 30px;
+    line-height: 1;
+
+    mix-blend-mode: difference;
+}
+
+
+/* =========================================================
+   01 — PORTADA
+========================================================= */
+
+.cover-screen {
+    position: relative;
+
+    width: 100%;
+
+    height: 100vh;
+    height: 100dvh;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    background: var(--red);
+
+    overflow: hidden;
+}
+
+.cover-image-area {
+    width: 100%;
+
+    flex: 1;
+
+    min-height: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cover-image {
+    width: 99vw;
+    height: 100%;
+
+    object-fit: contain;
+    object-position: center;
+}
+
+.cover-credit {
+    width: 94vw;
+
+    flex: 0 0 44px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    padding-bottom: 7px;
+
+    font-size:
+        clamp(
+            10px,
+            0.82vw,
+            14px
+        );
+}
+
+
+/* =========================================================
+   02 — LLUVIA
+========================================================= */
+
+.rain-section {
+    width: 100%;
+
+    padding-bottom:
+        clamp(
+            100px,
+            10vw,
+            150px
+        );
+
+    background: var(--red);
+}
+
+.rain-field {
+    position: relative;
+
+    width: 100%;
+
+    height:
+        clamp(
+            670px,
+            82vw,
+            1080px
+        );
+
+    overflow: hidden;
+}
+
+.rain-word {
+    position: absolute;
+
+    left: var(--x);
+    top: var(--y);
+
+    font-family:
+        "Inter",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size:
+        clamp(
+            9px,
+            0.83vw,
+            14px
+        );
+
+    font-weight: 400;
+    line-height: 1;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   PRIMER TEXTO
+========================================================= */
+
+.rain-story {
+    width:
+        min(
+            410px,
+            39vw
+        );
+
+    margin:
+        0
+        27%
+        0
+        auto;
+
+    font-family:
+        "Inter",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size:
+        clamp(
+            12px,
+            1vw,
+            15px
+        );
+
+    line-height: 1.17;
+}
+
+.rain-story p {
+    margin: 0;
+}
+
+.rain-story p + p {
+    margin-top: 10px;
+}
+
+.inline-desorden {
+    font: inherit;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   COLECTIVO + SERPIENTE
+========================================================= */
+
+.collective-layout {
+    width:
+        min(
+            1050px,
+            92vw
+        );
+
+    margin:
+        clamp(
+            55px,
+            5vw,
+            80px
+        )
+        auto
+        0;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(300px, 0.9fr)
+        minmax(390px, 1fr);
+
+    gap:
+        clamp(
+            60px,
+            8vw,
+            120px
+        );
+
+    align-items: start;
+}
+
+.collective-copy {
+    max-width: 430px;
+
+    font-size:
+        clamp(
+            12px,
+            1vw,
+            15px
+        );
+
+    line-height: 1.17;
+}
+
+.collective-copy p {
+    margin: 0;
+}
+
+.collective-copy p + p {
+    margin-top: 17px;
+}
+
+
+/* =========================================================
+   SERPIENTE @DESORDENSOCIAL
+========================================================= */
+
+.handle-snake {
+    position: relative;
+
+    width: 100%;
+    min-height: 455px;
+
+    padding-top: 1px;
+
+    font-size:
+        clamp(
+            11px,
+            0.95vw,
+            15px
+        );
+
+    line-height: 1;
+}
+
+.handle {
+    display: block;
+
+    width: max-content;
+
+    margin-bottom:
+        clamp(
+            2px,
+            0.3vw,
+            5px
+        );
+
+    white-space: nowrap;
+}
+
+.h01 { margin-left: 34%; }
+.h02 { margin-left: 15%; }
+.h03 { margin-left: 46%; }
+.h04 { margin-left: 21%; }
+
+.h05 { margin-left: 56%; }
+.h06 { margin-left: 32%; }
+.h07 { margin-left: 63%; }
+.h08 { margin-left: 43%; }
+
+.h09 { margin-left: 68%; }
+.h10 { margin-left: 52%; }
+.h11 { margin-left: 66%; }
+.h12 { margin-left: 42%; }
+
+.h13 { margin-left: 57%; }
+.h14 { margin-left: 32%; }
+.h15 { margin-left: 48%; }
+.h16 { margin-left: 21%; }
+
+.h17 { margin-left: 36%; }
+.h18 { margin-left: 12%; }
+.h19 { margin-left: 27%; }
+.h20 { margin-left: 4%; }
+
+.h21 { margin-left: 18%; }
+.h22 { margin-left: 1%; }
+.h23 { margin-left: 12%; }
+.h24 { margin-left: 5%; }
+
+.h25 { margin-left: 20%; }
+.h26 { margin-left: 8%; }
+
+
+/* =========================================================
+   03 — LAS PILAS
+========================================================= */
+
+.battery-section {
+    width: 100%;
+
+    padding:
+        clamp(
+            60px,
+            7vw,
+            100px
+        )
+        0
+        clamp(
+            140px,
+            15vw,
+            230px
+        );
+
+    background: var(--red);
+}
+
+.battery-heading {
+    width: 94vw;
+
+    margin:
+        0
+        auto
+        clamp(
+            95px,
+            10vw,
+            160px
+        );
+
+    display: flex;
+
+    justify-content: flex-end;
+}
+
+.battery-heading h2 {
+    margin: 0;
+
+    font-family:
+        "Inter",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size:
+        clamp(
+            105px,
+            12vw,
+            210px
+        );
+
+    font-weight: 400;
+
+    line-height: 0.74;
+
+    letter-spacing: -0.075em;
+
+    text-align: right;
+}
+
+.battery-copy {
+    font-family:
+        "Inter",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size:
+        clamp(
+            16px,
+            1.38vw,
+            23px
+        );
+
+    font-weight: 400;
+
+    line-height: 1.19;
+}
+
+.battery-copy p {
+    margin:
+        0
+        0
+        1em;
+}
+
+.battery-copy p:last-child {
+    margin-bottom: 0;
+}
+
+.battery-photo img {
+    width: 100%;
+    height: auto;
+
+    object-fit: cover;
+}
+
+.battery-row {
+    width:
+        min(
+            1450px,
+            92vw
+        );
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* =========================================================
+   PILAS — 1
+========================================================= */
+
+.battery-row-one {
+    display: grid;
+
+    grid-template-columns:
+        minmax(450px, 650px)
+        minmax(170px, 220px);
+
+    justify-content: center;
+
+    gap:
+        clamp(
+            100px,
+            13vw,
+            220px
+        );
+
+    align-items: start;
+
+    margin-bottom:
+        clamp(
+            150px,
+            17vw,
+            250px
+        );
+}
+
+
+/* =========================================================
+   PILAS — 2
+========================================================= */
+
+.battery-row-two {
+    display: grid;
+
+    grid-template-columns:
+        minmax(290px, 0.85fr)
+        minmax(470px, 1.18fr)
+        minmax(210px, 0.58fr);
+
+    gap:
+        clamp(
+            65px,
+            7vw,
+            115px
+        );
+
+    align-items: center;
+
+    margin-bottom:
+        clamp(
+            160px,
+            18vw,
+            275px
+        );
+}
+
+.battery-photo-three {
+    max-width: 310px;
+
+    justify-self: end;
+}
+
+
+/* =========================================================
+   PILAS — 3
+========================================================= */
+
+.battery-row-three {
+    width:
+        min(
+            1220px,
+            90vw
+        );
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(350px, 0.92fr)
+        minmax(470px, 1fr);
+
+    gap:
+        clamp(
+            100px,
+            11vw,
+            175px
+        );
+
+    align-items: start;
+}
+
+
+/* =========================================================
+   04 — TRAZOS / OBRAS
+
+   TODO EL BLANCO ES BLANCO PURO.
+========================================================= */
+
+.visual-section {
+    position: relative;
+
+    width: 100%;
+
+    height:
+        clamp(
+            900px,
+            100vw,
+            1450px
+        );
+
+    background:
+        linear-gradient(
+            to bottom,
+
+            var(--red) 0%,
+            var(--red) 52%,
+
+            #ffffff 52%,
+            #ffffff 100%
+        );
+
+    overflow: hidden;
+}
+
+.giant-traces {
+    position: absolute;
+
+    top: 5%;
+    left: 0;
+
+    width: 100%;
+    height: 82%;
+
+    z-index: 1;
+
+    pointer-events: none;
+}
+
+.giant-trace {
+    position: absolute;
+
+    max-width: none;
+
+    height: auto;
+
+    pointer-events: none;
+}
+
+.trace-one {
+    top: 0;
+    left: -18%;
+
+    width: 140%;
+}
+
+.trace-two {
+    top: 24%;
+    left: -13%;
+
+    width: 128%;
+}
+
+.trace-three {
+    top: 48%;
+    left: -3%;
+
+    width: 112%;
+}
+
+.visual-collage {
+    position: absolute;
+
+    z-index: 4;
+
+    top: 24%;
+    right: 3%;
+
+    width:
+        min(
+            44vw,
+            675px
+        );
+
+    height: auto;
+}
+
+.visual-jam {
+    position: absolute;
+
+    z-index: 4;
+
+    left: 18%;
+    top: 63%;
+
+    width:
+        min(
+            31vw,
+            475px
+        );
+
+    height: auto;
+}
+
+
+/* =========================================================
+   05 — PERFECT DAYS
+
+   AHORA TODO BLANCO.
+========================================================= */
+
+.perfect-days {
+    width: 100%;
+
+    background: #ffffff;
+
+    color: #090909;
+
+    padding:
+        clamp(
+            35px,
+            3vw,
+            55px
+        )
+        0
+        clamp(
+            90px,
+            7vw,
+            130px
+        );
+}
+
+
+/*
+   YA NO ESTÁ ENCERRADO EN 1120PX.
+   EN PANTALLA GRANDE USA CASI TODO EL ANCHO.
+*/
+
+.perfect-inner {
+    width:
+        min(
+            1600px,
+            95vw
+        );
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   PERFECT DAYS — TÍTULO
+========================================================= */
+
+.perfect-heading {
+    display: flex;
+
+    align-items: baseline;
+
+    gap:
+        clamp(
+            14px,
+            1.4vw,
+            24px
+        );
+
+    margin:
+        0
+        0
+        clamp(
+            55px,
+            5vw,
+            90px
+        )
+        3%;
+}
+
+.perfect-heading h2 {
+    margin: 0;
+
+    font-family:
+        "Times New Roman",
+        Times,
+        serif;
+
+    font-size:
+        clamp(
+            72px,
+            7vw,
+            125px
+        );
+
+    font-weight: 400;
+
+    line-height: 0.85;
+
+    letter-spacing: -0.04em;
+}
+
+.perfect-heading span {
+    font-family:
+        "Times New Roman",
+        Times,
+        serif;
+
+    font-size:
+        clamp(
+            18px,
+            1.5vw,
+            27px
+        );
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   PERFECT DAYS — DESKTOP GRANDE
+
+   LO TRATAMOS COMO UNA COMPOSICIÓN EDITORIAL.
+========================================================= */
+
+.perfect-layout {
+    position: relative;
+
+    width: 100%;
+
+    height:
+        clamp(
+            1120px,
+            78vw,
+            1420px
+        );
+}
+
+
+/* =========================================================
+   TEXTO PERFECT DAYS
+========================================================= */
+
+.perfect-copy {
+    position: absolute;
+
+    font-family:
+        "Times New Roman",
+        Times,
+        serif;
+
+    font-size:
+        clamp(
+            13px,
+            0.95vw,
+            17px
+        );
+
+    line-height: 1.08;
+}
+
+.perfect-copy p {
+    margin: 0;
+}
+
+
+/* =========================================================
+   IMÁGENES PERFECT DAYS
+========================================================= */
+
+.perfect-img {
+    position: absolute;
+
+    display: block;
+
+    width: auto;
+    height: auto;
+
+    max-width: none;
+}
+
+
+/* =========================================================
+   ARRIBA IZQUIERDA
+========================================================= */
+
+.perfect-copy-one {
+    top: 0;
+    left: 3%;
+
+    width: 31%;
+}
+
+
+/*
+   Pequeña en el diseño original,
+   pero NO minúscula.
+*/
+
+.perfect-img-one {
+    top: 17%;
+    left: 11%;
+
+    width: 21%;
+}
+
+
+/*
+   Segunda imagen izquierda.
+*/
+
+.perfect-img-two {
+    top: 37%;
+    left: 2%;
+
+    width: 21%;
+}
+
+
+/* =========================================================
+   GRAN FOTO SUPERIOR DERECHA
+========================================================= */
+
+.perfect-img-three {
+    top: 0;
+    right: 3%;
+
+    width: 48%;
+}
+
+
+/* =========================================================
+   TEXTO HORIZONTAL CENTRO
+========================================================= */
+
+.perfect-copy-two {
+    top: 37%;
+    left: 32%;
+
+    width: 61%;
+}
+
+
+/* =========================================================
+   TEXTO INFERIOR IZQUIERDA
+========================================================= */
+
+.perfect-copy-three {
+    top: 53%;
+    left: 4%;
+
+    width: 30%;
+}
+
+
+/* =========================================================
+   PREGUNTA
+========================================================= */
+
+.perfect-question {
+    position: absolute;
+
+    top: 67%;
+    left: 4%;
+
+    margin: 0;
+
+    font-family:
+        "Times New Roman",
+        Times,
+        serif;
+
+    font-size:
+        clamp(
+            22px,
+            1.7vw,
+            31px
+        );
+
+    line-height: 1;
+}
+
+
+/* =========================================================
+   GRAN RETRATO DERECHA
+========================================================= */
+
+.perfect-img-four {
+    top: 50%;
+    right: 3%;
+
+    width: 48%;
+}
+
+
+/* =========================================================
+   TEXTO FINAL IZQUIERDA
+========================================================= */
+
+.perfect-copy-four {
+    top: 76%;
+    left: 2%;
+
+    width: 31%;
+}
+
+
+/* =========================================================
+   FOTO FINAL
+========================================================= */
+
+.perfect-img-five {
+    top: 84%;
+    left: 8%;
+
+    width: 21%;
+}
+
+
+/* =========================================================
+   ÚLTIMO TEXTO
+========================================================= */
+
+.perfect-copy-five {
+    top: 85%;
+    left: 36%;
+
+    width: 31%;
+}
+
+
+/* =========================================================
+   06 — JAZZ
+========================================================= */
+
+.jazz-page {
+    position: relative;
+
+    width: 100%;
+
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: var(--pink);
+
+    overflow: hidden;
+}
+
+.jazz-vector {
+    position: absolute;
+
+    z-index: 1;
+
+    width: 125vw;
+    max-width: none;
+
+    height: 120%;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    object-fit: contain;
+
+    pointer-events: none;
+}
+
+.jazz-scan {
+    position: relative;
+
+    z-index: 3;
+
+    width:
+        min(
+            78vw,
+            1120px
+        );
+
+    height: auto;
+
+    object-fit: contain;
+}
+
+
+/* =========================================================
+   07 — MAMA
+
+   IMAGEN ENTERA.
+   TEXTO CASI DEL MISMO ALTO EN DESKTOP.
+========================================================= */
+
+.mama-page {
+    width: 100%;
+
+    min-height: 100vh;
+
+    background: #000000;
+
+    color: #ffffff;
+
+    padding:
+        clamp(
+            16px,
+            2vw,
+            34px
+        )
+        2.5vw
+        clamp(
+            24px,
+            3vw,
+            50px
+        );
+
+    overflow: visible;
+}
+
+
+/* =========================================================
+   MAMA — COMPOSICIÓN
+========================================================= */
+
+.mama-layout {
+    width: 95vw;
+
+    margin: 0 auto;
+
+    display: grid;
+
+    /*
+       MUCHO MÁS ESTRECHA LA COLUMNA DE TEXTO.
+
+       Eso obliga al texto a crecer verticalmente
+       y acercarse al alto de la obra.
+    */
+
+    grid-template-columns:
+        clamp(
+            105px,
+            8vw,
+            140px
+        )
+        minmax(0, 1fr);
+
+    gap:
+        clamp(
+            28px,
+            3vw,
+            55px
+        );
+
+    align-items: start;
+
+    justify-content: start;
+}
+
+
+/* =========================================================
+   MAMA — TEXTO
+========================================================= */
+
+.mama-copy {
+    width: 100%;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    /*
+       MÁS GRANDE EN PANTALLA GRANDE
+       PARA QUE BAJE HASTA CASI EL FINAL
+       DE LA IMAGEN.
+    */
+
+    font-size:
+        clamp(
+            17px,
+            1.2vw,
+            22px
+        );
+
+    font-weight: 400;
+
+    line-height: 1.14;
+
+    color: #ffffff;
+}
+
+.mama-copy p {
+    margin: 0;
+}
+
+
+/* =========================================================
+   MAMA — IMAGEN
+
+   ENTERA, SIN CORTAR.
+========================================================= */
+
+.mama-art {
+    width: 100%;
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    overflow: visible;
+}
+
+.mama-art img {
+    display: block;
+
+    /*
+       ALTO GRANDE DE PÁGINA,
+       PERO RESPETANDO LA IMAGEN ENTERA.
+    */
+
+    width: auto;
+
+    height:
+        min(
+            92vh,
+            980px
+        );
+
+    max-width:
+        calc(
+            95vw - 190px
+        );
+
+    max-height: none;
+
+    object-fit: contain;
+
+    object-position: top left;
+}
+
+
+/* =========================================================
+   08 — ATRAPADA EN LA PANTALLA
+========================================================= */
+
+.screen-page {
+    width: 100%;
+
+    background: #ffffff;
+
+    color: #111111;
+}
+
+
+/* =========================================================
+   PRIMERA FOTO — UNA PANTALLA
+========================================================= */
+
+.screen-first {
+    width: 100%;
+
+    height: 100vh;
+    height: 100dvh;
+
+    background: #ffffff;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+.screen-first img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+    object-position: center;
+
+    background: #ffffff;
+}
+
+
+/* =========================================================
+   SEGUNDA FOTO — MEDIA PANTALLA
+========================================================= */
+
+.screen-second {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        50%
+        50%;
+
+    align-items: start;
+
+    background: #ffffff;
+}
+
+.screen-second-image {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    object-fit: contain;
+
+    object-position: top left;
+}
+
+.screen-title {
+    margin: 0;
+
+    padding:
+        clamp(
+            30px,
+            5vw,
+            80px
+        )
+        0
+        0
+        clamp(
+            30px,
+            5vw,
+            80px
+        );
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size:
+        clamp(
+            18px,
+            1.6vw,
+            26px
+        );
+
+    font-weight: 400;
+
+    line-height: 1.12;
+
+    color: #111111;
+}
+
+
+/* =========================================================
+   09 — LIBRO FOTOGRÁFICO
+========================================================= */
+
+.photo-book-page {
+    width: 100%;
+
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: var(--book-pink);
+
+    color: #111111;
+
+    padding:
+        clamp(
+            45px,
+            7vw,
+            100px
+        )
+        5vw;
+}
+
+.photo-book-layout {
+    width:
+        min(
+            1200px,
+            90vw
+        );
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(300px, 0.9fr)
+        minmax(350px, 0.75fr);
+
+    gap:
+        clamp(
+            70px,
+            11vw,
+            170px
+        );
+
+    align-items: center;
+}
+
+.photo-book-copy-area {
+    position: relative;
+
+    min-height: 570px;
+
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.book-vector {
+    position: absolute;
+
+    z-index: 1;
+
+    left: 6%;
+    top: -8%;
+
+    width: 90%;
+
+    max-width: none;
+
+    height: auto;
+
+    pointer-events: none;
+}
+
+.photo-book-copy {
+    position: relative;
+
+    z-index: 2;
+
+    width:
+        min(
+            310px,
+            74%
+        );
+
+    margin-top: 20px;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size:
+        clamp(
+            13px,
+            1.15vw,
+            17px
+        );
+
+    font-weight: 400;
+
+    line-height: 1.16;
+
+    color: #111111;
+}
+
+.photo-book-copy p {
+    margin:
+        0
+        0
+        18px;
+}
+
+.photo-book-copy p:last-child {
+    margin-bottom: 0;
+}
+
+.book-cover-link {
+    display: block;
+
+    width: 100%;
+
+    max-width: 440px;
+
+    justify-self: center;
+
+    text-decoration: none;
+
+    transition:
+        transform 0.25s ease;
+}
+
+.book-cover-link:hover {
+    transform:
+        translateY(-7px);
+}
+
+.book-cover {
+    display: block;
+
+    width: 100%;
+    height: auto;
+}
+
+
+/* =========================================================
+   MEDIANO / TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+
+    /* PERFECT DAYS
+       dejamos de usar el canvas absoluto */
+
+    .perfect-inner {
+        width:
+            min(
+                1120px,
+                92vw
+            );
+    }
+
+
+    .perfect-layout {
+        position: static;
+
+        height: auto;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(12, 1fr);
+
+        gap:
+            26px
+            18px;
+
+        align-items: start;
+    }
+
+
+    .perfect-copy,
+    .perfect-img,
+    .perfect-question {
+        position: static;
+    }
+
+
+    .perfect-copy-one {
+        grid-column: 1 / 5;
+        grid-row: 1 / 4;
+
+        width: auto;
+    }
+
+
+    .perfect-img-one {
+        grid-column: 3 / 6;
+        grid-row: 4 / 7;
+
+        width: 100%;
+    }
+
+
+    .perfect-img-two {
+        grid-column: 1 / 5;
+        grid-row: 7 / 10;
+
+        width: 88%;
+    }
+
+
+    .perfect-img-three {
+        grid-column: 7 / 13;
+        grid-row: 1 / 7;
+
+        width: 100%;
+    }
+
+
+    .perfect-copy-two {
+        grid-column: 5 / 13;
+        grid-row: 7 / 9;
+
+        width: auto;
+
+        align-self: center;
+    }
+
+
+    .perfect-copy-three {
+        grid-column: 1 / 5;
+        grid-row: 10 / 14;
+
+        width: auto;
+
+        margin-top: 14px;
+    }
+
+
+    .perfect-question {
+        grid-column: 1 / 5;
+        grid-row: 14 / 16;
+    }
+
+
+    .perfect-img-four {
+        grid-column: 7 / 13;
+        grid-row: 10 / 17;
+
+        width: 100%;
+    }
+
+
+    .perfect-copy-four {
+        grid-column: 1 / 6;
+        grid-row: 17 / 20;
+
+        width: auto;
+
+        margin-top: 25px;
+    }
+
+
+    .perfect-img-five {
+        grid-column: 2 / 5;
+        grid-row: 20 / 24;
+
+        width: 100%;
+
+        margin-top: 15px;
+    }
+
+
+    .perfect-copy-five {
+        grid-column: 6 / 11;
+        grid-row: 20 / 23;
+
+        width: auto;
+
+        margin-top: 55px;
+    }
+
+
+    /* MAMA */
+
+    .mama-layout {
+        grid-template-columns:
+            120px
+            minmax(0, 1fr);
+
+        gap: 32px;
+    }
+
+
+    .mama-copy {
+        font-size:
+            clamp(
+                15px,
+                1.7vw,
+                18px
+            );
+    }
+
+
+    .mama-art img {
+        height:
+            min(
+                86vh,
+                820px
+            );
+
+        max-width:
+            calc(
+                95vw - 170px
+            );
+    }
+
+
+    /* PILAS */
+
+    .battery-heading h2 {
+        font-size:
+            clamp(
+                90px,
+                15vw,
+                155px
+            );
+    }
+
+
+    .battery-copy {
+        font-size:
+            clamp(
+                14px,
+                1.8vw,
+                19px
+            );
+    }
+
+
+    .battery-row-one {
+        grid-template-columns:
+            minmax(0, 1fr)
+            160px;
+
+        gap: 60px;
+    }
+
+
+    .battery-row-two {
+        grid-template-columns:
+            0.82fr
+            1.15fr
+            0.55fr;
+
+        gap: 42px;
+    }
+
+
+    .battery-row-three {
+        grid-template-columns:
+            0.9fr
+            1fr;
+
+        gap: 70px;
+    }
+
+
+    /* TRAZOS */
+
+    .trace-one {
+        left: -25%;
+        width: 155%;
+    }
+
+
+    .trace-two {
+        left: -18%;
+        width: 140%;
+    }
+
+
+    .trace-three {
+        left: -8%;
+        width: 125%;
+    }
+
+
+    /* LIBRO */
+
+    .photo-book-layout {
+        grid-template-columns:
+            1fr
+            0.8fr;
+
+        gap: 55px;
+    }
+
+}
+
+
+/* =========================================================
+   MÓVIL
+========================================================= */
+
+@media (max-width: 650px) {
+
+
+    /* PORTADA */
+
+    .cover-credit {
+        font-size: 9px;
+        flex-basis: 34px;
+    }
+
+
+    /* LLUVIA */
+
+    .rain-field {
+        height: 650px;
+    }
+
+
+    .rain-word {
+        font-size: 8px;
+    }
+
+
+    .rain-story {
+        width: 57%;
+
+        margin-right: 7%;
+
+        font-size: 10px;
+    }
+
+
+    .rain-story p + p {
+        margin-top: 7px;
+    }
+
+
+    /* COLECTIVO */
+
+    .collective-layout {
+        width: 92%;
+
+        grid-template-columns:
+            45%
+            1fr;
+
+        gap: 28px;
+    }
+
+
+    .collective-copy {
+        font-size: 10px;
+    }
+
+
+    .handle-snake {
+        min-height: 330px;
+
+        font-size: 9px;
+    }
+
+
+    /* PILAS */
+
+    .battery-heading h2 {
+        font-size:
+            clamp(
+                74px,
+                21vw,
+                115px
+            );
+    }
+
+
+    .battery-copy {
+        font-size: 12px;
+    }
+
+
+    .battery-row {
+        width: 92vw;
+    }
+
+
+    .battery-row-one {
+        grid-template-columns:
+            minmax(0, 1fr)
+            28%;
+
+        gap: 24px;
+    }
+
+
+    .battery-row-two {
+        grid-template-columns:
+            34%
+            minmax(0, 1fr);
+
+        gap:
+            40px
+            23px;
+
+        align-items: start;
+    }
+
+
+    .battery-photo-three {
+        grid-column: 2;
+
+        width: 48%;
+
+        justify-self: end;
+    }
+
+
+    .battery-row-three {
+        grid-template-columns: 1fr;
+
+        gap: 50px;
+    }
+
+
+    .battery-photo-four {
+        width: 78%;
+    }
+
+
+    .battery-row-three .battery-copy {
+        width: 88%;
+
+        margin-left: auto;
+    }
+
+
+    /* TRAZOS */
+
+    .visual-section {
+        height: 720px;
+    }
+
+
+    .trace-one {
+        width: 175%;
+        left: -38%;
+    }
+
+
+    .trace-two {
+        width: 155%;
+        left: -30%;
+    }
+
+
+    .trace-three {
+        width: 140%;
+        left: -18%;
+    }
+
+
+    .visual-collage {
+        width: 55%;
+        right: -2%;
+        top: 26%;
+    }
+
+
+    .visual-jam {
+        width: 45%;
+        left: 8%;
+        top: 64%;
+    }
+
+
+    /* PERFECT DAYS */
+
+    .perfect-days {
+        padding:
+            30px
+            20px
+            80px;
+    }
+
+
+    .perfect-inner {
+        width: 100%;
+    }
+
+
+    .perfect-heading {
+        margin-left: 0;
+
+        gap: 8px;
+    }
+
+
+    .perfect-layout {
+        display: block;
+
+        height: auto;
+    }
+
+
+    .perfect-copy,
+    .perfect-img,
+    .perfect-question {
+        position: static;
+
+        width: 100%;
+
+        margin:
+            0
+            0
+            30px;
+    }
+
+
+    .perfect-img-one,
+    .perfect-img-two,
+    .perfect-img-five {
+        width: 50%;
+    }
+
+
+    .perfect-img-five {
+        margin-left: 10%;
+    }
+
+
+    /* JAZZ */
+
+    .jazz-page {
+        min-height: 82vh;
+    }
+
+
+    .jazz-vector {
+        width: 185vw;
+        height: 125%;
+    }
+
+
+    .jazz-scan {
+        width: 89vw;
+    }
+
+
+    /* =====================================================
+       MAMA MÓVIL
+    ===================================================== */
+
+    .mama-page {
+        padding:
+            18px
+            14px
+            28px;
+    }
+
+
+    .mama-layout {
+        width: 100%;
+
+        grid-template-columns:
+            27%
+            minmax(0, 1fr);
+
+        gap: 14px;
+    }
+
+
+    .mama-copy {
+        font-size:
+            clamp(
+                10px,
+                2.7vw,
+                13px
+            );
+
+        line-height: 1.07;
+    }
+
+
+    .mama-art img {
+        width: 100%;
+        height: auto;
+
+        max-width: none;
+    }
+
+
+    /* ATRAPADA */
+
+    .screen-first {
+        height: 100dvh;
+    }
+
+
+    .screen-first img {
+        width: 100%;
+        height: 100%;
+
+        object-fit: contain;
+    }
+
+
+    .screen-second {
+        grid-template-columns:
+            50%
+            50%;
+    }
+
+
+    .screen-title {
+        padding:
+            20px
+            10px
+            0
+            20px;
+
+        font-size: 12px;
+    }
+
+
+    /* LIBRO */
+
+    .photo-book-page {
+        padding:
+            50px
+            20px;
+    }
+
+
+    .photo-book-layout {
+        width: 100%;
+
+        grid-template-columns: 1fr;
+
+        gap: 55px;
+    }
+
+
+    .photo-book-copy-area {
+        min-height: 440px;
+    }
+
+
+    .book-vector {
+        width: 78%;
+        left: 9%;
+    }
+
+
+    .photo-book-copy {
+        width: 62%;
+
+        margin-left: -15%;
+
+        font-size: 12px;
+    }
+
+
+    .book-cover-link {
+        width: 70%;
+
+        margin-left: auto;
+    }
+
+}
+
+
+/* =========================================================
+   CURSOR
+========================================================= */
+
+@media (pointer: fine) {
+
+    html,
+    body,
+    body *,
+    a,
+    button {
+        cursor: none !important;
+    }
+
+
+    .custom-cursor {
+        position: fixed;
+
+        top: 0;
+        left: 0;
+
+        z-index: 999999;
+
+        width: 140px;
+        height: 140px;
+
+        pointer-events: none;
+
+        transform:
+            translate(-50%, -50%);
+
+        mix-blend-mode: difference;
+
+        isolation: auto;
+    }
+
+
+    .custom-cursor img {
+        width: 100%;
+        height: 100%;
+
+        object-fit: contain;
+
+        filter:
+            brightness(0)
+            invert(1);
+    }
+
+}
+
+
+@media (pointer: coarse) {
+
+    .custom-cursor {
+        display: none;
+    }
+
+}
+
+/* =========================================================
+   =========================================================
+   CORRECCIONES FINALES REVISTA
+   PEGAR AL FINAL ABSOLUTO DE revista.css
+   =========================================================
+========================================================= */
+
+
+/* =========================================================
+   TODO LO EDITORIAL BLANCO = BLANCO PURO
+========================================================= */
+
+:root {
+    --perfect: #ffffff !important;
+}
+
+.visual-section {
+    /*
+       Conservamos el rojo hasta la mitad,
+       pero la segunda mitad es blanco puro.
+    */
+    background:
+        linear-gradient(
+            to bottom,
+            var(--red) 0%,
+            var(--red) 52%,
+            #ffffff 52%,
+            #ffffff 100%
+        ) !important;
+}
+
+.perfect-days,
+.perfect-inner,
+.screen-page,
+.screen-first,
+.screen-second {
+    background: #ffffff !important;
+}
+
+
+/* =========================================================
+   =========================================================
+   PERFECT DAYS — PANTALLAS GRANDES
+   =========================================================
+========================================================= */
+
+@media (min-width: 1101px) {
+
+    .perfect-days {
+        width: 100% !important;
+
+        padding:
+            42px
+            0
+            120px !important;
+
+        background: #ffffff !important;
+
+        overflow: visible !important;
+    }
+
+
+    /*
+       Aprovechamos prácticamente TODO
+       el ancho de una pantalla grande.
+    */
+
+    .perfect-inner {
+        width: 94vw !important;
+        max-width: 1750px !important;
+
+        margin: 0 auto !important;
+    }
+
+
+    .perfect-heading {
+        margin:
+            0
+            0
+            70px
+            3% !important;
+    }
+
+
+    .perfect-heading h2 {
+        font-size:
+            clamp(
+                78px,
+                6.7vw,
+                128px
+            ) !important;
+    }
+
+
+    .perfect-heading span {
+        font-size:
+            clamp(
+                20px,
+                1.45vw,
+                29px
+            ) !important;
+    }
+
+
+    /* =====================================================
+       ADIÓS A LAS POSICIONES ABSOLUTAS
+
+       Esto evita que una imagen termine
+       ocupando el lugar de un texto.
+    ===================================================== */
+
+    .perfect-layout {
+        position: static !important;
+
+        width: 100% !important;
+        height: auto !important;
+
+        display: grid !important;
+
+        grid-template-columns:
+            repeat(12, minmax(0, 1fr)) !important;
+
+        grid-auto-rows: auto !important;
+
+        column-gap:
+            clamp(
+                25px,
+                2.4vw,
+                48px
+            ) !important;
+
+        row-gap:
+            clamp(
+                38px,
+                4vw,
+                75px
+            ) !important;
+
+        align-items: start !important;
+    }
+
+
+    .perfect-copy,
+    .perfect-img,
+    .perfect-question {
+        position: static !important;
+
+        top: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+
+        max-width: none !important;
+    }
+
+
+    /* =====================================================
+       TEXTO
+
+       Un poco mayor, pero no hacemos
+       del texto el protagonista.
+    ===================================================== */
+
+    .perfect-copy {
+        font-size:
+            clamp(
+                15px,
+                0.95vw,
+                18px
+            ) !important;
+
+        line-height: 1.08 !important;
+    }
+
+
+    /* =====================================================
+       FILA SUPERIOR
+    ===================================================== */
+
+    .perfect-copy-one {
+        grid-column: 1 / 5 !important;
+        grid-row: 1 !important;
+
+        width: 100% !important;
+    }
+
+
+    /*
+       FOTO GRANDE DERECHA
+    */
+
+    .perfect-img-three {
+        grid-column: 7 / 13 !important;
+        grid-row: 1 / 4 !important;
+
+        width: 100% !important;
+        height: auto !important;
+
+        align-self: start !important;
+    }
+
+
+    /*
+       FOTO PEQUEÑA, pero ahora con
+       suficiente presencia visual.
+    */
+
+    .perfect-img-one {
+        grid-column: 2 / 5 !important;
+        grid-row: 2 !important;
+
+        width: 100% !important;
+        height: auto !important;
+    }
+
+
+    /*
+       FOTO IZQUIERDA 2
+    */
+
+    .perfect-img-two {
+        grid-column: 1 / 4 !important;
+        grid-row: 3 !important;
+
+        width: 100% !important;
+        height: auto !important;
+    }
+
+
+    /* =====================================================
+       TEXTO HORIZONTAL CENTRAL
+    ===================================================== */
+
+    .perfect-copy-two {
+        grid-column: 5 / 13 !important;
+        grid-row: 4 !important;
+
+        width: 100% !important;
+
+        align-self: center !important;
+    }
+
+
+    /* =====================================================
+       SEGUNDA MITAD
+    ===================================================== */
+
+    .perfect-copy-three {
+        grid-column: 1 / 5 !important;
+        grid-row: 5 !important;
+
+        width: 100% !important;
+
+        margin: 20px 0 0 !important;
+    }
+
+
+    /*
+       GRAN RETRATO
+    */
+
+    .perfect-img-four {
+        grid-column: 7 / 13 !important;
+        grid-row: 5 / 8 !important;
+
+        width: 100% !important;
+        height: auto !important;
+    }
+
+
+    .perfect-question {
+        grid-column: 1 / 5 !important;
+        grid-row: 6 !important;
+
+        margin:
+            10px
+            0
+            10px
+            0 !important;
+
+        font-size:
+            clamp(
+                27px,
+                1.8vw,
+                36px
+            ) !important;
+
+        line-height: 1 !important;
+    }
+
+
+    .perfect-copy-four {
+        grid-column: 1 / 5 !important;
+        grid-row: 7 !important;
+
+        width: 100% !important;
+
+        margin: 0 !important;
+    }
+
+
+    /* =====================================================
+       FINAL
+
+       Foto otra vez más grande para evitar
+       ese hueco enorme de la captura.
+    ===================================================== */
+
+    .perfect-img-five {
+        grid-column: 2 / 5 !important;
+        grid-row: 8 !important;
+
+        width: 100% !important;
+        height: auto !important;
+
+        margin: 0 !important;
+    }
+
+
+    .perfect-copy-five {
+        grid-column: 5 / 9 !important;
+        grid-row: 8 !important;
+
+        width: 100% !important;
+
+        margin:
+            clamp(
+                30px,
+                4vw,
+                70px
+            )
+            0
+            0 !important;
+    }
+
+}
+
+
+
+/* =========================================================
+   =========================================================
+   MAMA — DESKTOP
+   =========================================================
+========================================================= */
+
+@media (min-width: 901px) {
+
+    /*
+       Esta página YA NO mide una pantalla.
+
+       La obra puede hacer que ocupe bastante
+       más espacio vertical dentro del scroll.
+    */
+
+    .mama-page {
+        width: 100% !important;
+
+        min-height: 0 !important;
+
+        height: auto !important;
+
+        margin: 0 !important;
+
+        padding:
+            clamp(
+                35px,
+                4vw,
+                70px
+            )
+            3vw
+            clamp(
+                80px,
+                8vw,
+                140px
+            ) !important;
+
+        background: #000000 !important;
+
+        overflow: visible !important;
+    }
+
+
+    /*
+       Texto fino a la izquierda.
+       Obra ENORME a la derecha.
+
+       La página crecerá con la obra.
+    */
+
+    .mama-layout {
+        width: 94vw !important;
+        max-width: 1700px !important;
+
+        height: auto !important;
+
+        margin: 0 auto !important;
+
+        padding: 0 !important;
+
+        display: grid !important;
+
+        grid-template-columns:
+            clamp(
+                100px,
+                6.4vw,
+                125px
+            )
+            minmax(0, 1fr) !important;
+
+        gap:
+            clamp(
+                45px,
+                5vw,
+                90px
+            ) !important;
+
+        align-items: start !important;
+    }
+
+
+    /* =====================================================
+       TEXTO
+
+       Muy estrecho para que crezca
+       VERTICALMENTE junto a la obra.
+    ===================================================== */
+
+    .mama-copy {
+        width: 100% !important;
+        max-width: none !important;
+
+        height: auto !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        display: block !important;
+
+        font-family:
+            Arial,
+            Helvetica,
+            sans-serif !important;
+
+        font-size:
+            clamp(
+                17px,
+                1.05vw,
+                21px
+            ) !important;
+
+        font-weight: 400 !important;
+
+        line-height: 1.1 !important;
+
+        color: #ffffff !important;
+
+        overflow: visible !important;
+    }
+
+
+    .mama-copy p {
+        width: 100% !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+
+    /* =====================================================
+       OBRA
+
+       Aquí está el cambio importante:
+
+       Ya NO limitamos mama a 86vh / 92vh.
+
+       Se hace enorme y su altura pasa a
+       formar parte real del scroll.
+    ===================================================== */
+
+    .mama-art {
+        width: 100% !important;
+
+        height: auto !important;
+
+        max-width: none !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        display: block !important;
+
+        overflow: visible !important;
+    }
+
+
+    .mama-art img {
+        display: block !important;
+
+        /*
+           La imagen domina la composición.
+        */
+
+        width:
+            min(
+                70vw,
+                1250px
+            ) !important;
+
+        height: auto !important;
+
+        min-height: 0 !important;
+
+        max-width: 100% !important;
+        max-height: none !important;
+
+        margin: 0 !important;
+
+        object-fit: contain !important;
+
+        object-position: top left !important;
+    }
+
+}
+
+
+
+/* =========================================================
+   MAMA — PANTALLA MUY GRANDE
+
+   En monitores anchos la hacemos todavía
+   más monumental.
+========================================================= */
+
+@media (min-width: 1500px) {
+
+    .mama-layout {
+        grid-template-columns:
+            105px
+            minmax(0, 1fr) !important;
+    }
+
+
+    .mama-copy {
+        font-size: 19px !important;
+
+        line-height: 1.12 !important;
+    }
+
+
+    .mama-art img {
+        width:
+            min(
+                72vw,
+                1300px
+            ) !important;
+    }
+
+}

@@ -1,0 +1,1168 @@
+/* =========================================================
+   DESORDEN SOCIAL — HOME
+   CSS LIMPIO
+   ========================================================= */
+
+/* -------------------------
+   1. BASE
+------------------------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+    scroll-behavior: smooth;
+    background: #c5daed;
+}
+
+body {
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+
+    background: #c5daed;
+    color: #650000;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+/* -------------------------
+   2. FONDO
+------------------------- */
+
+.background-art {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.background-ornament {
+    position: absolute;
+    display: block;
+    height: auto;
+
+    pointer-events: none;
+    user-select: none;
+
+    mix-blend-mode: multiply;
+}
+
+.ornament-vertical {
+    width: clamp(900px, 82vw, 1550px);
+
+    left: -8vw;
+    top: -20vh;
+
+    opacity: 0.15;
+    transform: rotate(-1deg);
+}
+
+.background-index {
+    position: fixed;
+
+    left: 2vw;
+    top: 78vh;
+
+    transform: rotate(-90deg);
+    transform-origin: left top;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    line-height: 1;
+    letter-spacing: 0.22em;
+    white-space: nowrap;
+
+    color: #151515;
+    opacity: 0.48;
+
+    z-index: 2;
+    pointer-events: none;
+}
+
+
+/* -------------------------
+   3. PORTADA / COLLAGE
+------------------------- */
+
+.hero {
+    position: relative;
+    z-index: 1;
+
+    width: 100%;
+    min-height: 230vh;
+
+    overflow: hidden;
+}
+
+.collage-canvas {
+    position: relative;
+
+    width: min(100%, 1280px);
+    height: 230vh;
+
+    margin: 0 auto;
+}
+
+
+/* -------------------------
+   4. TÍTULO
+------------------------- */
+
+.titulo {
+    position: absolute;
+    z-index: 5;
+
+    top: 18vh;
+    left: 50%;
+
+    width: min(82vw, 1000px);
+    height: clamp(240px, 25vw, 345px);
+
+    transform: translateX(-50%);
+}
+
+.desorden,
+.social {
+    position: absolute;
+    display: block;
+    height: auto;
+
+    transform-origin: center;
+    transition: transform 0.35s ease;
+}
+
+.desorden {
+    width: 72%;
+
+    top: 0;
+    left: 0;
+}
+
+.social {
+    width: 52%;
+
+    top: 34%;
+    right: 1%;
+}
+
+.desorden:hover,
+.social:hover {
+    transform: scale(1.04);
+}
+
+
+/* -------------------------
+   5. ENLACES / RECORTES
+------------------------- */
+
+.project-link {
+    position: absolute;
+    z-index: 6;
+
+    display: block;
+
+    color: inherit;
+    text-decoration: none;
+}
+
+.project-link .icono {
+    position: static;
+
+    display: block;
+    width: 100%;
+    height: auto;
+
+    transform-origin: center;
+
+    transition:
+        transform 0.35s ease,
+        filter 0.35s ease;
+}
+
+.project-link:hover .icono {
+    transform: scale(1.1) rotate(-2deg);
+    filter: drop-shadow(0 8px 8px rgba(50, 0, 0, 0.12));
+}
+
+.project-link:focus-visible {
+    outline: 2px solid #650000;
+    outline-offset: 8px;
+}
+
+/* Niña */
+.info-link {
+    width: clamp(95px, 9vw, 135px);
+
+    top: -3vh;
+    left: 56%;
+}
+
+/* Stamp */
+.menu-link {
+    width: clamp(80px, 8vw, 125px);
+
+    top: 10vh;
+    right: 4vw;
+}
+
+/* Cara */
+.project-link:has(.cara) {
+    width: clamp(150px, 18vw, 250px);
+
+    top: 25%;
+    left: 10%;
+}
+
+/* DS.2.2.1 */
+.project-link:has(.ds-imagen) {
+    width: clamp(250px, 29vw, 390px);
+
+    top: 43%;
+    left: 10%;
+}
+
+/* Mano */
+.project-link:has(.mano) {
+    width: clamp(270px, 31vw, 430px);
+
+    top: 52%;
+    right: 3%;
+}
+
+/* Kiwi */
+.project-link:has(.kiwi) {
+    width: clamp(145px, 18vw, 240px);
+
+    right: 17%;
+    bottom: 8vh;
+}
+
+
+/* -------------------------
+   6. INFO / MENU
+------------------------- */
+
+.home-nav-label {
+    position: absolute;
+
+    left: 50%;
+    top: calc(100% + 7px);
+
+    transform: translateX(-50%);
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+    white-space: nowrap;
+
+    color: #040149;
+    opacity: 0.68;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   IDENTIDAD / USERNAME
+   ========================================================= */
+
+.username-modal {
+    position: fixed;
+    inset: 0;
+
+    z-index: 25000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease;
+}
+
+.username-modal.is-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* fondo */
+
+.username-backdrop {
+    position: absolute;
+    inset: 0;
+
+    background: rgba(197, 218, 237, 0.72);
+    backdrop-filter: blur(10px);
+}
+
+
+/* ventana */
+
+.username-window {
+    position: relative;
+    z-index: 1;
+
+    width: min(92vw, 520px);
+
+    padding: 48px 42px 40px;
+
+    background: #c5daed;
+
+    border: 1px solid rgba(101, 0, 0, 0.55);
+
+    color: #650000;
+
+    max-height: calc(100dvh - 40px);
+overflow-y: auto;
+overscroll-behavior: contain;
+}
+
+
+/* cerrar */
+
+.username-close {
+    position: absolute;
+
+    top: 14px;
+    right: 17px;
+
+    border: 0;
+    padding: 0;
+
+    background: transparent;
+    color: #650000;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 25px;
+    font-weight: 300;
+
+    line-height: 1;
+}
+
+
+/* texto pequeño */
+
+.username-small {
+    margin-bottom: 28px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 9px;
+
+    letter-spacing: 0.18em;
+
+    opacity: 0.6;
+}
+
+
+/* título */
+
+.username-window h2 {
+    max-width: 390px;
+
+    margin: 0 0 13px;
+
+    font-family: "Times New Roman", Times, serif;
+    font-size: clamp(34px, 5vw, 58px);
+    font-weight: normal;
+    line-height: 0.95;
+}
+
+
+/* explicación */
+
+.username-description {
+    margin-bottom: 36px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    line-height: 1.4;
+
+    opacity: 0.65;
+}
+
+
+/* campo */
+
+.username-field {
+    display: flex;
+    align-items: center;
+
+    border-bottom: 1px solid #650000;
+
+    font-family: "Times New Roman", Times, serif;
+    font-size: 28px;
+}
+
+.username-field span {
+    margin-right: 4px;
+}
+
+.username-field input {
+    width: 100%;
+
+    border: 0;
+    outline: 0;
+
+    padding: 8px 0;
+
+    background: transparent;
+    color: #650000;
+
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.username-field input::placeholder {
+    color: #650000;
+    opacity: 0.28;
+}
+
+
+/* error */
+
+.username-error {
+    min-height: 18px;
+
+    margin-top: 8px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10px;
+
+    opacity: 0.7;
+}
+
+
+/* botones */
+
+.username-submit,
+.username-continue {
+    margin-top: 24px;
+
+    border: 1px solid #650000;
+
+    padding: 10px 20px;
+
+    background: transparent;
+    color: #650000;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+}
+
+.username-change {
+    display: block;
+
+    margin-top: 18px;
+
+    border: 0;
+    padding: 0;
+
+    background: transparent;
+    color: #650000;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 9px;
+
+    text-decoration: underline;
+
+    opacity: 0.55;
+}
+
+
+/* móvil */
+
+@media (max-width: 600px) {
+
+    .username-modal {
+        padding: 12px;
+    }
+
+    .username-window {
+        width: 100%;
+        max-height: calc(100dvh - 24px);
+
+        padding:
+            42px
+            25px
+            32px;
+    }
+}
+
+/* =========================================================
+   DEJAR POLEN
+   ========================================================= */
+
+.pollen-user {
+    margin-bottom: 24px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+
+    opacity: 0.6;
+}
+
+.pollen-user span {
+    opacity: 1;
+    font-weight: 600;
+}
+
+
+.pollen-field {
+    display: block;
+
+    margin-top: 24px;
+}
+
+.pollen-field > span {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+
+    opacity: 0.55;
+}
+
+
+.pollen-field input,
+.pollen-field select,
+.pollen-field textarea {
+    width: 100%;
+
+    border: 0;
+    border-bottom: 1px solid rgba(101, 0, 0, 0.65);
+    border-radius: 0;
+
+    padding: 8px 0;
+
+    outline: 0;
+
+    background: transparent;
+    color: #650000;
+
+    font-family: "Times New Roman", Times, serif;
+    font-size: 18px;
+}
+
+.pollen-field textarea {
+    resize: vertical;
+    line-height: 1.3;
+}
+
+.pollen-field select {
+    appearance: none;
+}
+
+
+.pollen-field input::placeholder,
+.pollen-field textarea::placeholder {
+    color: #650000;
+    opacity: 0.25;
+}
+
+
+.pollen-back {
+    display: block;
+
+    margin-top: 16px;
+
+    border: 0;
+    padding: 0;
+
+    background: transparent;
+    color: #650000;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 9px;
+
+    opacity: 0.55;
+    text-decoration: underline;
+}
+
+
+.pollen-signature {
+    margin-top: 28px;
+
+    font-family: "Times New Roman", Times, serif;
+    font-size: 20px;
+}
+
+/* -------------------------
+   ARCHIVO / POLEN
+------------------------- */
+
+.pollen-file-field input[type="file"] {
+    width: 100%;
+
+    border: 1px dashed rgba(101, 0, 0, 0.45);
+
+    padding: 18px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10px;
+
+    color: #650000;
+
+    background: transparent;
+}
+
+.pollen-file-name {
+    display: block;
+
+    margin-top: 8px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 9px;
+    line-height: 1.3;
+
+    opacity: 0.45;
+}
+
+
+/* -------------------------
+   8. CURSOR PERSONALIZADO
+------------------------- */
+
+@media (pointer: fine) {
+
+    body,
+    a,
+    button,
+    .project-link,
+    .desorden,
+    .social,
+    .language-switcher,
+    .language-switcher * {
+        cursor: none !important;
+    }
+
+    .custom-cursor {
+        position: fixed;
+
+        top: 0;
+        left: 0;
+
+        z-index: 30000;
+
+        width: 180px;
+        height: 180px;
+
+        pointer-events: none;
+
+        transform: translate(-50%, -50%);
+
+        transition:
+            width 0.18s ease,
+            height 0.18s ease,
+            transform 0.18s ease;
+
+        will-change: left, top;
+    }
+
+    .custom-cursor img {
+        display: block;
+
+        width: 100%;
+        height: 100%;
+
+        object-fit: contain;
+    }
+
+    .custom-cursor.is-hovering {
+        width: 115px;
+        height: 115px;
+
+        transform: translate(-50%, -50%) rotate(10deg);
+    }
+
+    .custom-cursor.is-clicking {
+        transform: translate(-50%, -50%) scale(0.78);
+    }
+}
+
+@media (pointer: coarse) {
+    .custom-cursor {
+        display: none;
+    }
+}
+
+
+/* -------------------------
+   9. RESPONSIVE — TABLET
+------------------------- */
+
+@media (max-width: 1000px) {
+
+    .titulo {
+        top: 23vh;
+
+        width: 94vw;
+        height: clamp(255px, 36vw, 350px);
+    }
+
+    .desorden {
+        width: 76%;
+    }
+
+    .social {
+        width: 54%;
+        top: 35%;
+    }
+
+    .info-link {
+        width: 100px;
+
+        top: -2vh;
+        left: 57%;
+    }
+
+    .menu-link {
+        width: 90px;
+
+        top: 12vh;
+        right: 3vw;
+    }
+}
+
+
+/* -------------------------
+   10. RESPONSIVE — MÓVIL
+------------------------- */
+
+@media (max-width: 700px) {
+
+    .hero {
+        min-height: 200vh;
+    }
+
+    .collage-canvas {
+        height: 200vh;
+    }
+
+    .titulo {
+        top: 24vh;
+
+        width: 94vw;
+        height: 270px;
+    }
+
+    .desorden {
+        width: 79%;
+    }
+
+    .social {
+        width: 57%;
+        top: 36%;
+    }
+
+    .info-link {
+        width: 82px;
+
+        top: 0;
+        left: 56%;
+    }
+
+    .menu-link {
+        width: 72px;
+
+        top: 14vh;
+        right: 3vw;
+    }
+
+    .project-link:has(.cara) {
+        left: 7%;
+    }
+
+    .project-link:has(.ds-imagen) {
+        width: 38vw;
+        left: 5%;
+    }
+
+    .project-link:has(.mano) {
+        width: 42vw;
+        right: 1%;
+    }
+
+    .project-link:has(.kiwi) {
+        right: 10%;
+        bottom: 7vh;
+    }
+
+    .ornament-vertical {
+        width: 125vw;
+
+        left: -19vw;
+        top: -10vh;
+    }
+
+    .background-index {
+        display: none;
+    }
+
+    .home-nav-label {
+        font-size: 8px;
+        top: calc(100% + 5px);
+    }
+}
+
+
+/* -------------------------
+   11. MOVIMIENTO REDUCIDO
+------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    .desorden,
+    .social,
+    .project-link .icono,
+    .custom-cursor {
+        transition: none !important;
+    }
+}
+
+.home-nav-label {
+    position: absolute;
+
+    left: 50%;
+    top: calc(100% + 7px);
+
+    transform: translateX(-50%);
+
+    font-family: Times New Roman, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1;
+
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+    white-space: nowrap;
+
+    color: #650000;
+
+    /* oculto por defecto */
+    opacity: 0;
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease;
+}
+
+.home-nav-label {
+    transform: translate(-50%, 5px);
+}
+
+/* aparece al pasar el cursor por el recorte */
+
+.menu-link:hover .home-nav-label,
+.info-link:hover .home-nav-label {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+}
+/* =========================================================
+   ABEJA
+   ========================================================= */
+
+.bee {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    z-index: 12000;
+
+    width: clamp(55px, 6vw, 85px);
+
+    padding: 0;
+    margin: 0;
+
+    border: 0;
+    background: transparent;
+
+    cursor: pointer;
+
+    /* La posición real la controla JavaScript */
+    transform: translate3d(70vw, 60vh, 0);
+
+    will-change: transform;
+}
+
+
+/* dibujo de la abeja */
+
+.bee img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    pointer-events: none;
+
+    transform-origin: center;
+
+    transition:
+        transform 0.25s ease,
+        filter 0.25s ease;
+}
+
+
+/* pequeño movimiento cuando la señalas */
+
+.bee:hover img {
+    transform: scale(1.08);
+
+    filter:
+        drop-shadow(
+            0 5px 5px rgba(101, 0, 0, 0.12)
+        );
+}
+
+
+/* texto debajo */
+
+.bee-label {
+    position: absolute;
+
+    left: 50%;
+    top: calc(100% + 4px);
+
+    transform:
+        translate(-50%, 5px);
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 1;
+
+    letter-spacing: 0.06em;
+
+    white-space: nowrap;
+
+    color: #650000;
+
+    opacity: 0;
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.25s ease,
+        visibility 0.2s ease;
+}
+
+
+/* aparece "deja polen" */
+
+.bee:hover .bee-label,
+.bee:focus-visible .bee-label {
+    opacity: 1;
+    visibility: visible;
+
+    transform:
+        translate(-50%, 0);
+}
+
+
+/* foco de teclado */
+
+.bee:focus-visible {
+    outline: 1px solid #650000;
+    outline-offset: 8px;
+}
+
+/* =========================================================
+   EVITAR DOBLE CURSOR EN MODAL / FORMULARIO
+   ========================================================= */
+
+@media (pointer: fine) {
+
+    .username-modal,
+    .username-modal * {
+        cursor: none !important;
+    }
+}
+
+/* =========================================================
+   POLEN — CONEXIONES MÚLTIPLES
+========================================================= */
+
+.pollen-connections-field small {
+    font-size: 0.72em;
+    opacity: 0.55;
+    font-weight: 400;
+}
+
+.pollen-connection-picker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pollen-connection-picker input {
+    flex: 1;
+}
+
+.pollen-add-connection {
+    border: 0;
+    background: transparent;
+    padding: 5px 2px;
+
+    font: inherit;
+    font-size: 11px;
+
+    opacity: 0.6;
+}
+
+.pollen-add-connection:hover {
+    opacity: 1;
+}
+
+.selected-connections {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+
+    margin-top: 8px;
+}
+
+.selected-connection {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 5px 8px;
+
+    border: 1px solid rgba(101, 0, 0, 0.25);
+    border-radius: 20px;
+
+    font-size: 9px;
+    line-height: 1.1;
+}
+
+.remove-connection {
+    border: 0;
+    background: transparent;
+    padding: 0;
+
+    font-size: 13px;
+    line-height: 1;
+
+    opacity: 0.55;
+}
+
+.remove-connection:hover {
+    opacity: 1;
+}
+
+/* =========================================================
+   CONEXIONES ELEGIDAS
+========================================================= */
+
+.selected-connections {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+
+    margin-top: 9px;
+}
+
+.selected-connection {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 5px 9px;
+
+    border:
+        1px solid
+        rgba(101, 0, 0, 0.25);
+
+    border-radius: 20px;
+
+    font-size: 9px;
+}
+
+.remove-connection {
+    border: 0;
+    padding: 0;
+
+    background: transparent;
+
+    font-size: 14px;
+
+    opacity: 0.55;
+}
+
+.pollen-add-connection {
+    border: 0;
+
+    background: transparent;
+
+    margin-left: 8px;
+
+    font: inherit;
+    font-size: 10px;
+
+    opacity: 0.6;
+}
+
+
+/* =========================================================
+   PORTADA DEL NUDO
+========================================================= */
+
+.pollen-cover-preview {
+    display: block;
+
+    width: 115px;
+    height: 115px;
+
+    margin-top: 10px;
+
+    object-fit: cover;
+
+    border-radius: 2px;
+}
+
+.pollen-cover-preview[hidden] {
+    display: none;
+}

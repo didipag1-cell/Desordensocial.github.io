@@ -1,0 +1,1093 @@
+/* =========================================================
+   ENTREVISTAS / ???
+========================================================= */
+
+
+:root {
+
+    --acid:
+        #ecef31;
+
+    --red:
+        #d73a2f;
+
+}
+
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+
+* {
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+    width: 100%;
+
+    min-height: 100%;
+}
+
+
+html {
+    background:
+        var(--acid);
+}
+
+
+body {
+    background:
+        var(--acid);
+
+    color:
+        var(--red);
+
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    overflow-x:
+        hidden;
+}
+
+
+
+/* =========================================================
+   VOLVER
+========================================================= */
+
+
+.back-arrow {
+    position: fixed;
+
+    top: 14px;
+    left: 16px;
+
+    z-index: 99999;
+
+    color:
+        var(--red);
+
+    text-decoration:
+        none;
+
+    font-size:
+        34px;
+
+    line-height: 1;
+
+    mix-blend-mode:
+        multiply;
+}
+
+
+
+/* =========================================================
+   =========================================================
+   01 — DATAMOSH
+   =========================================================
+========================================================= */
+
+
+.interviews-scroll {
+    position: relative;
+
+    /*
+       suficiente recorrido para llevar
+       el texto de arriba a abajo
+    */
+
+    height:
+        260vh;
+
+    background:
+        var(--acid);
+}
+
+
+
+.interviews-sticky {
+    position: sticky;
+
+    top: 0;
+
+    width: 100%;
+
+    height:
+        100vh;
+    height:
+        100dvh;
+
+    overflow:
+        hidden;
+
+    background:
+        var(--acid);
+
+    isolation:
+        isolate;
+}
+
+
+
+/* =========================================================
+   TEXTURAS
+========================================================= */
+
+
+.bg-noise,
+.bg-halftone {
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events:
+        none;
+}
+
+
+
+.bg-noise {
+    opacity:
+        0.08;
+
+    background-image:
+
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(215, 58, 47, 0.55) 0 1px,
+            transparent 1px
+        ),
+
+        radial-gradient(
+            circle at 65% 18%,
+            rgba(215, 58, 47, 0.45) 0 1px,
+            transparent 1px
+        ),
+
+        radial-gradient(
+            circle at 34% 70%,
+            rgba(215, 58, 47, 0.45) 0 1px,
+            transparent 1px
+        ),
+
+        radial-gradient(
+            circle at 84% 78%,
+            rgba(215, 58, 47, 0.45) 0 1px,
+            transparent 1px
+        );
+
+    background-size:
+        13px 13px,
+        17px 17px,
+        21px 21px,
+        29px 29px;
+}
+
+
+
+.bg-halftone {
+    opacity:
+        0.09;
+
+    background-image:
+
+        radial-gradient(
+            var(--red) 0.8px,
+            transparent 0.8px
+        );
+
+    background-size:
+        8px 8px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.5),
+            transparent 72%
+        );
+
+    -webkit-mask-image:
+        linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.5),
+            transparent 72%
+        );
+}
+
+
+
+/* =========================================================
+   DESORDEN SOCIAL FANTASMA
+========================================================= */
+
+
+.ghost {
+    position: absolute;
+
+    z-index: 3;
+
+    color:
+        var(--red);
+
+    opacity:
+        0.09;
+
+    font-size:
+        clamp(
+            16px,
+            1.3vw,
+            24px
+        );
+
+    font-weight:
+        500;
+
+    letter-spacing:
+        0.03em;
+
+    pointer-events:
+        none;
+}
+
+
+.ghost-1 {
+    top: 11vh;
+
+    left: 8vw;
+}
+
+
+.ghost-2 {
+    bottom: 11vh;
+
+    left: 14vw;
+}
+
+
+
+/* =========================================================
+   CARA
+========================================================= */
+
+
+.face-wrap {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 4;
+
+    overflow:
+        hidden;
+}
+
+
+.face-source {
+    display:
+        none;
+}
+
+
+
+/* =========================================================
+   CANVAS DATAMOSH
+========================================================= */
+
+
+#faceCanvas {
+    position: absolute;
+
+    left: 50%;
+    top: 4vh;
+
+    width:
+        min(
+            78vw,
+            860px
+        );
+
+    height:
+        auto;
+
+    aspect-ratio:
+        0.75 / 1.18;
+
+    display:
+        block;
+
+    transform:
+        translateX(-50%);
+
+    image-rendering:
+        pixelated;
+
+    mix-blend-mode:
+        multiply;
+
+    opacity:
+        0.98;
+
+    will-change:
+        transform;
+}
+
+
+
+/* =========================================================
+   LET'S TALK
+========================================================= */
+
+
+.talk {
+    position: absolute;
+
+    z-index: 10;
+
+    /*
+       EMPIEZA ARRIBA.
+       JS hace todo el recorrido.
+    */
+
+    top: 6vh;
+
+    right: 4vw;
+
+    width:
+        min(
+            36vw,
+            520px
+        );
+
+    pointer-events:
+        none;
+
+    will-change:
+        transform;
+}
+
+
+.talk h1 {
+    margin: 0;
+
+    color:
+        var(--red);
+
+    font-size:
+        clamp(
+            40px,
+            5.5vw,
+            92px
+        );
+
+    font-weight:
+        500;
+
+    line-height:
+        0.92;
+
+    letter-spacing:
+        -0.08em;
+
+    text-align:
+        right;
+}
+
+
+
+/* =========================================================
+   =========================================================
+   02 — CONVERSACIÓN
+   =========================================================
+========================================================= */
+
+
+.conversation-section {
+    position: relative;
+
+    width: 100%;
+
+    min-height:
+        150vh;
+
+    padding:
+        clamp(
+            90px,
+            10vw,
+            170px
+        )
+        5vw
+        clamp(
+            140px,
+            15vw,
+            240px
+        );
+
+    background:
+        var(--acid);
+
+    overflow:
+        hidden;
+}
+
+
+
+/* =========================================================
+   DESORDEN SOCIAL GIGANTE / CASI INVISIBLE
+========================================================= */
+
+
+.conversation-ghost {
+    position: absolute;
+
+    z-index: 0;
+
+    left: -3vw;
+
+    top: 22%;
+
+    color:
+        var(--red);
+
+    opacity:
+        0.045;
+
+    font-size:
+        clamp(
+            120px,
+            20vw,
+            360px
+        );
+
+    font-weight:
+        700;
+
+    line-height:
+        0.72;
+
+    letter-spacing:
+        -0.1em;
+
+    white-space:
+        nowrap;
+
+    pointer-events:
+        none;
+}
+
+
+
+/* =========================================================
+   MENSAJES
+========================================================= */
+
+
+.conversation-stream {
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    min-height:
+        85vh;
+
+    display: flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        clamp(
+            60px,
+            8vw,
+            125px
+        );
+
+    padding-bottom:
+        clamp(
+            130px,
+            14vw,
+            210px
+        );
+}
+
+
+
+/* =========================================================
+   UN MENSAJE
+
+   NO BURBUJAS.
+   NO TARJETAS.
+========================================================= */
+
+
+.chat-entry {
+    width:
+        min(
+            35ch,
+            46vw
+        );
+
+    margin-left:
+        var(--x);
+
+    color:
+        var(--red);
+
+    transition:
+        opacity 0.35s ease;
+}
+
+
+.chat-entry-name {
+    display: block;
+
+    margin-bottom:
+        7px;
+
+    font-size:
+        clamp(
+            9px,
+            0.68vw,
+            12px
+        );
+
+    font-weight:
+        500;
+
+    letter-spacing:
+        0.035em;
+
+    text-transform:
+        lowercase;
+
+    opacity:
+        0.58;
+}
+
+
+.chat-entry-message {
+    margin: 0;
+
+    font-size:
+        clamp(
+            18px,
+            1.65vw,
+            29px
+        );
+
+    font-weight:
+        400;
+
+    line-height:
+        1.05;
+
+    letter-spacing:
+        -0.025em;
+
+    overflow-wrap:
+        anywhere;
+}
+
+
+
+/* =========================================================
+   FORMULARIO
+========================================================= */
+
+
+.conversation-form {
+    position: relative;
+
+    z-index: 10;
+
+    width:
+        min(
+            760px,
+            88vw
+        );
+
+    margin:
+        clamp(
+            20px,
+            4vw,
+            70px
+        )
+        auto
+        0;
+
+    color:
+        var(--red);
+}
+
+
+/* =========================================================
+   MENSAJE
+========================================================= */
+
+
+.form-message-row {
+    display: flex;
+
+    align-items:
+        flex-end;
+
+    width: 100%;
+
+    gap:
+        15px;
+
+    border-bottom:
+        1px solid
+        var(--red);
+}
+
+
+
+.chat-message {
+    flex: 1;
+
+    min-height:
+        50px;
+
+    max-height:
+        180px;
+
+    padding:
+        9px
+        0
+        12px;
+
+    border: 0;
+
+    outline: none;
+
+    resize: none;
+
+    overflow-y:
+        auto;
+
+    background:
+        transparent;
+
+    color:
+        var(--red);
+
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size:
+        clamp(
+            19px,
+            1.7vw,
+            28px
+        );
+
+    line-height:
+        1.08;
+
+    border-radius:
+        0;
+}
+
+
+.chat-message::placeholder {
+    color:
+        var(--red);
+
+    opacity:
+        0.32;
+}
+
+
+
+/* =========================================================
+   SEND
+========================================================= */
+
+
+.chat-send {
+    flex:
+        0 0 auto;
+
+    margin-bottom:
+        10px;
+
+    border: 0;
+
+    outline: 0;
+
+    background:
+        transparent;
+
+    color:
+        var(--red);
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size:
+        28px;
+
+    line-height: 1;
+
+    opacity:
+        0.75;
+}
+
+
+
+/* =========================================================
+   HONEYPOT
+========================================================= */
+
+
+.website-field {
+    position: absolute !important;
+
+    left: -99999px !important;
+
+    width: 1px !important;
+
+    height: 1px !important;
+
+    opacity: 0 !important;
+
+    pointer-events:
+        none !important;
+}
+
+
+
+/* =========================================================
+   MENSAJE QUE ACABA DE ENTRAR
+========================================================= */
+
+
+.chat-entry.is-new {
+    animation:
+        message-arrive
+        0.65s
+        ease
+        both;
+}
+
+
+@keyframes message-arrive {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+
+}
+
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+
+@media (max-width: 980px) {
+
+
+    .interviews-scroll {
+        height:
+            245vh;
+    }
+
+
+    #faceCanvas {
+        width:
+            95vw;
+
+        top:
+            8vh;
+    }
+
+
+    .talk {
+        top:
+            7vh;
+
+        right:
+            6vw;
+
+        width:
+            54vw;
+    }
+
+
+    .talk h1 {
+        font-size:
+            clamp(
+                34px,
+                7vw,
+                62px
+            );
+    }
+
+
+    .chat-entry {
+        width:
+            min(
+                35ch,
+                56vw
+            );
+    }
+
+}
+
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+
+@media (max-width: 640px) {
+
+
+    .back-arrow {
+        top:
+            10px;
+
+        left:
+            12px;
+
+        font-size:
+            28px;
+    }
+
+
+    .interviews-scroll {
+        height:
+            225vh;
+    }
+
+
+    #faceCanvas {
+        width:
+            124vw;
+
+        top:
+            10vh;
+    }
+
+
+    .talk {
+        top:
+            8vh;
+
+        right:
+            5vw;
+
+        width:
+            72vw;
+    }
+
+
+    .talk h1 {
+        font-size:
+            11vw;
+
+        line-height:
+            0.92;
+    }
+
+
+    .ghost {
+        font-size:
+            14px;
+    }
+
+
+    /* conversación */
+
+    .conversation-section {
+        min-height:
+            130vh;
+
+        padding:
+            75px
+            6vw
+            130px;
+    }
+
+
+    .conversation-stream {
+        gap:
+            75px;
+
+        padding-bottom:
+            110px;
+    }
+
+
+    .chat-entry {
+        width:
+            67vw;
+
+        /*
+            JS seguirá cambiando --x,
+            pero lo mantenemos dentro
+            del viewport.
+        */
+    }
+
+
+    .chat-entry-name {
+        font-size:
+            9px;
+    }
+
+
+    .chat-entry-message {
+        font-size:
+            19px;
+    }
+
+
+    .conversation-form {
+        width:
+            100%;
+    }
+
+
+    .chat-message {
+        font-size:
+            20px;
+    }
+
+
+    .conversation-ghost {
+        top:
+            29%;
+
+        font-size:
+            37vw;
+    }
+
+}
+
+
+
+/* =========================================================
+   CURSOR
+========================================================= */
+
+
+@media (hover: hover) {
+
+
+    html,
+    body,
+    body *,
+    a,
+    button,
+    textarea,
+    input {
+        cursor:
+            none !important;
+    }
+
+
+    .site-cursor {
+        position:
+            fixed;
+
+        top: 0;
+        left: 0;
+
+        z-index:
+            2147483647;
+
+        width:
+            130px;
+
+        height:
+            130px;
+
+        pointer-events:
+            none;
+
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+
+        opacity:
+            0;
+
+        visibility:
+            hidden;
+
+        mix-blend-mode:
+            difference;
+    }
+
+
+    .site-cursor.is-visible {
+        opacity:
+            1;
+
+        visibility:
+            visible;
+    }
+
+
+    .site-cursor img {
+        display:
+            block;
+
+        width:
+            100%;
+
+        height:
+            100%;
+
+        object-fit:
+            contain;
+
+        filter:
+            brightness(0)
+            invert(1);
+    }
+
+}
+
+
+@media (hover: none) {
+
+    .site-cursor {
+        display:
+            none;
+    }
+
+}

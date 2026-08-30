@@ -1,0 +1,744 @@
+/* =========================================================
+   DESORDEN SOCIAL — MENÚ COMPACTO 3D
+
+   Idea:
+   - carpetas más pequeñas
+   - mucho más negro alrededor
+   - solo la PESTAÑA activa el hover
+   - el cuerpo de la carpeta no atrapa el cursor
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    overflow: hidden;
+
+    background: #111111;
+    color: #111111;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    color: inherit;
+    font: inherit;
+}
+
+
+/* =========================================================
+   VOLVER
+========================================================= */
+
+.menu-home {
+    position: fixed;
+
+    top: 22px;
+    left: 24px;
+
+    z-index: 30000;
+
+    color: #ffffff;
+
+    font-family: "Times New Roman", Times, serif;
+    font-size: 30px;
+    line-height: 1;
+
+    opacity: .62;
+
+    transition:
+        opacity .2s ease,
+        transform .2s ease;
+}
+
+.menu-home:hover {
+    opacity: 1;
+    transform: translateX(-4px);
+}
+
+
+/* =========================================================
+   ESCENARIO
+========================================================= */
+
+.menu-stage {
+    width: 100vw;
+    height: 100vh;
+
+    display: grid;
+    place-items: center;
+
+    overflow: hidden;
+
+    perspective: 1600px;
+}
+
+.menu-stack {
+    --folder-step: clamp(92px, 11vh, 108px);
+
+    position: relative;
+
+    /*
+       Mucho más pequeño que antes:
+       deja negro visible a ambos lados y arriba/abajo.
+    */
+    width: min(860px, 76vw);
+    height: min(760px, 84vh);
+
+    transform-style: preserve-3d;
+
+    transform:
+        rotateX(7deg)
+        rotateY(-3deg);
+}
+
+
+/* =========================================================
+   CARPETAS
+========================================================= */
+
+.menu-folder {
+    position: absolute;
+
+    left: 50%;
+    top: calc(var(--i) * var(--folder-step));
+
+    width: calc(100% - (var(--i) * 12px));
+    height: clamp(300px, 39vh, 350px);
+
+    z-index: calc(10 + var(--i));
+
+    display: block;
+
+    border: 0;
+    padding: 0;
+
+    background: transparent;
+
+    text-align: left;
+
+    /*
+       MUY IMPORTANTE:
+       el cuerpo NO captura el cursor.
+       Solo la pestaña lo hace.
+    */
+    pointer-events: none;
+
+    transform:
+        translateX(-50%)
+        translateZ(calc(var(--i) * 20px))
+        rotateZ(var(--tilt));
+
+    transform-origin:
+        center top;
+
+    transition:
+        transform .34s cubic-bezier(.2,.82,.2,1),
+        filter .34s ease;
+}
+
+
+/* =========================================================
+   ABIERTO / PREVIEW
+
+   Solo menu.js añade .is-open cuando el cursor
+   está realmente sobre la pestaña.
+========================================================= */
+
+.menu-folder.is-open {
+    z-index: 1000;
+
+    transform:
+        translateX(-50%)
+        translateY(-24px)
+        translateZ(105px)
+        rotateX(-3deg)
+        rotateZ(0deg)
+        scale(1.018);
+
+    filter:
+        drop-shadow(
+            0 28px 22px
+            rgba(0,0,0,.34)
+        );
+}
+
+
+/* =========================================================
+   CUERPO
+========================================================= */
+
+.folder-face {
+    position: absolute;
+
+    inset: 40px 0 0;
+
+    overflow: hidden;
+
+    border:
+        1.5px solid
+        rgba(0,0,0,.78);
+
+    border-radius:
+        27px
+        27px
+        17px
+        17px;
+
+    transform:
+        perspective(1200px)
+        rotateX(5deg);
+
+    transform-origin:
+        top center;
+
+    box-shadow:
+        0 3px 0 rgba(255,255,255,.20) inset,
+        0 9px 0 rgba(0,0,0,.21),
+        0 17px 0 rgba(0,0,0,.09),
+        0 28px 31px rgba(0,0,0,.24);
+
+    transition:
+        transform .34s cubic-bezier(.2,.82,.2,1),
+        box-shadow .34s ease;
+}
+
+.folder-face::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    z-index: 10;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.21) 0%,
+            rgba(255,255,255,0) 16%,
+            rgba(0,0,0,0) 76%,
+            rgba(0,0,0,.08) 100%
+        );
+}
+
+.menu-folder.is-open .folder-face {
+    transform:
+        perspective(1200px)
+        rotateX(-2deg);
+
+    box-shadow:
+        0 3px 0 rgba(255,255,255,.27) inset,
+        0 11px 0 rgba(0,0,0,.23),
+        0 22px 0 rgba(0,0,0,.09),
+        0 39px 44px rgba(0,0,0,.33);
+}
+
+
+/* =========================================================
+   PESTAÑA
+
+   Esta es la ÚNICA zona que captura el cursor.
+========================================================= */
+
+.folder-tab {
+    position: absolute;
+
+    top: 0;
+    right: clamp(18px, 4vw, 50px);
+
+    z-index: 30;
+
+    min-width:
+        clamp(
+            135px,
+            17vw,
+            205px
+        );
+
+    height: 68px;
+
+    display: grid;
+    place-items: center;
+
+    padding: 0 22px;
+
+    border:
+        1.5px solid
+        rgba(0,0,0,.78);
+
+    border-bottom: 0;
+
+    border-radius:
+        28px
+        28px
+        0
+        0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size:
+        clamp(
+            19px,
+            2.35vw,
+            31px
+        );
+
+    font-weight: 700;
+
+    letter-spacing: -.045em;
+
+    text-transform: lowercase;
+
+    pointer-events: auto;
+
+    box-shadow:
+        0 -1px 0 rgba(255,255,255,.28) inset,
+        7px 0 0 rgba(0,0,0,.08);
+
+    transform:
+        perspective(900px)
+        rotateX(3deg);
+
+    transform-origin:
+        bottom center;
+
+    transition:
+        transform .34s ease,
+        box-shadow .34s ease;
+}
+
+.menu-folder.is-open .folder-tab {
+    transform:
+        perspective(900px)
+        rotateX(-4deg)
+        translateY(-4px);
+
+    box-shadow:
+        0 -1px 0 rgba(255,255,255,.34) inset,
+        10px 6px 0 rgba(0,0,0,.10);
+}
+
+
+/* =========================================================
+   CONTENIDO
+========================================================= */
+
+.folder-copy {
+    position: absolute;
+
+    left: clamp(22px, 4.5vw, 55px);
+    top: clamp(40px, 6vh, 65px);
+
+    z-index: 3;
+
+    width: min(430px, 56%);
+}
+
+.folder-kicker {
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: 7px;
+    font-weight: 700;
+
+    letter-spacing: .16em;
+
+    text-transform: uppercase;
+
+    opacity: .47;
+}
+
+.folder-copy h2 {
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size:
+        clamp(
+            47px,
+            7vw,
+            88px
+        );
+
+    font-weight: 700;
+
+    line-height: .78;
+
+    letter-spacing: -.07em;
+
+    text-transform: lowercase;
+}
+
+.folder-copy p {
+    max-width: 235px;
+
+    margin-top: 17px;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: 9px;
+    line-height: 1.25;
+
+    opacity: .6;
+}
+
+
+/* =========================================================
+   OBJETOS
+========================================================= */
+
+.folder-object {
+    position: absolute;
+
+    z-index: 2;
+
+    display: block;
+
+    object-fit: contain;
+
+    pointer-events: none;
+
+    filter:
+        drop-shadow(
+            0 9px 7px
+            rgba(0,0,0,.08)
+        );
+
+    transition:
+        transform .34s cubic-bezier(.2,.82,.2,1),
+        filter .34s ease;
+}
+
+.menu-folder.is-open .folder-object {
+    transform:
+        translateY(-7px)
+        rotate(-3deg)
+        scale(1.06);
+
+    filter:
+        drop-shadow(
+            0 17px 12px
+            rgba(0,0,0,.14)
+        );
+}
+
+.folder-object-cara {
+    right: 6%;
+    top: 11%;
+    width: 175px;
+}
+
+.folder-object-mano {
+    right: -1%;
+    top: 10%;
+    width: 290px;
+}
+
+.folder-object-ds {
+    right: 4%;
+    top: 10%;
+    width: 235px;
+}
+
+.folder-object-kiwi {
+    right: 7%;
+    top: 12%;
+    width: 185px;
+}
+
+.folder-object-nina {
+    right: 8%;
+    top: 13%;
+    width: 130px;
+}
+
+
+/* =========================================================
+   COLORES
+========================================================= */
+
+.folder-desorden .folder-face,
+.folder-desorden .folder-tab {
+    background: #c5daed;
+}
+
+.folder-social .folder-face,
+.folder-social .folder-tab {
+    background: #49b64e;
+}
+
+.folder-revista .folder-face,
+.folder-revista .folder-tab {
+    background: #ffec58;
+}
+
+.folder-kiwi .folder-face,
+.folder-kiwi .folder-tab {
+    background: #f18b52;
+}
+
+.folder-info .folder-face,
+.folder-info .folder-tab {
+    background: #ff7aa8;
+}
+
+
+/* =========================================================
+   DETALLE DE PAPEL
+========================================================= */
+
+.folder-face::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 48px;
+
+    height: 1px;
+
+    z-index: 12;
+
+    background:
+        rgba(0,0,0,.32);
+}
+
+
+.is-pending {
+    cursor: default;
+}
+
+.is-pending .folder-copy p {
+    font-style: italic;
+}
+
+
+/* =========================================================
+   CURSOR
+========================================================= */
+
+@media (pointer: fine) {
+
+    html,
+    body,
+    body *,
+    a,
+    button {
+        cursor: none !important;
+    }
+
+    .custom-cursor {
+        position: fixed;
+
+        top: 0;
+        left: 0;
+
+        z-index: 40000;
+
+        width: 160px;
+        height: 160px;
+
+        pointer-events: none;
+
+        transform:
+            translate(-50%, -50%);
+
+        transition:
+            width .18s ease,
+            height .18s ease,
+            transform .18s ease;
+
+        will-change:
+            left,
+            top,
+            transform;
+    }
+
+    .custom-cursor img {
+        display: block;
+
+        width: 100%;
+        height: 100%;
+
+        object-fit: contain;
+    }
+
+    .custom-cursor.is-hovering {
+        width: 110px;
+        height: 110px;
+
+        transform:
+            translate(-50%, -50%)
+            rotate(10deg);
+    }
+
+    .custom-cursor.is-clicking {
+        transform:
+            translate(-50%, -50%)
+            scale(.78);
+    }
+}
+
+@media (pointer: coarse) {
+
+    .custom-cursor {
+        display: none;
+    }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .menu-stack {
+        width: min(790px, 82vw);
+        height: 82vh;
+    }
+
+    .menu-folder {
+        height: 330px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 620px) {
+
+    .menu-home {
+        top: 17px;
+        left: 17px;
+    }
+
+    .menu-stage {
+        align-items: center;
+    }
+
+    .menu-stack {
+        --folder-step: clamp(72px, 9.5vh, 83px);
+
+        width: calc(100vw - 38px);
+        height: 82vh;
+
+        transform:
+            rotateX(3deg);
+    }
+
+    .menu-folder {
+        width:
+            calc(
+                100% -
+                (var(--i) * 5px)
+            );
+
+        height: 300px;
+    }
+
+    .folder-tab {
+        right: 0;
+
+        min-width: 135px;
+        height: 59px;
+
+        border-radius:
+            25px
+            25px
+            0
+            0;
+
+        font-size: 21px;
+    }
+
+    .folder-face {
+        inset: 36px 0 0;
+
+        border-radius:
+            24px
+            24px
+            16px
+            16px;
+    }
+
+    .folder-copy {
+        left: 17px;
+        top: 42px;
+
+        width: 60%;
+    }
+
+    .folder-copy h2 {
+        font-size:
+            clamp(
+                48px,
+                15vw,
+                69px
+            );
+    }
+
+    .folder-copy p {
+        max-width: 165px;
+
+        font-size: 8px;
+    }
+
+    .folder-object-cara {
+        right: 1%;
+        width: 115px;
+    }
+
+    .folder-object-mano {
+        right: -10%;
+        width: 185px;
+    }
+
+    .folder-object-ds {
+        right: -4%;
+        width: 150px;
+    }
+
+    .folder-object-kiwi {
+        right: -2%;
+        width: 125px;
+    }
+
+    .folder-object-nina {
+        right: 3%;
+        width: 90px;
+    }
+}
+

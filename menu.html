@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Menú — Desorden Social</title>
+
+    <link rel="stylesheet" href="menu.css">
+    <link rel="stylesheet" href="bee-pollen.css">
+    <link rel="stylesheet" href="cursor-global.css">
+</head>
+
+<body>
+
+    <a
+        href="index.html"
+        class="menu-home"
+        aria-label="Volver a inicio"
+    >
+        ←
+    </a>
+
+    <main class="menu-stage">
+
+        <div class="menu-stack" id="menuStack">
+
+            <!-- DESORDEN -->
+            <a
+                href="cara.html"
+                class="menu-folder folder-desorden"
+                data-menu-item
+                style="--i:0; --tilt:-0.7deg;"
+            >
+                <span class="folder-tab">
+                    desorden
+                </span>
+
+                <div class="folder-face">
+
+                    <div class="folder-copy">
+                        <span class="folder-kicker">
+                            
+                        </span>
+
+                        <h2>
+                            desorden
+                        </h2>
+
+                        <p>
+                            entra por conexiones
+                        </p>
+                    </div>
+
+                    <img
+                        src="assets/icons/cara.svg"
+                        class="folder-object folder-object-cara"
+                        alt=""
+                    >
+
+                </div>
+            </a>
+
+
+            <!-- SOCIAL -->
+            <a
+                href="usuarios.html"
+                class="menu-folder folder-social"
+                data-menu-item
+                style="--i:1; --tilt:0.45deg;"
+            >
+                <span class="folder-tab">
+                    social
+                </span>
+
+                <div class="folder-face">
+
+                    <div class="folder-copy">
+                        <span class="folder-kicker">
+                            
+                        </span>
+
+                        <h2>
+                            social
+                        </h2>
+
+                        <p>
+                            usuarios y sus aportaciones
+                        </p>
+                    </div>
+
+                    <img
+                        src="assets/icons/mano.svg"
+                        class="folder-object folder-object-mano"
+                        alt=""
+                    >
+
+                </div>
+            </a>
+
+
+            <!-- REVISTA -->
+            <a
+                href="revista.html"
+                class="menu-folder folder-revista"
+                data-menu-item
+                style="--i:2; --tilt:-0.35deg;"
+            >
+                <span class="folder-tab">
+                    revista
+                </span>
+
+                <div class="folder-face">
+
+                    <div class="folder-copy">
+                        <span class="folder-kicker">
+                            
+                        </span>
+
+                        <h2>
+                            revista
+                        </h2>
+
+                        <p>
+                            ediciones, piezas y páginas
+                        </p>
+                    </div>
+
+                    <img
+                        src="assets/images/ds-2-2-1.png"
+                        class="folder-object folder-object-ds"
+                        alt=""
+                    >
+
+                </div>
+            </a>
+
+
+           <!-- KIWI / ENTREVISTAS -->
+<a
+    href="entrevistas.html"
+    class="menu-folder folder-kiwi"
+    data-menu-item
+    style="--i:3; --tilt:0.65deg;"
+    aria-label="Entrevistas"
+>
+    <span class="folder-tab">
+        ???
+    </span>
+
+    <div class="folder-face">
+
+        <div class="folder-copy">
+
+            <span class="folder-kicker"></span>
+
+            <h2>
+                ???
+            </h2>
+
+            <p>
+                let's talk to each other
+            </p>
+
+        </div>
+
+        <img
+            src="assets/images/kiwi.png"
+            class="folder-object folder-object-kiwi"
+            alt=""
+        >
+
+    </div>
+</a>
+
+
+            <!-- INFO -->
+            <a
+                href="about.html"
+                class="menu-folder folder-info"
+                data-menu-item
+                style="--i:4; --tilt:-0.45deg;"
+            >
+                <span class="folder-tab">
+                    info
+                </span>
+
+                <div class="folder-face">
+
+                    <div class="folder-copy">
+                        <span class="folder-kicker">
+                            
+                        </span>
+
+                        <h2>
+                            info
+                        </h2>
+
+                        <p>
+                            sobre Desorden Social
+                        </p>
+                    </div>
+
+                    <img
+                        src="assets/icons/nina-con-zapatos.svg"
+                        class="folder-object folder-object-nina"
+                        alt=""
+                    >
+
+                </div>
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <div
+        class="custom-cursor"
+        id="customCursor"
+        aria-hidden="true"
+    >
+        <img
+            src="assets/cursor/cursor.svg"
+            alt=""
+        >
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="user-session.js"></script>
+
+    <script src="menu.js"></script>
+    <script src="cursor-contrast.js"></script>
+    <script src="bee-pollen.js"></script>
+
+</body>
+</html>

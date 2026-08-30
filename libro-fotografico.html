@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Libro fotográfico — Desorden Social</title>
+
+    <link rel="stylesheet" href="libro.css">
+</head>
+
+<body class="book-body">
+
+    <!-- CURSOR PERSONALIZADO -->
+    <div
+        class="custom-cursor"
+        aria-hidden="true"
+    ></div>
+
+
+    <!-- VOLVER A FOTOGRAFÍA -->
+    <a
+        href="revista.html"
+        class="book-back"
+        aria-label="Volver a Revista"
+    >
+        ←
+    </a>
+
+
+    <!-- CONTADOR -->
+    <div
+        class="book-counter"
+        aria-live="polite"
+    >
+        <span id="current-page">01</span>
+        <span>/</span>
+        <span>23</span>
+    </div>
+
+
+    <main class="book-reader">
+
+        <!-- ZONA IZQUIERDA PARA RETROCEDER -->
+        <button
+            type="button"
+            class="book-click-zone book-click-zone-left"
+            id="previous-zone"
+            aria-label="Página anterior"
+        ></button>
+
+
+        <!-- LIBRO -->
+         
+       <div class="book-spread" id="book-spread">
+
+    <div class="book-page book-page-left">
+        <img
+            id="left-page"
+            src=""
+            alt=""
+            draggable="false"
+        >
+    </div>
+
+    <div class="book-page book-page-right">
+        <img
+            id="right-page"
+            src=""
+            alt=""
+            draggable="false"
+        >
+    </div>
+
+    <div
+        class="book-turning-page"
+        id="turning-page"
+        aria-hidden="true"
+    >
+        <img
+            id="turning-page-image"
+            src=""
+            alt=""
+            draggable="false"
+        >
+    </div>
+
+</div>
+
+
+        <!-- ZONA DERECHA PARA AVANZAR -->
+        <button
+            type="button"
+            class="book-click-zone book-click-zone-right"
+            id="next-zone"
+            aria-label="Página siguiente"
+        ></button>
+
+    </main>
+
+
+    <!-- CONTROLES INFERIORES -->
+    <nav
+        class="book-controls"
+        aria-label="Controles del libro"
+    >
+        <button
+            type="button"
+            class="book-arrow"
+            id="previous-button"
+            aria-label="Página anterior"
+        >
+            ←
+        </button>
+
+        <button
+            type="button"
+            class="book-arrow"
+            id="next-button"
+            aria-label="Página siguiente"
+        >
+            →
+        </button>
+    </nav>
+
+
+    <script src="libro.js"></script>
+
+</body>
+
+</html>

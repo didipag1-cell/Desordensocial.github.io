@@ -1,0 +1,685 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    background: #f7ecec;
+    color: #650000;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.project-header {
+    width: 100%;
+    padding: 32px 4vw;
+}
+
+.back-link {
+    color: inherit;
+    text-decoration: none;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    transition: opacity 0.25s ease;
+}
+
+.back-link:hover {
+    opacity: 0.55;
+}
+
+.project-page {
+    min-height: 90vh;
+    padding: 8vh 8vw 16vh;
+}
+
+.project-number {
+    margin-bottom: 4vh;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+}
+
+h1 {
+    max-width: 1100px;
+    font-family: "Times New Roman", Times, serif;
+    font-size: clamp(80px, 15vw, 230px);
+    font-weight: normal;
+    line-height: 0.8;
+}
+
+.project-intro {
+    max-width: 700px;
+    margin-top: 10vh;
+    margin-left: auto;
+
+    font-family: "Times New Roman", Times, serif;
+    font-size: clamp(30px, 4vw, 60px);
+    line-height: 1;
+}
+
+.temporary {
+    margin-top: 30vh;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+@media (max-width: 700px) {
+
+    .project-header {
+        padding: 24px;
+    }
+
+    .project-page {
+        padding: 8vh 24px 14vh;
+    }
+
+    .project-intro {
+        margin-top: 8vh;
+    }
+}
+/* ABOUT */
+
+.about-layout {
+    display: grid;
+    grid-template-columns: 1.4fr 0.8fr;
+    gap: clamp(50px, 10vw, 160px);
+    align-items: end;
+
+    margin-top: 9vh;
+}
+
+.about-layout .project-intro {
+    margin: 0;
+}
+
+.about-text {
+    max-width: 460px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: clamp(17px, 1.5vw, 23px);
+    line-height: 1.45;
+}
+
+
+/* ÍNDICE */
+
+.menu-list {
+    margin-top: 12vh;
+    border-top: 1px solid currentColor;
+}
+
+.menu-list a {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    align-items: center;
+
+    padding: 24px 0;
+    border-bottom: 1px solid currentColor;
+
+    color: inherit;
+    text-decoration: none;
+
+    transition:
+        padding-left 0.35s ease,
+        opacity 0.35s ease;
+}
+
+.menu-list span {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+}
+
+.menu-list strong {
+    font-family: "Times New Roman", Times, serif;
+    font-size: clamp(38px, 6vw, 88px);
+    font-weight: normal;
+    line-height: 0.9;
+}
+
+.menu-list a:hover {
+    padding-left: 24px;
+    opacity: 0.6;
+}
+
+
+@media (max-width: 700px) {
+
+    .about-layout {
+        grid-template-columns: 1fr;
+        gap: 8vh;
+    }
+
+    .menu-list a {
+        grid-template-columns: 48px 1fr;
+        padding: 20px 0;
+    }
+
+    .menu-list a:hover {
+        padding-left: 10px;
+    }
+}
+
+/* ==================================================
+   LANDING — PINTURA
+================================================== */
+
+.paintings-body {
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+
+    background: #f3f0e9;
+    color: #151515;
+}
+
+
+/* CONTENEDOR GENERAL */
+
+.paintings-page {
+    width: min(1280px, 92vw);
+    margin: 0 auto;
+    padding: 110px 0 160px;
+}
+
+
+/* GRUPOS DE OBRAS */
+
+.painting-group {
+    position: relative;
+    width: 100%;
+}
+
+
+/* ==================================================
+   PRIMERA VISTA
+================================================== */
+
+.painting-group-intro {
+    min-height: 1250px;
+}
+
+
+/* Demasiado para una sala según mi mamá */
+
+.painting-01 {
+    position: absolute;
+
+    top: 0;
+    left: 4%;
+
+    width: 47%;
+}
+
+
+/* Cuaderno rojo */
+
+.painting-02 {
+    position: absolute;
+
+    top: 75px;
+    right: 5%;
+
+    width: 25%;
+}
+
+
+/* Título grande de la landing */
+
+.paintings-title {
+    position: absolute;
+
+    top: 430px;
+    left: 52%;
+
+    width: min(36%, 470px);
+    height: auto;
+
+    transform: translateX(-5%);
+
+    z-index: 3;
+}
+
+
+/* Cera sobre cartón */
+
+.painting-03 {
+    position: absolute;
+
+    top: 650px;
+    left: 0;
+
+    width: 39%;
+}
+
+/* ==================================================
+   SEGUNDA ZONA — UNA OBRA
+================================================== */
+
+.painting-group-single {
+    min-height: 1050px;
+}
+
+.painting-05 {
+    position: absolute;
+
+    top: 180px;
+    left: 14%;
+
+    width: 48%;
+}
+
+
+/* ==================================================
+   TERCERA ZONA
+================================================== */
+
+.painting-group-pair {
+    min-height: 1000px;
+}
+
+.painting-06 {
+    position: absolute;
+
+    top: 120px;
+    right: 8%;
+
+    width: 40%;
+}
+
+
+/* ==================================================
+   IMÁGENES
+================================================== */
+
+.painting-card {
+    z-index: 2;
+}
+
+.painting-view {
+    position: relative;
+    width: 100%;
+
+    overflow: hidden;
+}
+
+.painting-main {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    transition:
+        opacity 0.45s ease,
+        transform 0.7s ease;
+}
+
+
+/* Movimiento muy leve al explorar una obra */
+
+.painting-view:hover .painting-main {
+    transform: scale(1.015);
+}
+
+
+/* TÍTULOS SVG DE LAS OBRAS */
+
+.painting-caption-image {
+    display: block;
+
+    width: auto;
+    max-width: 90%;
+    max-height: 42px;
+
+    margin: 12px auto 0;
+}
+
+
+/* Algunos títulos pueden alinearse de forma diferente */
+
+.painting-02 .painting-caption-image {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+
+/* ==================================================
+   BOTÓN PARA VOLVER
+================================================== */
+
+.painting-home-link {
+    position: fixed;
+
+    top: 25px;
+    left: 27px;
+
+    z-index: 20000;
+
+    color: #631010;
+    text-decoration: none;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 22px;
+}
+
+
+/* ==================================================
+   SELECTOR DE IDIOMA
+================================================== */
+
+.language-switcher {
+    position: fixed;
+
+    top: 20px;
+    right: 24px;
+
+    z-index: 20000;
+
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 8px 12px;
+
+    background: rgba(243, 240, 233, 0.9);
+    border: 1px solid rgba(99, 16, 16, 0.35);
+    border-radius: 999px;
+
+    color: #631010;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+
+    backdrop-filter: blur(8px);
+}
+
+.lang-button {
+    appearance: none;
+
+    border: 0;
+    padding: 2px 1px;
+
+    background: transparent;
+    color: inherit;
+
+    font: inherit;
+
+    opacity: 0.42;
+}
+
+.lang-button:hover,
+.lang-button.active {
+    opacity: 1;
+}
+
+
+/* ==================================================
+   CURSOR PERSONALIZADO
+================================================== */
+
+.custom-cursor {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 80px;
+    height: 80px;
+
+    z-index: 30000;
+
+    pointer-events: none;
+
+    background-image: url("assets/cursor/cursor.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+
+    transform: translate(-50%, -50%);
+}
+
+@media (pointer: fine) {
+    .paintings-body,
+    .painting-home-link,
+    .language-switcher,
+    .language-switcher *,
+    .painting-view {
+        cursor: none !important;
+    }
+}
+
+
+/* ==================================================
+   TABLET Y VENTANA ESTRECHA
+================================================== */
+
+@media (max-width: 900px) {
+
+    .paintings-page {
+        width: 88vw;
+        padding-top: 120px;
+    }
+
+    .painting-group-intro {
+        min-height: auto;
+
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 90px 45px;
+        align-items: start;
+    }
+
+    .painting-group-intro .painting-card,
+    .paintings-title {
+        position: static;
+
+        width: 100%;
+
+        top: auto;
+        right: auto;
+        bottom: auto;
+        left: auto;
+
+        transform: none;
+    }
+
+    .paintings-title {
+        grid-column: 1 / -1;
+
+        width: min(360px, 62vw);
+        margin: 0 auto;
+    }
+
+    .painting-group-single,
+    .painting-group-pair {
+        min-height: auto;
+        margin-top: 180px;
+    }
+
+    .painting-group-single .painting-card,
+    .painting-group-pair .painting-card {
+        position: static;
+
+        width: 68%;
+        margin: 0 auto;
+    }
+
+    .painting-group-pair .painting-card {
+        margin-left: auto;
+        margin-right: 0;
+    }
+}
+
+
+/* ==================================================
+   MÓVIL
+================================================== */
+
+@media (max-width: 600px) {
+
+    .paintings-page {
+        width: 86vw;
+        padding-top: 110px;
+    }
+
+    .painting-group-intro {
+        grid-template-columns: 1fr;
+        gap: 95px;
+    }
+
+    .paintings-title {
+        grid-column: auto;
+
+        width: min(290px, 75vw);
+    }
+
+    .painting-group-single,
+    .painting-group-pair {
+        margin-top: 160px;
+    }
+
+    .painting-group-single .painting-card,
+    .painting-group-pair .painting-card {
+        width: 100%;
+        margin: 0;
+    }
+
+    .painting-caption-image {
+        max-height: 32px;
+    }
+}
+/* ==================================================
+   ZONA FINAL — JAM
+================================================== */
+
+.painting-group-final {
+    position: relative;
+    min-height: 950px;
+}
+
+.painting-final-jam {
+    position: absolute;
+
+    top: 180px;
+    left: 50%;
+
+    width: 38%;
+
+    transform: translateX(-50%);
+}
+@media (max-width: 900px) {
+    .painting-group-final {
+        min-height: auto;
+        margin-top: 180px;
+    }
+
+    .painting-final-jam {
+        position: static;
+
+        width: 68%;
+        margin: 0 auto;
+
+        transform: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .painting-group-final {
+        margin-top: 160px;
+    }
+
+    .painting-final-jam {
+        width: 100%;
+    }
+}
+/* El cursor sigue visible aunque la ventana sea pequeña */
+
+@media (pointer: fine) {
+    .custom-cursor {
+        display: block !important;
+    }
+}
+
+/* Solo se oculta en móviles y pantallas táctiles reales */
+
+@media (pointer: coarse) {
+    .custom-cursor {
+        display: none !important;
+    }
+}
+
+/* ==================================================
+   DETALLES DE LAS PINTURAS
+================================================== */
+
+.painting-view {
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+}
+
+.painting-main,
+.painting-detail {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.painting-main {
+    position: relative;
+    z-index: 1;
+
+    transition:
+        transform 0.7s ease,
+        opacity 0.35s ease;
+}
+
+.painting-detail {
+    position: absolute;
+    inset: 0;
+
+    z-index: 2;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.8s ease;
+
+    transform: scale(1.015);
+}
+
+.painting-detail.is-visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Pequeño movimiento al explorar la obra */
+
+.painting-view:hover .painting-main {
+    transform: scale(1.01);
+}
+/* Oculta la obra principal mientras aparece un detalle */
+
+.painting-view.showing-detail .painting-main {
+    opacity: 0;
+}
+
+/* El fondo de la zona queda limpio aunque cambie la proporción */
+
+.painting-view {
+    background: #f3f0e9;
+}

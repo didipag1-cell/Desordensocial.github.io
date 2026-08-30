@@ -1,0 +1,840 @@
+/* =========================================================
+   DESORDEN SOCIAL — LIBRO FOTOGRÁFICO
+========================================================= */
+
+:root {
+    --book-background: #ded8cc;
+    --book-text: #241f1d;
+    --paper: #f4f0e7;
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+
+html {
+    background: var(--book-background);
+}
+
+
+body,
+.book-body {
+    margin: 0;
+
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+
+    overflow: hidden;
+
+    background: var(--book-background);
+    color: var(--book-text);
+}
+
+
+img {
+    display: block;
+}
+
+
+/* =========================================================
+   VOLVER
+========================================================= */
+
+.book-back {
+    position: fixed;
+
+    top: 22px;
+    left: 26px;
+
+    z-index: 200;
+
+    color: inherit;
+
+    text-decoration: none;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: 26px;
+
+    line-height: 1;
+}
+
+
+/* =========================================================
+   CONTADOR
+========================================================= */
+
+.book-counter {
+    position: fixed;
+
+    top: 25px;
+    right: 28px;
+
+    z-index: 200;
+
+    display: flex;
+
+    gap: 7px;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: 12px;
+
+    line-height: 1;
+
+    letter-spacing: 0.12em;
+}
+
+
+/* =========================================================
+   LECTOR
+========================================================= */
+
+.book-reader {
+    position: relative;
+
+    width: 100vw;
+
+    height: 100vh;
+    height: 100dvh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding:
+        38px
+        2vw
+        36px;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   DOBLE PÁGINA
+========================================================= */
+
+.book-spread {
+    position: relative;
+
+    z-index: 10;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width:
+        min(
+            1580px,
+            94vw
+        );
+
+    height:
+        min(
+            920px,
+            90vh
+        );
+
+    perspective: 2200px;
+
+    transform-style: preserve-3d;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   PÁGINAS
+========================================================= */
+
+.book-page {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 50%;
+    height: 100%;
+
+    overflow: hidden;
+}
+
+
+.book-page img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    object-position: center;
+
+    user-select: none;
+
+    -webkit-user-drag: none;
+}
+
+
+.book-page-left {
+    transform-origin: right center;
+}
+
+
+.book-page-right {
+    transform-origin: left center;
+}
+
+
+/* =========================================================
+   SOMBRA CENTRAL
+========================================================= */
+
+.book-spread::after {
+    content: "";
+
+    position: absolute;
+
+    top: 4%;
+    bottom: 4%;
+
+    left: 50%;
+
+    width: 22px;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        linear-gradient(
+            90deg,
+
+            transparent,
+
+            rgba(
+                0,
+                0,
+                0,
+                0.085
+            ),
+
+            transparent
+        );
+
+    opacity: 0.45;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   PORTADA / ÚLTIMA PÁGINA
+========================================================= */
+
+.book-spread.single-page .book-page {
+    width:
+        min(
+            720px,
+            68vw
+        );
+}
+
+
+.book-spread.single-page .book-page-left {
+    display: none;
+}
+
+
+.book-spread.single-page::after {
+    display: none;
+}
+
+
+/* =========================================================
+   ZONAS INVISIBLES PARA PASAR PÁGINA
+========================================================= */
+
+.book-click-zone {
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+
+    z-index: 40;
+
+    width: 50vw;
+
+    margin: 0;
+    padding: 0;
+
+    border: none;
+
+    background: transparent;
+}
+
+
+.book-click-zone-left {
+    left: 0;
+}
+
+
+.book-click-zone-right {
+    right: 0;
+}
+
+
+/* =========================================================
+   CONTROLES INFERIORES
+
+   Los dejamos en HTML para no romper el JS,
+   pero no los enseñamos.
+========================================================= */
+
+.book-controls {
+    display: none !important;
+}
+
+
+/* =========================================================
+   HOJA ANIMADA
+========================================================= */
+
+.book-turning-page {
+    position: absolute;
+
+    top: 0;
+    right: 0;
+
+    z-index: 60;
+
+    display: none;
+
+    width: 50%;
+    height: 100%;
+
+    background:
+        var(--paper);
+
+    transform-style:
+        preserve-3d;
+
+    backface-visibility:
+        hidden;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   CARA FRONTAL
+========================================================= */
+
+.book-turning-page img {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 2;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    object-position: center;
+
+    backface-visibility:
+        hidden;
+
+    user-select: none;
+
+    -webkit-user-drag:
+        none;
+}
+
+
+/* =========================================================
+   REVERSO DEL PAPEL
+========================================================= */
+
+.book-turning-page::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 1;
+
+    background:
+        linear-gradient(
+            90deg,
+
+            #e8e1d5,
+
+            #f7f3eb 18%,
+
+            var(--paper)
+        );
+
+    transform:
+        rotateY(180deg);
+
+    backface-visibility:
+        hidden;
+}
+
+
+/* =========================================================
+   SOMBRA DEL PLIEGUE
+========================================================= */
+
+.book-turning-page::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 3;
+
+    background:
+        linear-gradient(
+            90deg,
+
+            rgba(
+                0,
+                0,
+                0,
+                0.22
+            ),
+
+            transparent 22%,
+
+            transparent 78%,
+
+            rgba(
+                0,
+                0,
+                0,
+                0.08
+            )
+        );
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    backface-visibility:
+        hidden;
+}
+
+
+/* =========================================================
+   GIRAR HACIA DELANTE
+========================================================= */
+
+.book-turning-page.turn-next {
+    display: block;
+
+    right: 0;
+    left: auto;
+
+    transform-origin:
+        left center;
+
+    animation:
+        turn-page-next
+        0.78s
+        cubic-bezier(
+            0.65,
+            0,
+            0.35,
+            1
+        )
+        forwards;
+}
+
+
+.book-turning-page.turn-next::after {
+    animation:
+        page-shadow
+        0.78s
+        ease
+        forwards;
+}
+
+
+/* =========================================================
+   GIRAR HACIA ATRÁS
+========================================================= */
+
+.book-turning-page.turn-previous {
+    display: block;
+
+    right: auto;
+    left: 0;
+
+    transform-origin:
+        right center;
+
+    animation:
+        turn-page-previous
+        0.78s
+        cubic-bezier(
+            0.65,
+            0,
+            0.35,
+            1
+        )
+        forwards;
+}
+
+
+.book-turning-page.turn-previous::after {
+    transform:
+        scaleX(-1);
+
+    animation:
+        page-shadow
+        0.78s
+        ease
+        forwards;
+}
+
+
+/* =========================================================
+   HOJA ÚNICA
+========================================================= */
+
+.book-turning-page.is-single {
+    right: 0;
+    left: 0;
+
+    width:
+        min(
+            720px,
+            68vw
+        );
+
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+/* =========================================================
+   ANIMACIONES
+========================================================= */
+
+@keyframes turn-page-next {
+
+    0% {
+        transform:
+            rotateY(0deg);
+    }
+
+    45% {
+        transform:
+            rotateY(-82deg);
+    }
+
+    55% {
+        transform:
+            rotateY(-98deg);
+    }
+
+    100% {
+        transform:
+            rotateY(-180deg);
+    }
+
+}
+
+
+@keyframes turn-page-previous {
+
+    0% {
+        transform:
+            rotateY(0deg);
+    }
+
+    45% {
+        transform:
+            rotateY(82deg);
+    }
+
+    55% {
+        transform:
+            rotateY(98deg);
+    }
+
+    100% {
+        transform:
+            rotateY(180deg);
+    }
+
+}
+
+
+@keyframes page-shadow {
+
+    0% {
+        opacity: 0;
+    }
+
+    42% {
+        opacity: 0.8;
+    }
+
+    58% {
+        opacity: 0.65;
+    }
+
+    100% {
+        opacity: 0;
+    }
+
+}
+
+
+/* =========================================================
+   =========================================================
+   CURSOR DESORDEN SOCIAL
+   =========================================================
+
+   IMPORTANTE:
+
+   NO usamos .custom-cursor.
+
+   El JS crea un elemento NUEVO:
+   #ds-book-cursor
+
+   Así ninguna regla antigua puede tocarlo.
+========================================================= */
+
+
+/*
+   Si el HTML todavía contiene el cursor viejo,
+   lo escondemos.
+*/
+
+.custom-cursor {
+    display: none !important;
+}
+
+
+/* =========================================================
+   NUEVO CURSOR
+========================================================= */
+
+#ds-book-cursor {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    z-index:
+        2147483647;
+
+    display: none;
+
+    width: 140px;
+    height: 140px;
+
+    margin: 0;
+    padding: 0;
+
+    pointer-events: none;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    mix-blend-mode:
+        difference;
+
+    isolation: auto;
+
+    will-change:
+        left,
+        top;
+}
+
+
+#ds-book-cursor.is-visible {
+    opacity: 1;
+
+    visibility: visible;
+}
+
+
+#ds-book-cursor img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    /*
+       La estrella queda blanca
+       antes de aplicar difference.
+    */
+
+    filter:
+        brightness(0)
+        invert(1);
+
+    pointer-events: none;
+
+    user-select: none;
+}
+
+
+/* =========================================================
+   RATÓN / TRACKPAD
+========================================================= */
+
+@media (hover: hover) {
+
+    html,
+    body,
+    body *,
+    a,
+    button,
+    .book-click-zone {
+        cursor: none !important;
+    }
+
+
+    #ds-book-cursor {
+        display: block;
+    }
+
+}
+
+
+/* =========================================================
+   TABLET / MÓVIL
+========================================================= */
+
+@media (max-width: 800px) {
+
+    .book-reader {
+        padding:
+            55px
+            2vw
+            40px;
+    }
+
+
+    .book-spread,
+    .book-spread.single-page {
+        width: 94vw;
+
+        height: 84vh;
+    }
+
+
+    .book-page,
+    .book-spread.single-page .book-page {
+        width: 100%;
+
+        height: 100%;
+    }
+
+
+    /*
+       Una sola página.
+    */
+
+    .book-page-left {
+        display: none;
+    }
+
+
+    .book-spread::after {
+        display: none;
+    }
+
+
+    .book-turning-page,
+    .book-turning-page.is-single {
+        right: 0;
+        left: 0;
+
+        width: 100%;
+
+        margin: 0;
+    }
+
+
+    .book-click-zone {
+        width: 50vw;
+    }
+
+
+    .book-back {
+        top: 18px;
+        left: 18px;
+    }
+
+
+    .book-counter {
+        top: 21px;
+        right: 18px;
+    }
+
+
+    #ds-book-cursor {
+        width: 110px;
+        height: 110px;
+    }
+
+}
+
+
+/* =========================================================
+   TOUCH REAL
+========================================================= */
+
+@media (hover: none) {
+
+    #ds-book-cursor {
+        display: none !important;
+    }
+
+}

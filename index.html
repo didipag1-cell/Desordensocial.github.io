@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Desorden Social</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bee-pollen.css">
+    <link rel="stylesheet" href="cursor-global.css">
+</head>
+
+<body>
+
+    <!-- FONDO -->
+    <div class="background-art" aria-hidden="true">
+        <img
+            src="assets/background/ornamento-vertical.svg"
+            class="background-ornament ornament-vertical"
+            alt=""
+        >
+    </div>
+
+    <p class="background-index">
+        ARCHIVE / ISSUE 01 / DESORDEN SOCIAL
+    </p>
+
+
+    <!-- PORTADA / COLLAGE -->
+    <main>
+
+        <section class="hero">
+
+            <div class="collage-canvas">
+
+                <!-- TÍTULO -->
+                <div class="titulo">
+
+                    <img
+                        src="assets/fonts/Desorden.svg"
+                        class="desorden"
+                        alt="Desorden"
+                    >
+
+                    <img
+                        src="assets/fonts/Social.svg"
+                        class="social"
+                        alt="Social"
+                    >
+
+                </div>
+
+
+                <!-- MENU / STAMP -->
+                <a
+                    href="menu.html"
+                    class="project-link menu-link"
+                    aria-label="Abrir menú"
+                >
+                    <img
+                        src="assets/icons/stamp-1.svg"
+                        class="icono stamp"
+                        alt=""
+                    >
+
+                    <span class="home-nav-label">menu</span>
+                </a>
+
+
+                <!-- INFO / NIÑA -->
+                <a
+                    href="about.html"
+                    class="project-link info-link"
+                    aria-label="Información"
+                >
+                    <img
+                        src="assets/icons/nina-con-zapatos.svg"
+                        class="icono nina"
+                        alt=""
+                    >
+
+                    <span class="home-nav-label">info</span>
+                </a>
+
+
+                <!-- CARA -->
+                <a
+                   href="cara.html"
+                   class="project-link"
+                   aria-label="Entrar"
+>
+                    <img
+                        src="assets/icons/cara.svg"
+                        class="icono cara"
+                        alt=""
+                    >
+                </a>
+
+
+                <!-- DS.2.2.1 -->
+                <a
+                    href="revista.html"
+                    class="project-link"
+                    aria-label="Ver literatura"
+                >
+                    <img
+                        src="assets/images/ds-2-2-1.png"
+                        class="icono ds-imagen"
+                        alt=""
+                    >
+                </a>
+
+
+                <!-- MANO -->
+                <a
+                    href="usuarios.html"
+                    class="project-link"
+                    aria-label="Abrir biblioteca de usuarios"
+                >
+                    <img
+                        src="assets/icons/mano.svg"
+                        class="icono mano"
+                        alt=""
+                    >
+                </a>
+
+
+                <!-- KIWI -->
+                <a
+                    href="entrevistas.html"
+                    class="project-link"
+                    aria-label="Ver ???"
+                >
+                    <img
+                        src="assets/images/kiwi.png"
+                        class="icono kiwi"
+                        alt=""
+                    >
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+  <!-- ABEJA / DEJAR POLEN -->
+<button
+    class="bee"
+    id="bee"
+    type="button"
+    aria-label="Dejar polen"
+>
+    <img
+        src="assets/icons/abeja.svg"
+        alt=""
+    >
+
+    <span class="bee-label">
+        poliniza
+    </span>
+</button>  
+
+<!-- IDENTIDAD DEL VISITANTE -->
+
+<div class="username-modal" id="usernameModal" aria-hidden="true">
+
+    <div class="username-backdrop"></div>
+
+    <div
+        class="username-window"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="usernameTitle"
+    >
+
+        <button
+            class="username-close"
+            id="usernameClose"
+            type="button"
+            aria-label="Cerrar"
+        >
+            ×
+        </button>
+
+
+        <!-- PRIMERA VISITA -->
+
+        <div class="username-create" id="usernameCreate">
+
+            <p class="username-small">
+                DESORDEN SOCIAL
+            </p>
+
+            <h2 id="usernameTitle">
+                ¿cómo quieres aparecer aquí?
+            </h2>
+
+            <p class="username-description">
+                elige un nombre para dejar tu rastro
+            </p>
+
+            <form id="usernameForm">
+
+                <div class="username-field">
+
+                    <span>@</span>
+
+                    <input
+                        type="text"
+                        id="usernameInput"
+                        maxlength="30"
+                        autocomplete="off"
+                        spellcheck="false"
+                        placeholder="tu nombre"
+                        required
+                    >
+
+                </div>
+
+                <p
+                    class="username-error"
+                    id="usernameError"
+                    aria-live="polite"
+                ></p>
+
+                <button
+                    class="username-submit"
+                    type="submit"
+                >
+                    entrar
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- USUARIO YA CREADO -->
+
+        <div
+            class="username-return"
+            id="usernameReturn"
+            hidden
+        >
+
+            <p class="username-small">
+                DESORDEN SOCIAL
+            </p>
+
+            <h2>
+                hola,
+                <span id="savedUsername"></span>
+            </h2>
+
+            <p class="username-description">
+                ya puedes dejar tu rastro
+            </p>
+
+            <button
+                class="username-continue"
+                id="usernameContinue"
+                type="button"
+            >
+                continuar
+            </button>
+
+            <button
+                class="username-change"
+                id="usernameChange"
+                type="button"
+            >
+                cambiar nombre
+            </button>
+
+        </div>
+        <!-- DEJAR POLEN -->
+
+<div
+    class="pollen-create"
+    id="pollenCreate"
+    hidden
+>
+
+    <p class="username-small">
+        DESORDEN SOCIAL
+    </p>
+
+    <p class="pollen-user">
+        dejando polen como
+        <span id="pollenUsername"></span>
+    </p>
+
+    <h2>
+        ¿qué quieres conectar?
+    </h2>
+
+    <form id="pollenForm">
+
+        <!-- ¿CON QUÉ SE CONECTA? -->
+
+<div class="pollen-field pollen-connections-field">
+
+    <span>
+        ¿con qué lo conectas?
+        <small>opcional · puedes elegir varios</small>
+    </span>
+
+    <div class="pollen-connection-picker">
+
+        <input
+            type="text"
+            id="pollenConnectTo"
+            list="connectionSuggestions"
+            autocomplete="off"
+            placeholder="empieza a escribir..."
+        >
+
+        <button
+            type="button"
+            id="addConnection"
+            class="pollen-add-connection"
+        >
+            añadir
+        </button>
+
+    </div>
+
+    <datalist id="connectionSuggestions"></datalist>
+
+    <div
+        class="selected-connections"
+        id="selectedConnections"
+        aria-live="polite"
+    ></div>
+
+</div>
+
+
+<!-- ¿QUÉ QUIERES AÑADIR? -->
+
+<label class="pollen-field">
+    <span>¿qué quieres dejar?</span>
+
+    <input
+        type="text"
+        id="pollenTitle"
+        maxlength="120"
+        autocomplete="off"
+        placeholder="una canción, una foto, un texto, una idea..."
+        required
+    >
+</label>
+
+
+        <label class="pollen-field">
+            <span>qué es</span>
+
+            <select id="pollenType">
+                <option value="canción">canción</option>
+                <option value="película">película</option>
+                <option value="texto">texto</option>
+                <option value="imagen">imagen</option>
+                <option value="vídeo">vídeo</option>
+                <option value="entrevista">entrevista</option>
+                <option value="web">web</option>
+                <option value="idea">idea</option>
+                <option value="otro">otro</option>
+            </select>
+        </label>
+
+
+        <label class="pollen-field">
+            <span>enlace — si existe</span>
+
+            <input
+                type="url"
+                id="pollenUrl"
+                placeholder="https://..."
+            >
+        </label>
+
+        <label class="pollen-field pollen-file-field">
+    <span>archivo — si quieres dejar algo tuyo</span>
+
+    <input
+        type="file"
+        id="pollenFile"
+        accept="image/*,.pdf,.txt,.doc,.docx"
+    >
+
+    <span
+        class="pollen-file-name"
+        id="pollenFileName"
+    >
+        ningún archivo seleccionado
+    </span>
+</label>
+
+<!-- CONTENIDO ESCRITO -->
+
+<label class="pollen-field">
+
+    <span>
+        texto — si quieres escribir algo
+    </span>
+
+    <textarea
+        id="pollenBody"
+        rows="6"
+        maxlength="5000"
+        placeholder="escribe aquí lo que quieres dejar..."
+    ></textarea>
+
+</label>
+
+
+<!-- ARCHIVOS QUE FORMAN PARTE DEL NUDO -->
+
+<label class="pollen-field pollen-file-field">
+
+    <span>
+        imágenes, vídeos o archivos
+        — opcional
+    </span>
+
+    <input
+        type="file"
+        id="pollenMedia"
+        multiple
+        accept="
+            image/*,
+            video/mp4,
+            video/webm,
+            application/pdf,
+            text/plain
+        "
+    >
+
+    <span
+        class="pollen-file-name"
+        id="pollenMediaName"
+    >
+        ningún archivo añadido
+    </span>
+
+</label>
+
+
+<div
+    class="pollen-media-preview"
+    id="pollenMediaPreview"
+></div>
+
+        <label class="pollen-field">
+            <span>¿por qué lo conectas?</span>
+
+            <textarea
+                id="pollenNote"
+                rows="4"
+                maxlength="500"
+                placeholder="cuéntame la conexión..."
+            ></textarea>
+        </label>
+
+
+        <p
+            class="username-error"
+            id="pollenError"
+            aria-live="polite"
+        ></p>
+
+
+        <button
+            class="username-submit"
+            type="submit"
+        >
+            dejar polen
+        </button>
+
+
+        <button
+            class="pollen-back"
+            id="pollenBack"
+            type="button"
+        >
+            volver
+        </button>
+
+    </form>
+
+</div>
+
+
+<!-- POLEN ENVIADO -->
+
+<div
+    class="pollen-success"
+    id="pollenSuccess"
+    hidden
+>
+
+    <p class="username-small">
+        DESORDEN SOCIAL
+    </p>
+
+    <h2>
+        polen dejado.
+    </h2>
+
+    <p class="username-description">
+        tu conexión ya forma parte de este desorden.
+    </p>
+
+    <p class="pollen-signature" id="pollenSignature"></p>
+
+    <button
+        class="username-continue"
+        id="pollenDone"
+        type="button"
+    >
+        volver
+    </button>
+
+</div>
+
+    </div>
+
+</div>
+
+    <!-- CURSOR PERSONALIZADO -->
+    <div class="custom-cursor" aria-hidden="true">
+        <img
+            src="assets/cursor/cursor.svg"
+            alt=""
+        >
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase-config.js"></script>
+<script src="user-session.js"></script>
+<script src="network-data.js"></script>
+<script src="script.js"></script>
+<script src="bee-pollen.js"></script>
+</body>
+</html>
