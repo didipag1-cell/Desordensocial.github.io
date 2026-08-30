@@ -1992,22 +1992,55 @@ img {
     }
 
 
-    /* JAZZ */
+ /* JAZZ */
 
-    .jazz-page {
-        min-height: 82vh;
-    }
+.jazz-page {
+    position: relative;
+    width: 100%;
+    min-height: 100dvh;
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    .jazz-vector {
-        width: 185vw;
-        height: 125%;
-    }
+    background: var(--pink);
 
+    overflow: hidden;
+    isolation: isolate;
+}
 
-    .jazz-scan {
-        width: 89vw;
-    }
+.jazz-vector {
+    position: absolute;
+
+    display: block;
+
+    z-index: 1;
+
+    left: 50%;
+    top: 50%;
+
+    width: 190vw;
+    height: auto;
+
+    max-width: none;
+
+    transform: translate(-50%, -50%);
+
+    pointer-events: none;
+}
+
+.jazz-scan {
+    position: relative;
+
+    z-index: 2;
+
+    display: block;
+
+    width: 89vw;
+    height: auto;
+
+    max-width: none;
+}
 
 
     /* =====================================================
@@ -2870,6 +2903,84 @@ img {
 
     .reels-text p {
         margin-bottom: 11px;
+    }
+
+}
+/* =========================================================
+   FIX iPHONE / iOS — JAZZ
+   Safari a veces no renderiza bien el SVG absoluto
+========================================================= */
+
+@supports (-webkit-touch-callout: none) {
+
+    @media (max-width: 650px) {
+
+        .jazz-page {
+            position: relative;
+
+            min-height: 100svh;
+
+            background: var(--pink);
+
+            overflow: hidden;
+
+            isolation: isolate;
+        }
+
+
+        /* En iPhone ocultamos el <img> SVG problemático */
+
+        .jazz-vector {
+            display: none !important;
+        }
+
+
+        /* Y dibujamos el mismo SVG como capa de fondo */
+
+        .jazz-page::before {
+            content: "";
+
+            position: absolute;
+
+            z-index: 1;
+
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+
+            display: block;
+
+            background-image:
+                url("assets/revista/vector 5.svg");
+
+            background-repeat: no-repeat;
+
+            background-position:
+                center center;
+
+            background-size:
+                190% auto;
+
+            pointer-events: none;
+        }
+
+
+        /* La pieza de JAZZ queda siempre encima */
+
+        .jazz-scan {
+            position: relative;
+
+            z-index: 2;
+
+            display: block;
+
+            width: 89vw;
+            height: auto;
+
+            max-width: none;
+        }
+
     }
 
 }
