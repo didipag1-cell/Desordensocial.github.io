@@ -1138,3 +1138,128 @@ body {
     }
 
 }
+
+/* =========================================================
+   iPHONE — CARA GLITCH SIN CANVAS
+========================================================= */
+
+@supports (-webkit-touch-callout: none) {
+
+    @media (max-width: 640px) {
+
+
+        /*
+           En iPhone el canvas desaparece.
+        */
+
+        #faceCanvas {
+            display: none !important;
+        }
+
+
+        /*
+           Todas las capas ocupan exactamente
+           la posición que antes ocupaba el canvas.
+        */
+
+        .face-source.ios-face-base,
+        .ios-face-glitch {
+
+            position: absolute;
+
+            display: block !important;
+
+            left: 50%;
+            top: 10vh;
+
+            width: 124vw;
+            height: auto;
+
+            max-width: none;
+
+            pointer-events: none;
+
+            mix-blend-mode: multiply;
+
+            transform:
+                translateX(-50%);
+
+            transform-origin:
+                center center;
+
+            -webkit-backface-visibility:
+                hidden;
+
+            backface-visibility:
+                hidden;
+
+            will-change:
+                transform;
+        }
+
+
+        /* imagen completa */
+
+        .ios-face-base {
+            z-index: 1;
+
+            opacity: 0.98;
+        }
+
+
+        /*
+           Las siguientes dos imágenes son
+           únicamente fragmentos de la cara.
+        */
+
+        .ios-face-glitch {
+            z-index: 2;
+        }
+
+
+        /* banda superior / central */
+
+        .ios-face-glitch-a {
+
+            clip-path:
+                polygon(
+                    0 17%,
+                    100% 17%,
+                    100% 42%,
+                    0 42%
+                );
+
+            -webkit-clip-path:
+                polygon(
+                    0 17%,
+                    100% 17%,
+                    100% 42%,
+                    0 42%
+                );
+        }
+
+
+        /* banda inferior */
+
+        .ios-face-glitch-b {
+
+            clip-path:
+                polygon(
+                    0 53%,
+                    100% 53%,
+                    100% 79%,
+                    0 79%
+                );
+
+            -webkit-clip-path:
+                polygon(
+                    0 53%,
+                    100% 53%,
+                    100% 79%,
+                    0 79%
+                );
+        }
+
+    }
+
+}

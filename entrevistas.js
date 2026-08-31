@@ -67,7 +67,19 @@ const isTouchDevice =
     window.matchMedia(
         "(pointer: coarse)"
     ).matches;
+const isIOS =
+    /iPad|iPhone|iPod/.test(
+        navigator.userAgent
+    ) ||
+    (
+        navigator.platform === "MacIntel" &&
+        navigator.maxTouchPoints > 1
+    );
 
+
+let mobileFaceBase = null;
+let mobileFaceA = null;
+let mobileFaceB = null;
 let hasSuccessfulCanvasFrame = false;
 
 let lastMobileGlitchStep = -1;
@@ -147,6 +159,107 @@ const backupCtx =
 
     }
 
+/* =====================================================
+   CARA GLITCH ESTABLE — iPHONE / iOS
+===================================================== */
+
+function setupIOSFace() {
+
+    if (
+        !isIOS ||
+        !faceSource
+    ) {
+        return;
+    }
+
+
+    const faceWrap =
+        document.getElementById(
+            "faceWrap"
+        );
+
+
+    if (!faceWrap) {
+        return;
+    }
+
+
+    /*
+       En iPhone NO usamos el canvas durante scroll.
+    */
+
+    if (canvas) {
+        canvas.style.display =
+            "none";
+    }
+
+
+    /* imagen base */
+
+    mobileFaceBase =
+        faceSource;
+
+    mobileFaceBase.style.display =
+        "block";
+
+    mobileFaceBase.classList.add(
+        "ios-face-base"
+    );
+
+
+    /* primera capa glitch */
+
+    mobileFaceA =
+        faceSource.cloneNode(
+            true
+        );
+
+    mobileFaceA.removeAttribute(
+        "id"
+    );
+
+    mobileFaceA.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+    mobileFaceA.classList.add(
+        "ios-face-glitch",
+        "ios-face-glitch-a"
+    );
+
+
+    /* segunda capa glitch */
+
+    mobileFaceB =
+        faceSource.cloneNode(
+            true
+        );
+
+    mobileFaceB.removeAttribute(
+        "id"
+    );
+
+    mobileFaceB.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+    mobileFaceB.classList.add(
+        "ios-face-glitch",
+        "ios-face-glitch-b"
+    );
+
+
+    faceWrap.append(
+        mobileFaceA,
+        mobileFaceB
+    );
+
+}
+
+
+setupIOSFace();
 
     function hideFaceFallback() {
 
@@ -460,9 +573,19 @@ const backupCtx =
     }
 
 
-    function drawDatamosh(
+   function drawDatamosh(
     progress = 0
 ) {
+
+    /*
+       iPhone utiliza las capas SVG estables,
+       no el canvas.
+    */
+
+    if (isIOS) {
+        return;
+    }
+
 
     if (
         !canvas ||
@@ -1215,24 +1338,108 @@ if (
         /* cara */
 
         const faceTransform =
-            getFaceTransform(
-                progress
-            );
+    getFaceTransform(
+        progress
+    );
 
 
-        canvas.style.transform =
+/* =================================================
+   CARA — iPHONE
+================================================= */
+
+if (
+    isIOS &&
+    mobileFaceBase &&
+    mobileFaceA &&
+    mobileFaceB
+) {
+
+    /*
+       Movimiento general de la cara.
+    */
+
+    mobileFaceBase.style.transform =
+        faceTransform;
+
+
+    /*
+       Dos desplazamientos distintos generan
+       las roturas horizontales del glitch.
+
+       Son deterministas: no hay Math.random()
+       haciendo que Safari salte de un frame a otro.
+    */
+
+    const glitchA =
+        Math.sin(
+            progress * 38
+        ) *
+        (
+            3 +
+            progress * 18
+        );
+
+
+    const glitchB =
+        Math.cos(
+            progress * 51
+        ) *
+        (
+            3 +
+            progress * 14
+        );
+
+
+    mobileFaceA.style.transform =
+        `${faceTransform} translateX(${glitchA}px)`;
+
+
+    mobileFaceB.style.transform =
+        `${faceTransform} translateX(${glitchB}px)`;
+
+
+    /*
+       A medida que bajas,
+       el glitch se hace un poco más evidente.
+    */
+
+    mobileFaceA.style.opacity =
+        String(
+            0.38 +
+            progress * 0.38
+        );
+
+
+    mobileFaceB.style.opacity =
+        String(
+            0.30 +
+            progress * 0.42
+        );
+
+}
+
+
+/* =================================================
+   CARA — DESKTOP / RESTO
+================================================= */
+
+else {
+
+    canvas.style.transform =
+        faceTransform;
+
+
+    if (
+        fallbackFaceVisible &&
+        faceSource
+    ) {
+
+        faceSource.style.transform =
             faceTransform;
 
+    }
 
-        if (
-            fallbackFaceVisible &&
-            faceSource
-        ) {
-
-            faceSource.style.transform =
-                faceTransform;
-
-        }
+}
 
 
         /* texto */
@@ -1342,29 +1549,48 @@ if (
 
     if (faceSource) {
 
-        const startFace =
-            async () => {
+       const startFace =
+    async () => {
 
-                if (
-                    typeof faceSource.decode ===
-                    "function"
-                ) {
 
-                    try {
-                        await faceSource.decode();
-                    }
-                    catch (error) {
-                        /*
-                           El evento load / complete
-                           sigue siendo suficiente.
-                        */
-                    }
+        /*
+           En iPhone la imagen ya funciona como <img>.
+           No esperamos decode() del SVG.
+        */
 
-                }
+        if (isIOS) {
 
-                requestScrollUpdate();
+            requestScrollUpdate();
 
-            };
+            return;
+
+        }
+
+
+        if (
+            typeof faceSource.decode ===
+            "function"
+        ) {
+
+            try {
+
+                await faceSource.decode();
+
+            }
+            catch (error) {
+
+                /*
+                   load / complete sigue siendo suficiente
+                */
+
+            }
+
+        }
+
+
+        requestScrollUpdate();
+
+    };
 
 
         if (
