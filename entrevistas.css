@@ -573,18 +573,16 @@ body {
 
 /* =========================================================
    iOS — iPHONE + iPAD
-   FALLBACK SIN CANVAS, SIN @supports
 
-   IMPORTANTE:
-   - escritorio / Android conservan el datamosh original
-   - iOS usa únicamente este bloque
-   - la foto fuente nunca se muestra sola
+   SOLO TOCAMOS APPLE.
+   Escritorio y Android conservan el datamosh de canvas.
+
+   Dos vías de activación:
+   1) html.is-ios, añadida por JS
+   2) @supports de iOS, como red de seguridad para Safari/iPad
 ========================================================= */
 
-html.is-ios #faceCanvas {
-    display: none !important;
-}
-
+html.is-ios #faceCanvas,
 html.is-ios #faceSource {
     display: none !important;
 }
@@ -594,8 +592,8 @@ html.is-ios .ios-face-fallback {
     display: block !important;
     z-index: 4;
     left: 50%;
-    top: 7vh;
-    width: min(86vw, 900px);
+    top: 12vh;
+    width: min(68vw, 720px);
     max-width: none;
     transform: translateX(-50%) translateY(9vh);
     transform-origin: center center;
@@ -614,58 +612,61 @@ html.is-ios .ios-face-fallback img {
     height: auto;
     max-width: none;
     pointer-events: none;
-    mix-blend-mode: multiply;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
 }
 
+/* Base: ya llega intervenida; nunca es una foto limpia. */
 html.is-ios .ios-face-base-static {
     position: relative !important;
-    opacity: 0.46;
+    opacity: 0.66;
     filter:
         grayscale(1)
-        contrast(2.35)
-        sepia(1)
-        saturate(10)
-        hue-rotate(325deg)
-        brightness(0.86);
-    transform: scaleX(1.035);
+        contrast(2.15)
+        sepia(0.9)
+        saturate(5.5)
+        hue-rotate(330deg)
+        brightness(0.96);
+    mix-blend-mode: multiply;
+    transform: scaleX(1.02);
+    animation: ios-base-wobble 2.6s steps(3, end) infinite;
 }
 
 html.is-ios .ios-face-layer {
-    opacity: 0.92;
+    opacity: 0.78;
     filter:
         grayscale(1)
-        contrast(2.75)
-        sepia(1)
-        saturate(12)
-        hue-rotate(325deg)
-        brightness(0.82);
+        contrast(2.45)
+        sepia(0.9)
+        saturate(6.5)
+        hue-rotate(330deg)
+        brightness(0.92);
+    mix-blend-mode: multiply;
     will-change: transform;
 }
 
 html.is-ios .ios-face-layer-1 {
-    -webkit-clip-path: inset(6% 0 72% 0);
-    clip-path: inset(6% 0 72% 0);
-    animation: ios-glitch-a 1.1s steps(2, end) infinite;
+    -webkit-clip-path: inset(8% 0 72% 0);
+    clip-path: inset(8% 0 72% 0);
+    animation: ios-glitch-a 0.95s steps(2, end) infinite;
 }
 
 html.is-ios .ios-face-layer-2 {
-    -webkit-clip-path: inset(30% 0 49% 0);
-    clip-path: inset(30% 0 49% 0);
-    animation: ios-glitch-b 1.45s steps(2, end) infinite;
+    -webkit-clip-path: inset(31% 0 48% 0);
+    clip-path: inset(31% 0 48% 0);
+    animation: ios-glitch-b 1.2s steps(2, end) infinite;
 }
 
 html.is-ios .ios-face-layer-3 {
     -webkit-clip-path: inset(55% 0 25% 0);
     clip-path: inset(55% 0 25% 0);
-    animation: ios-glitch-c 1.25s steps(2, end) infinite;
+    animation: ios-glitch-c 1.05s steps(2, end) infinite;
 }
 
 html.is-ios .ios-face-layer-4 {
-    -webkit-clip-path: inset(78% 0 6% 0);
-    clip-path: inset(78% 0 6% 0);
-    animation: ios-glitch-d 1.7s steps(2, end) infinite;
+    -webkit-clip-path: inset(78% 0 7% 0);
+    clip-path: inset(78% 0 7% 0);
+    animation: ios-glitch-d 1.4s steps(2, end) infinite;
 }
 
 html.is-ios .ios-face-fallback::after {
@@ -674,49 +675,55 @@ html.is-ios .ios-face-fallback::after {
     inset: 0;
     z-index: 10;
     pointer-events: none;
-    opacity: 0.18;
+    opacity: 0.11;
     background:
         repeating-linear-gradient(
             to bottom,
             transparent 0,
-            transparent 3px,
-            rgba(215, 58, 47, 0.55) 4px
+            transparent 4px,
+            rgba(215, 58, 47, 0.46) 5px
         );
     mix-blend-mode: multiply;
 }
 
+@keyframes ios-base-wobble {
+    0%, 100% { transform: translate3d(0, 0, 0) scaleX(1.02); }
+    35% { transform: translate3d(-5px, 1px, 0) scaleX(1.035); }
+    70% { transform: translate3d(4px, -1px, 0) scaleX(0.995); }
+}
+
 @keyframes ios-glitch-a {
-    0%, 100% { transform: translate3d(-16px, 0, 0) scaleX(1.03); }
-    25% { transform: translate3d(22px, -2px, 0) scaleX(1.08); }
-    50% { transform: translate3d(-7px, 2px, 0) scaleX(0.98); }
-    75% { transform: translate3d(12px, 0, 0) scaleX(1.05); }
+    0%, 100% { transform: translate3d(-12px, 0, 0) scaleX(1.02); }
+    25% { transform: translate3d(18px, -2px, 0) scaleX(1.07); }
+    50% { transform: translate3d(-6px, 2px, 0) scaleX(0.99); }
+    75% { transform: translate3d(10px, 0, 0) scaleX(1.04); }
 }
 
 @keyframes ios-glitch-b {
-    0%, 100% { transform: translate3d(14px, 1px, 0) scaleX(0.99); }
-    30% { transform: translate3d(-22px, -2px, 0) scaleX(1.07); }
-    60% { transform: translate3d(9px, 3px, 0) scaleX(1.02); }
-    80% { transform: translate3d(-11px, 0, 0) scaleX(1.05); }
+    0%, 100% { transform: translate3d(11px, 1px, 0) scaleX(1); }
+    30% { transform: translate3d(-18px, -2px, 0) scaleX(1.06); }
+    60% { transform: translate3d(8px, 3px, 0) scaleX(1.02); }
+    80% { transform: translate3d(-9px, 0, 0) scaleX(1.04); }
 }
 
 @keyframes ios-glitch-c {
-    0%, 100% { transform: translate3d(-9px, 0, 0) scaleX(1.06); }
-    20% { transform: translate3d(24px, 2px, 0) scaleX(0.97); }
-    55% { transform: translate3d(-18px, -2px, 0) scaleX(1.08); }
-    85% { transform: translate3d(8px, 1px, 0) scaleX(1.01); }
+    0%, 100% { transform: translate3d(-8px, 0, 0) scaleX(1.05); }
+    20% { transform: translate3d(20px, 2px, 0) scaleX(0.98); }
+    55% { transform: translate3d(-15px, -2px, 0) scaleX(1.07); }
+    85% { transform: translate3d(7px, 1px, 0) scaleX(1.01); }
 }
 
 @keyframes ios-glitch-d {
-    0%, 100% { transform: translate3d(17px, 0, 0) scaleX(1.02); }
-    35% { transform: translate3d(-15px, 2px, 0) scaleX(1.09); }
-    65% { transform: translate3d(22px, -2px, 0) scaleX(0.98); }
+    0%, 100% { transform: translate3d(13px, 0, 0) scaleX(1.02); }
+    35% { transform: translate3d(-12px, 2px, 0) scaleX(1.07); }
+    65% { transform: translate3d(17px, -2px, 0) scaleX(0.99); }
 }
 
-/* iPad / tablet iOS */
+/* iPad / tablet Apple */
 @media (min-width: 641px) and (max-width: 1180px) {
     html.is-ios .ios-face-fallback {
-        top: 8vh;
-        width: min(92vw, 900px);
+        top: 13vh;
+        width: min(66vw, 700px);
     }
 }
 
@@ -731,8 +738,163 @@ html.is-ios .ios-face-fallback::after {
     }
 
     html.is-ios .ios-face-fallback {
-        top: 10svh;
-        width: 112vw;
+        top: 19svh;
+        width: 84vw;
     }
 }
 
+/* Red de seguridad: en iOS Safari/WebKit mostramos el fallback
+   aunque la detección de user-agent falle. */
+@supports (-webkit-touch-callout: none) {
+    #faceCanvas,
+    #faceSource {
+        display: none !important;
+    }
+
+    .ios-face-fallback {
+        position: absolute;
+        display: block !important;
+        z-index: 4;
+        left: 50%;
+        top: 12vh;
+        width: min(68vw, 720px);
+        max-width: none;
+        transform: translateX(-50%) translateY(9vh);
+        transform-origin: center center;
+        pointer-events: none;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+
+    .ios-face-fallback img {
+        position: absolute;
+        display: block;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: auto;
+        max-width: none;
+        pointer-events: none;
+    }
+
+    .ios-face-base-static {
+        position: relative !important;
+        opacity: 0.66;
+        filter:
+            grayscale(1)
+            contrast(2.15)
+            sepia(0.9)
+            saturate(5.5)
+            hue-rotate(330deg)
+            brightness(0.96);
+        mix-blend-mode: multiply;
+        animation: ios-base-wobble 2.6s steps(3, end) infinite;
+    }
+
+    .ios-face-layer {
+        opacity: 0.78;
+        filter:
+            grayscale(1)
+            contrast(2.45)
+            sepia(0.9)
+            saturate(6.5)
+            hue-rotate(330deg)
+            brightness(0.92);
+        mix-blend-mode: multiply;
+    }
+
+    .ios-face-layer-1 {
+        -webkit-clip-path: inset(8% 0 72% 0);
+        clip-path: inset(8% 0 72% 0);
+        animation: ios-glitch-a 0.95s steps(2, end) infinite;
+    }
+
+    .ios-face-layer-2 {
+        -webkit-clip-path: inset(31% 0 48% 0);
+        clip-path: inset(31% 0 48% 0);
+        animation: ios-glitch-b 1.2s steps(2, end) infinite;
+    }
+
+    .ios-face-layer-3 {
+        -webkit-clip-path: inset(55% 0 25% 0);
+        clip-path: inset(55% 0 25% 0);
+        animation: ios-glitch-c 1.05s steps(2, end) infinite;
+    }
+
+    .ios-face-layer-4 {
+        -webkit-clip-path: inset(78% 0 7% 0);
+        clip-path: inset(78% 0 7% 0);
+        animation: ios-glitch-d 1.4s steps(2, end) infinite;
+    }
+
+    @media (min-width: 641px) and (max-width: 1180px) {
+        .ios-face-fallback {
+            top: 13vh;
+            width: min(66vw, 700px);
+        }
+    }
+
+    @media (max-width: 640px) {
+        .interviews-sticky {
+            height: 100svh;
+        }
+
+        .interviews-scroll {
+            height: 225svh;
+        }
+
+        .ios-face-fallback {
+            top: 19svh;
+            width: 84vw;
+        }
+    }
+}
+/* =========================================================
+   FIX SAFARI / iPAD — BOTÓN ABEJA TRANSPARENTE
+========================================================= */
+
+.bee {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+
+    background: transparent !important;
+    background-color: transparent !important;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+
+    box-shadow: none !important;
+
+    -webkit-box-shadow: none !important;
+
+    outline: none;
+
+    color: transparent;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+.bee img {
+    display: block;
+
+    background: transparent !important;
+    background-color: transparent !important;
+
+    border: 0 !important;
+
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+}
+
+
+/* Safari puede aplicar estilos de botón al tocar */
+
+.bee:active,
+.bee:focus {
+    background: transparent !important;
+    background-color: transparent !important;
+
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+}

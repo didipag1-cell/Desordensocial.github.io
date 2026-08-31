@@ -45,11 +45,24 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
 
+    const userAgent = navigator.userAgent || "";
+    const platform = navigator.platform || "";
+
+    const supportsIOSTouchCallout =
+        typeof CSS !== "undefined" &&
+        typeof CSS.supports === "function" &&
+        CSS.supports("-webkit-touch-callout", "none");
+
     const isIOS =
-        /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+        /iPad|iPhone|iPod/i.test(userAgent) ||
         (
-            navigator.platform === "MacIntel" &&
+            /MacIntel|Macintosh/i.test(platform + " " + userAgent) &&
             navigator.maxTouchPoints > 1
+        ) ||
+        (
+            supportsIOSTouchCallout &&
+            navigator.maxTouchPoints > 0 &&
+            !/Android/i.test(userAgent)
         );
 
     if (isIOS) {
