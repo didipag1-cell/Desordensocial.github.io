@@ -180,6 +180,10 @@ body {
     display: none;
 }
 
+.ios-face-fallback {
+    display: none;
+}
+
 
 /* =========================================================
    CANVAS DATAMOSH
@@ -219,7 +223,7 @@ body {
 
 .talk {
     position: absolute;
-    z-index: 10;
+    z-index: 30;
     top: 6vh;
     right: 4vw;
     width: min(36vw, 520px);
@@ -417,7 +421,7 @@ body {
         height: 245vh;
     }
 
-    #faceCanvas {
+    .is-ios #faceCanvas {
         width: 95vw;
         top: 8vh;
     }
@@ -453,7 +457,7 @@ body {
         height: 225vh;
     }
 
-    #faceCanvas {
+    .is-ios #faceCanvas {
         width: 124vw;
         top: 10vh;
     }
@@ -569,22 +573,14 @@ body {
 
 
 /* =========================================================
-   iPHONE / iOS — GLITCH ESTABLE SIN CANVAS
+   iPHONE / iPAD / iOS — GLITCH ESTABLE SIN CANVAS
 
-   IMPORTANTE:
-   - no hay reglas duplicadas de Safari
-   - #faceSource siempre queda oculto
-   - el iPhone solo renderiza capas DOM ligeras
+   Este fallback existe en el HTML, no depende de crear
+   elementos con JavaScript. La animación CSS funciona
+   incluso si Safari decide no ejecutar un frame de scroll.
 ========================================================= */
 
-@media (max-width: 640px) {
-    .is-ios .interviews-sticky {
-        height: 100svh;
-    }
-
-    .is-ios .interviews-scroll {
-        height: 225svh;
-    }
+@supports (-webkit-touch-callout: none) {
 
     .is-ios #faceCanvas {
         display: none !important;
@@ -594,12 +590,13 @@ body {
         display: none !important;
     }
 
-    .is-ios .ios-face-stage {
+    .is-ios .ios-face-fallback {
         position: absolute;
+        display: block;
         z-index: 2;
         left: 50%;
-        top: 10svh;
-        width: 112vw;
+        top: 7vh;
+        width: min(86vw, 900px);
         max-width: none;
         transform: translateX(-50%) translateY(9vh);
         transform-origin: center center;
@@ -609,41 +606,7 @@ body {
         backface-visibility: hidden;
     }
 
-    /* Base ya muy tratada: si el movimiento JS se detuviera,
-       nunca se vería la fotografía original sin intervenir. */
-    .is-ios .ios-face-base {
-        position: relative;
-        display: block;
-        width: 100%;
-        height: auto;
-        max-width: none;
-        opacity: 0.48;
-        filter:
-            grayscale(1)
-            contrast(2.35)
-            sepia(1)
-            saturate(10)
-            hue-rotate(325deg)
-            brightness(0.86);
-        mix-blend-mode: multiply;
-        transform: scaleX(1.035);
-    }
-
-    .is-ios .ios-face-slice {
-        position: absolute;
-        left: 0;
-        top: var(--slice-top);
-        width: 100%;
-        height: var(--slice-height);
-        overflow: hidden;
-        opacity: 0.98;
-        pointer-events: none;
-        will-change: transform;
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-    }
-
-    .is-ios .ios-face-slice-image {
+    .is-ios .ios-face-fallback img {
         position: absolute;
         display: block;
         left: 0;
@@ -651,31 +614,117 @@ body {
         width: 100%;
         height: auto;
         max-width: none;
-        transform: translateY(var(--slice-offset));
-        filter:
-            grayscale(1)
-            contrast(2.75)
-            sepia(1)
-            saturate(12)
-            hue-rotate(325deg)
-            brightness(0.82);
+        pointer-events: none;
         mix-blend-mode: multiply;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
     }
 
-    .is-ios .ios-face-stage::after {
+    .is-ios .ios-face-base-static {
+        position: relative !important;
+        opacity: 0.38;
+        filter:
+            grayscale(1)
+            contrast(3.2)
+            sepia(1)
+            saturate(11)
+            hue-rotate(325deg)
+            brightness(0.82);
+        transform: scaleX(1.04) skewX(-1deg);
+    }
+
+    .is-ios .ios-face-layer {
+        opacity: 0.92;
+        filter:
+            grayscale(1)
+            contrast(3.6)
+            sepia(1)
+            saturate(13)
+            hue-rotate(325deg)
+            brightness(0.78);
+        will-change: transform;
+    }
+
+    .is-ios .ios-face-layer-1 {
+        -webkit-clip-path: inset(7% 0 72% 0);
+        clip-path: inset(7% 0 72% 0);
+        animation: ios-glitch-a 1.15s steps(2, end) infinite;
+    }
+
+    .is-ios .ios-face-layer-2 {
+        -webkit-clip-path: inset(32% 0 48% 0);
+        clip-path: inset(32% 0 48% 0);
+        animation: ios-glitch-b 1.55s steps(2, end) infinite;
+    }
+
+    .is-ios .ios-face-layer-3 {
+        -webkit-clip-path: inset(55% 0 25% 0);
+        clip-path: inset(55% 0 25% 0);
+        animation: ios-glitch-c 1.35s steps(2, end) infinite;
+    }
+
+    .is-ios .ios-face-layer-4 {
+        -webkit-clip-path: inset(78% 0 6% 0);
+        clip-path: inset(78% 0 6% 0);
+        animation: ios-glitch-d 1.8s steps(2, end) infinite;
+    }
+
+    .is-ios .ios-face-fallback::after {
         content: "";
         position: absolute;
         inset: 0;
         z-index: 10;
         pointer-events: none;
-        opacity: 0.20;
+        opacity: 0.22;
         background:
             repeating-linear-gradient(
                 to bottom,
                 transparent 0,
                 transparent 3px,
-                rgba(215, 58, 47, 0.6) 4px
+                rgba(215, 58, 47, 0.65) 4px
             );
         mix-blend-mode: multiply;
+    }
+
+    @keyframes ios-glitch-a {
+        0%, 100% { transform: translate3d(-18px, 0, 0) scaleX(1.03); }
+        25% { transform: translate3d(22px, -2px, 0) scaleX(1.08); }
+        50% { transform: translate3d(-7px, 2px, 0) scaleX(0.98); }
+        75% { transform: translate3d(14px, 0, 0) scaleX(1.05); }
+    }
+
+    @keyframes ios-glitch-b {
+        0%, 100% { transform: translate3d(15px, 1px, 0) scaleX(0.99); }
+        30% { transform: translate3d(-24px, -2px, 0) scaleX(1.07); }
+        60% { transform: translate3d(9px, 3px, 0) scaleX(1.02); }
+        80% { transform: translate3d(-12px, 0, 0) scaleX(1.05); }
+    }
+
+    @keyframes ios-glitch-c {
+        0%, 100% { transform: translate3d(-10px, 0, 0) scaleX(1.06); }
+        20% { transform: translate3d(26px, 2px, 0) scaleX(0.97); }
+        55% { transform: translate3d(-19px, -2px, 0) scaleX(1.08); }
+        85% { transform: translate3d(8px, 1px, 0) scaleX(1.01); }
+    }
+
+    @keyframes ios-glitch-d {
+        0%, 100% { transform: translate3d(18px, 0, 0) scaleX(1.02); }
+        35% { transform: translate3d(-16px, 2px, 0) scaleX(1.09); }
+        65% { transform: translate3d(25px, -2px, 0) scaleX(0.98); }
+    }
+
+    @media (max-width: 640px) {
+        .interviews-sticky {
+            height: 100svh;
+        }
+
+        .interviews-scroll {
+            height: 225svh;
+        }
+
+        .is-ios .ios-face-fallback {
+            top: 10svh;
+            width: 112vw;
+        }
     }
 }

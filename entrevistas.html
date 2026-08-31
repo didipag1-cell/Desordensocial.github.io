@@ -42,92 +42,133 @@
     <main>
 
 
-        <!-- ==========================================
-             01 — DATAMOSH / INTRO
-        =========================================== -->
+       <section
+    class="interviews-scroll"
+    id="interviewsScroll"
+>
 
-        <section
-            class="interviews-scroll"
-            id="interviewsScroll"
+    <div class="interviews-sticky">
+
+
+        <!-- textura -->
+
+        <div class="bg-noise"></div>
+
+        <div class="bg-halftone"></div>
+
+
+
+        <!-- marca casi invisible -->
+
+        <div
+            class="ghost ghost-1"
+            aria-hidden="true"
+        >
+            DESORDEN SOCIAL
+        </div>
+
+
+        <div
+            class="ghost ghost-2"
+            aria-hidden="true"
+        >
+            DESORDEN SOCIAL
+        </div>
+
+
+
+        <!-- ======================================
+             CARA / DATAMOSH
+        ======================================= -->
+
+        <div
+            class="face-wrap"
+            id="faceWrap"
         >
 
+            <!-- FUENTE PARA EL DATAMOSH
+                 DE ESCRITORIO / ANDROID -->
 
-            <div class="interviews-sticky">
-
-
-                <!-- textura -->
-
-                <div class="bg-noise"></div>
-
-                <div class="bg-halftone"></div>
-
-
-
-                <!-- marca casi invisible -->
-
-                <div
-                    class="ghost ghost-1"
-                    aria-hidden="true"
-                >
-                    DESORDEN SOCIAL
-                </div>
+            <img
+                id="faceSource"
+                class="face-source"
+                src="assets/entrevistas/face.svg"
+                alt=""
+            >
 
 
-                <div
-                    class="ghost ghost-2"
-                    aria-hidden="true"
-                >
-                    DESORDEN SOCIAL
-                </div>
+            <!-- ESCRITORIO / ANDROID -->
+
+            <canvas
+                id="faceCanvas"
+                aria-hidden="true"
+            ></canvas>
 
 
+            <!-- iPHONE / iPAD -->
 
-                <!-- CARA -->
+            <div
+                class="ios-face-fallback"
+                id="iosFaceFallback"
+                aria-hidden="true"
+            >
 
-                <div
-                    class="face-wrap"
-                    id="faceWrap"
+                <img
+                    src="assets/entrevistas/face.svg"
+                    class="ios-face-base-static"
+                    alt=""
                 >
 
-
-                    <img
-                        id="faceSource"
-                        class="face-source"
-                        src="assets/entrevistas/face.svg"
-                        alt=""
-                    >
-
-
-                    <canvas
-                        id="faceCanvas"
-                        aria-hidden="true"
-                    ></canvas>
-
-
-                </div>
-
-
-
-                <!-- ÚNICO TEXTO -->
-
-                <div
-                    class="talk"
-                    id="talkBlock"
+                <img
+                    src="assets/entrevistas/face.svg"
+                    class="ios-face-layer ios-face-layer-1"
+                    alt=""
                 >
 
-                    <h1>
-                        let’s talk<br>
-                        to each other
-                    </h1>
+                <img
+                    src="assets/entrevistas/face.svg"
+                    class="ios-face-layer ios-face-layer-2"
+                    alt=""
+                >
 
-                </div>
+                <img
+                    src="assets/entrevistas/face.svg"
+                    class="ios-face-layer ios-face-layer-3"
+                    alt=""
+                >
 
+                <img
+                    src="assets/entrevistas/face.svg"
+                    class="ios-face-layer ios-face-layer-4"
+                    alt=""
+                >
 
             </div>
 
+        </div>
 
-        </section>
 
+
+        <!-- ======================================
+             TEXTO — SIEMPRE DELANTE
+        ======================================= -->
+
+        <div
+            class="talk"
+            id="talkBlock"
+        >
+
+            <h1>
+                let’s talk<br>
+                to each other
+            </h1>
+
+        </div>
+
+
+    </div>
+
+</section>
 
 
         <!-- ==========================================

@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const talk = document.getElementById("talkBlock");
     const canvas = document.getElementById("faceCanvas");
     const faceSource = document.getElementById("faceSource");
+    const iosFaceFallback = document.getElementById("iosFaceFallback");
     const cursor = document.getElementById("siteCursor");
     const stream = document.getElementById("conversationStream");
     const form = document.getElementById("conversationForm");
@@ -54,9 +55,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (isIOS) {
         document.documentElement.classList.add("is-ios");
     }
-
-    let iosFaceStage = null;
-    let iosFaceSlices = [];
 
     let hasSuccessfulCanvasFrame = false;
     let lastMobileGlitchStep = -1;
@@ -107,79 +105,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             { willReadFrequently: true }
         );
     }
-
-
-    /* =====================================================
-       CARA GLITCH ESTABLE — iPHONE / iOS
-
-       iOS NO usa canvas.
-       La imagen fuente original permanece oculta.
-       Creamos una base muy intervenida + 7 bandas.
-    ===================================================== */
-
-    function setupIOSFace() {
-        if (!isIOS || !faceSource) {
-            return;
-        }
-
-        const faceWrap = document.getElementById("faceWrap");
-
-        if (!faceWrap) {
-            return;
-        }
-
-        if (canvas) {
-            canvas.style.display = "none";
-        }
-
-        faceSource.style.display = "none";
-
-        iosFaceStage = document.createElement("div");
-        iosFaceStage.className = "ios-face-stage";
-        iosFaceStage.style.transform = getFaceTransform(0);
-
-        const base = faceSource.cloneNode(true);
-        base.removeAttribute("id");
-        base.className = "ios-face-base";
-        base.setAttribute("aria-hidden", "true");
-
-        iosFaceStage.appendChild(base);
-
-        const bands = [
-            { top: 4,  height: 9 },
-            { top: 16, height: 12 },
-            { top: 31, height: 8 },
-            { top: 43, height: 13 },
-            { top: 59, height: 9 },
-            { top: 72, height: 12 },
-            { top: 87, height: 8 }
-        ];
-
-        bands.forEach((band, index) => {
-            const slice = document.createElement("div");
-            slice.className = "ios-face-slice";
-            slice.style.setProperty("--slice-top", `${band.top}%`);
-            slice.style.setProperty("--slice-height", `${band.height}%`);
-            slice.style.setProperty("--slice-offset", `${-band.top}%`);
-
-            const image = faceSource.cloneNode(true);
-            image.removeAttribute("id");
-            image.className = "ios-face-slice-image";
-            image.setAttribute("aria-hidden", "true");
-
-            slice.appendChild(image);
-            iosFaceStage.appendChild(slice);
-
-            iosFaceSlices.push({
-                element: slice,
-                index
-            });
-        });
-
-        faceWrap.appendChild(iosFaceStage);
-    }
-
-    setupIOSFace();
 
 
     /* =====================================================
@@ -583,45 +508,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-
-    /* =====================================================
-       iOS — MOVIMIENTO DE LAS BANDAS
-    ===================================================== */
-
-    function updateIOSFace(progress, faceTransform) {
-        if (!iosFaceStage) {
-            return;
-        }
-
-        iosFaceStage.style.transform = faceTransform;
-
-        const intensity = 12 + progress * 38;
-
-        iosFaceSlices.forEach(({ element, index }) => {
-            const phase = (index + 1) * 1.73;
-            const direction = index % 2 === 0 ? 1 : -1;
-
-            const shiftX =
-                Math.sin(progress * 33 + phase) *
-                intensity *
-                direction;
-
-            const shiftY =
-                Math.cos(progress * 21 + phase) *
-                (2 + progress * 6);
-
-            const scaleX =
-                1 +
-                Math.sin(progress * 18 + phase) *
-                0.035;
-
-            element.style.transform =
-                `translate3d(${shiftX}px, ${shiftY}px, 0) ` +
-                `scaleX(${scaleX})`;
-        });
-    }
-
-
     /* =====================================================
        SCROLL
     ===================================================== */
@@ -652,8 +538,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const faceTransform = getFaceTransform(progress);
 
-        if (isIOS) {
-            updateIOSFace(progress, faceTransform);
+        if (isIOS && iosFaceFallback) {
+            iosFaceFallback.style.transform = faceTransform;
         } else if (canvas) {
             canvas.style.transform = faceTransform;
 
@@ -853,41 +739,29 @@ document.addEventListener("DOMContentLoaded", async () => {
        CHAT — POSICIÓN DE LOS MENSAJES
     ===================================================== */
 
-    function messageOffset(seed) {
-        const value = String(seed);
-        let hash = 0;
+    function messageOffset(index) {
+        const width = window.innerWidth;
 
-        for (let i = 0; i < value.length; i++) {
-            hash = (
-                hash * 31 +
-                value.charCodeAt(i)
-            ) >>> 0;
-        }
+        const mobilePositions = [
+            1, 22, 6, 25, 12, 18, 3, 20, 9, 15
+        ];
 
-        const isMobile = window.matchMedia("(max-width: 640px)").matches;
+        const tabletPositions = [
+            3, 28, 9, 34, 15, 24, 5, 31, 12, 20
+        ];
 
-        if (isMobile) {
-            const mobilePositions = [
-                1,
-                23,
-                7,
-                26,
-                12,
-                18,
-                4,
-                21,
-                9,
-                25,
-                15,
-                3
-            ];
+        const desktopPositions = [
+            3, 40, 12, 45, 24, 34, 7, 42, 18, 29
+        ];
 
-            return mobilePositions[
-                hash % mobilePositions.length
-            ];
-        }
+        const positions =
+            width <= 640
+                ? mobilePositions
+                : width <= 980
+                    ? tabletPositions
+                    : desktopPositions;
 
-        return 3 + (hash % 50);
+        return positions[index % positions.length];
     }
 
     function cleanUsername(username) {
@@ -969,9 +843,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             article.classList.add("is-new");
         }
 
+        const messageIndex = stream.children.length;
+
         article.style.setProperty(
             "--x",
-            `${messageOffset(row.id)}%`
+            `${messageOffset(messageIndex)}%`
         );
 
         const nameElement = document.createElement("span");

@@ -1,18 +1,49 @@
 # =========================================================
 # DESORDEN SOCIAL
-# Permitimos buscadores tradicionales.
-# Bloqueamos crawlers de IA conocidos.
+# Buscadores permitidos.
+# Otros crawlers bloqueados por defecto.
 # =========================================================
 
 
-# GOOGLE SEARCH — PERMITIDO
+# GOOGLE SEARCH
+
 User-agent: Googlebot
 Allow: /
 
 
-# BING SEARCH — PERMITIDO
+# GOOGLE IMÁGENES
+
+User-agent: Googlebot-Image
+Allow: /
+
+
+# GOOGLE VIDEO
+
+User-agent: Googlebot-Video
+Allow: /
+
+
+# GOOGLE SEARCH CONSOLE / INSPECCIÓN
+
+User-agent: Google-InspectionTool
+Allow: /
+
+
+# BING
+
 User-agent: Bingbot
 Allow: /
+
+
+# TODOS LOS DEMÁS CRAWLERS
+
+User-agent: *
+Disallow: /
+
+
+# SITEMAP
+
+Sitemap: https://desordensocial.com/sitemap.xml
 
 
 # =========================================================
