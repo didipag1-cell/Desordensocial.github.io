@@ -1,0 +1,104 @@
+# =========================================================
+# DESORDEN SOCIAL
+# Permitimos buscadores tradicionales.
+# Bloqueamos crawlers de IA conocidos.
+# =========================================================
+
+
+# GOOGLE SEARCH — PERMITIDO
+User-agent: Googlebot
+Allow: /
+
+
+# BING SEARCH — PERMITIDO
+User-agent: Bingbot
+Allow: /
+
+
+# =========================================================
+# GOOGLE / GEMINI — BLOQUEADO PARA IA
+# No afecta al posicionamiento en Google Search.
+# =========================================================
+
+User-agent: Google-Extended
+Disallow: /
+
+
+# =========================================================
+# OPENAI / CHATGPT
+# =========================================================
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: OAI-SearchBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: OAI-AdsBot
+Disallow: /
+
+
+# =========================================================
+# ANTHROPIC / CLAUDE
+# =========================================================
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Claude-User
+Disallow: /
+
+User-agent: Claude-SearchBot
+Disallow: /
+
+
+# =========================================================
+# PERPLEXITY
+# =========================================================
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: Perplexity-User
+Disallow: /
+
+
+# =========================================================
+# COMMON CRAWL
+# Su archivo público se utiliza ampliamente como fuente
+# de datasets, incluidos proyectos de IA.
+# =========================================================
+
+User-agent: CCBot
+Disallow: /
+
+
+# =========================================================
+# APPLE AI
+# Bloqueamos el uso para modelos generativos de Apple.
+# =========================================================
+
+User-agent: Applebot-Extended
+Disallow: /
+
+
+# =========================================================
+# OTROS BOTS
+#
+# En tu caso prefiero bloquear por defecto cualquier
+# crawler que no hayamos autorizado específicamente.
+# =========================================================
+
+User-agent: *
+Disallow: /
+
+
+# =========================================================
+# MAPA DEL SITIO
+# CAMBIA ESTA URL POR TU DOMINIO REAL
+# =========================================================
+
+Sitemap: https://desordensocial.com/sitemap.xml

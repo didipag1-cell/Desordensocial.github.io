@@ -1166,3 +1166,26 @@ overscroll-behavior: contain;
 .pollen-cover-preview[hidden] {
     display: none;
 }
+
+/* =========================================================
+   TEXTO SOLO PARA ESTRUCTURA / ACCESIBILIDAD
+========================================================= */
+
+.visually-hidden {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    padding: 0;
+    margin: -1px;
+
+    overflow: hidden;
+
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+
+    white-space: nowrap;
+
+    border: 0;
+}
