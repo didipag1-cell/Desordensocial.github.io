@@ -5,10 +5,8 @@
 
 :root {
     --red: #ff1108;
-    --white: #ffffff;
-    --black: #000000;
-    --perfect: #ffffff;
     --pink: #f300df;
+    --editorial-pink: #f500d8;
     --book-pink: #f4c7df;
 }
 
@@ -602,13 +600,10 @@ img {
     background:
         linear-gradient(
             to bottom,
-
             var(--red) 0%,
             var(--red) 52%,
-
-             var(--pink),
-             var(--pink) 100%
-
+            var(--editorial-pink) 52%,
+            var(--editorial-pink) 100%
         );
 
     overflow: hidden;
@@ -703,7 +698,7 @@ img {
 .perfect-days {
     width: 100%;
 
-    background: var(--pink);
+    background: var(--editorial-pink);
 
     color: #090909;
 
@@ -1240,7 +1235,7 @@ img {
 .screen-page {
     width: 100%;
 
-    background: #ffffff;
+    background: var(--editorial-pink);
 
     color: #111111;
 }
@@ -1256,7 +1251,7 @@ img {
     height: 100vh;
     height: 100dvh;
 
-    background: #ffffff;
+    background: var(--editorial-pink);
 
     display: flex;
 
@@ -1294,7 +1289,7 @@ img {
 
     align-items: start;
 
-    background: #ffffff;
+    background: var(--editorial-pink);
 }
 
 .screen-second-image {
@@ -2226,50 +2221,7 @@ img {
 }
 
 /* =========================================================
-   =========================================================
-   CORRECCIONES FINALES REVISTA
-   PEGAR AL FINAL ABSOLUTO DE revista.css
-   =========================================================
-========================================================= */
-
-
-/* =========================================================
-   TODO LO EDITORIAL BLANCO = BLANCO PURO
-========================================================= */
-
-:root {
-    --perfect: #ffffff !important;
-}
-
-.visual-section {
-    /*
-       Conservamos el rojo hasta la mitad,
-       pero la segunda mitad es blanco puro.
-    */
-    background:
-        linear-gradient(
-            to bottom,
-            var(--red) 0%,
-            var(--red) 52%,
-            #f500d8 52%,
-            #f500d8 100%
-        ) !important;
-}
-
-.perfect-days,
-.perfect-inner,
-.screen-page,
-.screen-first,
-.screen-second {
-    background: #f500d8 !important;
-}
-
-
-
-/* =========================================================
-   =========================================================
    MAMA — DESKTOP
-   =========================================================
 ========================================================= */
 
 @media (min-width: 901px) {
@@ -2282,13 +2234,13 @@ img {
     */
 
     .mama-page {
-        width: 100% !important;
+        width: 100%;
 
-        min-height: 0 !important;
+        min-height: 0;
 
-        height: auto !important;
+        height: auto;
 
-        margin: 0 !important;
+        margin: 0;
 
         padding:
             clamp(
@@ -2301,11 +2253,11 @@ img {
                 80px,
                 8vw,
                 140px
-            ) !important;
+            );
 
-        background: #000000 !important;
+        background: #000000;
 
-        overflow: visible !important;
+        overflow: visible;
     }
 
 
@@ -2317,16 +2269,16 @@ img {
     */
 
     .mama-layout {
-        width: 94vw !important;
-        max-width: 1700px !important;
+        width: 94vw;
+        max-width: 1700px;
 
-        height: auto !important;
+        height: auto;
 
-        margin: 0 auto !important;
+        margin: 0 auto;
 
-        padding: 0 !important;
+        padding: 0;
 
-        display: grid !important;
+        display: grid;
 
         grid-template-columns:
             clamp(
@@ -2334,16 +2286,16 @@ img {
                 6.4vw,
                 125px
             )
-            minmax(0, 1fr) !important;
+            minmax(0, 1fr);
 
         gap:
             clamp(
                 45px,
                 5vw,
                 90px
-            ) !important;
+            );
 
-        align-items: start !important;
+        align-items: start;
     }
 
 
@@ -2355,43 +2307,43 @@ img {
     ===================================================== */
 
     .mama-copy {
-        width: 100% !important;
-        max-width: none !important;
+        width: 100%;
+        max-width: none;
 
-        height: auto !important;
+        height: auto;
 
-        margin: 0 !important;
-        padding: 0 !important;
+        margin: 0;
+        padding: 0;
 
-        display: block !important;
+        display: block;
 
         font-family:
             Arial,
             Helvetica,
-            sans-serif !important;
+            sans-serif;
 
         font-size:
             clamp(
                 17px,
                 1.05vw,
                 21px
-            ) !important;
+            );
 
-        font-weight: 400 !important;
+        font-weight: 400;
 
-        line-height: 1.1 !important;
+        line-height: 1.1;
 
-        color: #ffffff !important;
+        color: #ffffff;
 
-        overflow: visible !important;
+        overflow: visible;
     }
 
 
     .mama-copy p {
-        width: 100% !important;
+        width: 100%;
 
-        margin: 0 !important;
-        padding: 0 !important;
+        margin: 0;
+        padding: 0;
     }
 
 
@@ -2407,23 +2359,23 @@ img {
     ===================================================== */
 
     .mama-art {
-        width: 100% !important;
+        width: 100%;
 
-        height: auto !important;
+        height: auto;
 
-        max-width: none !important;
+        max-width: none;
 
-        margin: 0 !important;
-        padding: 0 !important;
+        margin: 0;
+        padding: 0;
 
-        display: block !important;
+        display: block;
 
-        overflow: visible !important;
+        overflow: visible;
     }
 
 
     .mama-art img {
-        display: block !important;
+        display: block;
 
         /*
            La imagen domina la composición.
@@ -2433,20 +2385,20 @@ img {
             min(
                 70vw,
                 1250px
-            ) !important;
+            );
 
-        height: auto !important;
+        height: auto;
 
-        min-height: 0 !important;
+        min-height: 0;
 
-        max-width: 100% !important;
-        max-height: none !important;
+        max-width: 100%;
+        max-height: none;
 
-        margin: 0 !important;
+        margin: 0;
 
-        object-fit: contain !important;
+        object-fit: contain;
 
-        object-position: top left !important;
+        object-position: top left;
     }
 
 }
@@ -2465,14 +2417,14 @@ img {
     .mama-layout {
         grid-template-columns:
             105px
-            minmax(0, 1fr) !important;
+            minmax(0, 1fr);
     }
 
 
     .mama-copy {
-        font-size: 19px !important;
+        font-size: 19px;
 
-        line-height: 1.12 !important;
+        line-height: 1.12;
     }
 
 
@@ -2481,7 +2433,7 @@ img {
             min(
                 72vw,
                 1300px
-            ) !important;
+            );
     }
 
 }
@@ -3010,4 +2962,487 @@ img {
     color: #111111;
 
     text-transform: lowercase;
+}
+/* =========================================================
+   PATERSON — REVIEW
+========================================================= */
+
+.paterson-editorial {
+    width: 100%;
+    padding: clamp(70px, 9vw, 140px) 0 clamp(100px, 14vw, 200px);
+    background: #f3efdf;
+    color: #111111;
+}
+
+.paterson-page {
+    width: min(1180px, calc(100% - 70px));
+    margin: 0 auto;
+}
+
+.paterson-header {
+    margin-bottom: clamp(65px, 9vw, 120px);
+}
+
+.paterson-title {
+    margin: 0;
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    font-size: clamp(105px, 18vw, 270px);
+    font-weight: 900;
+    line-height: .72;
+    letter-spacing: -.055em;
+    color: #516fa8;
+    text-transform: uppercase;
+}
+
+.paterson-subtitle {
+    width: fit-content;
+    margin: clamp(24px, 3vw, 44px) 1% 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: clamp(20px, 2.7vw, 39px);
+    line-height: .95;
+    color: #516fa8;
+}
+
+.paterson-meta {
+    display: flex;
+    gap: 18px;
+    margin-top: 36px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: #516fa8;
+}
+
+.paterson-copy {
+    font-family: "Times New Roman", Times, serif;
+    font-size: clamp(14px, 1.25vw, 18px);
+    line-height: 1.18;
+}
+
+.paterson-copy p {
+    margin: 0 0 1.15em;
+}
+
+.paterson-photo {
+    margin: 0;
+}
+
+.paterson-photo img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+
+/* texto inicial */
+
+.paterson-grid-one {
+    display: block;
+    margin-bottom: clamp(35px, 5vw, 70px);
+}
+
+.paterson-grid-one .paterson-copy {
+    width: min(680px, 68%);
+}
+
+
+/* foto horizontal */
+
+.paterson-photo-wide {
+    width: min(760px, 72%);
+    margin: clamp(35px, 5vw, 65px) 0 clamp(70px, 9vw, 120px) 7%;
+}
+
+.paterson-photo-wide img {
+    aspect-ratio: 16 / 8.5;
+    object-fit: cover;
+}
+
+
+/* texto entre foto grande y segundo bloque */
+
+.paterson-between-copy {
+    width: min(620px, 55%);
+    margin: 0 0 clamp(75px, 10vw, 135px) 15%;
+}
+
+
+/* foto pequeña + texto */
+
+.paterson-grid-two {
+    display: grid;
+    grid-template-columns: minmax(170px, 28%) minmax(260px, 43%);
+    gap: 12%;
+    align-items: start;
+    margin: 0 0 clamp(90px, 13vw, 170px) 10%;
+}
+
+.paterson-small-photo {
+    width: 100%;
+    padding-top: clamp(10px, 2vw, 35px);
+}
+
+.paterson-copy-two {
+    width: 100%;
+}
+
+
+/* frase + foto del bus */
+
+.paterson-quote-row {
+    display: grid;
+    grid-template-columns: minmax(230px, 34%) minmax(260px, 38%);
+    gap: 11%;
+    align-items: center;
+    width: 88%;
+    margin: 0 0 clamp(100px, 14vw, 190px) 12%;
+}
+
+.paterson-quote {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    color: #111111;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: clamp(31px, 4.4vw, 66px);
+    font-weight: 400;
+    line-height: .93;
+    letter-spacing: -.045em;
+}
+
+.paterson-photo-bus {
+    width: 100%;
+}
+
+.paterson-photo-bus img {
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center;
+}
+
+
+/* texto final + póster */
+
+.paterson-grid-three {
+    display: grid;
+    grid-template-columns: minmax(280px, 48%) minmax(200px, 28%);
+    gap: 13%;
+    align-items: end;
+    width: 87%;
+    margin-left: 5%;
+}
+
+.paterson-copy-three {
+    width: 100%;
+    padding-left: 0;
+}
+
+.paterson-photo-four {
+    width: 100%;
+    margin: 0;
+}
+
+.paterson-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin-top: clamp(90px, 12vw, 160px);
+    padding-top: 14px;
+    border-top: 1px solid #516fa8;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    color: #516fa8;
+    text-transform: lowercase;
+}
+
+
+@media (max-width: 900px) {
+    .paterson-page {
+        width: calc(100% - 46px);
+    }
+
+    .paterson-title {
+        font-size: 18.5vw;
+    }
+
+    .paterson-grid-one .paterson-copy {
+        width: 74%;
+    }
+
+    .paterson-photo-wide {
+        width: 76%;
+        margin-left: 5%;
+    }
+
+    .paterson-between-copy {
+        width: 60%;
+        margin-left: 10%;
+    }
+
+    .paterson-grid-two {
+        grid-template-columns: 30% 49%;
+        gap: 9%;
+        margin-left: 7%;
+    }
+
+    .paterson-quote-row {
+        grid-template-columns: 38% 43%;
+        gap: 9%;
+        width: 91%;
+        margin-left: 7%;
+    }
+
+    .paterson-grid-three {
+        grid-template-columns: 55% 31%;
+        gap: 9%;
+    }
+}
+
+
+@media (max-width: 600px) {
+    .paterson-editorial {
+        padding: 70px 0 105px;
+    }
+
+    .paterson-page {
+        width: calc(100% - 30px);
+    }
+
+    .paterson-title {
+        font-size: 20vw;
+        line-height: .75;
+    }
+
+    .paterson-subtitle {
+        margin-top: 18px;
+        font-size: 18px;
+    }
+
+    .paterson-meta {
+        margin-top: 25px;
+        font-size: 8px;
+    }
+
+    .paterson-copy {
+        width: 86%;
+        font-size: 13px;
+        line-height: 1.2;
+    }
+
+    .paterson-grid-one .paterson-copy {
+        width: 92%;
+        margin-left: 0;
+    }
+
+    .paterson-photo-wide {
+        width: 92%;
+        margin: 35px 0 70px 4%;
+    }
+
+    .paterson-between-copy {
+        width: 84%;
+        margin: 0 0 65px 7%;
+    }
+
+    .paterson-grid-two {
+        grid-template-columns: 34% 56%;
+        gap: 10%;
+        margin: 0 0 75px;
+    }
+
+    .paterson-grid-two .paterson-copy {
+        width: 100%;
+        margin: 0;
+    }
+
+    .paterson-quote-row {
+        grid-template-columns: 42% 48%;
+        gap: 10%;
+        width: 100%;
+        margin: 0 0 85px;
+    }
+
+    .paterson-quote {
+        font-size: clamp(22px, 7vw, 38px);
+        line-height: .92;
+    }
+
+    .paterson-grid-three {
+        grid-template-columns: 58% 34%;
+        gap: 8%;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .paterson-grid-three .paterson-copy {
+        width: 100%;
+        margin: 0;
+    }
+
+    .paterson-footer {
+        margin-top: 85px;
+        font-size: 8px;
+    }
+}
+
+/* =========================================================
+   FINAL — COLLAGE DE LA REVISTA ORIGINAL
+========================================================= */
+
+.revista-final-collage {
+    position: relative;
+    width: 100%;
+    min-height: clamp(1100px, 150vh, 1650px);
+    background: #0816b8;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+
+/*
+   Los cuatro SVG forman UNA sola pieza.
+   El wrapper controla tamaño y posición del conjunto;
+   las piezas de dentro solo reconstruyen el gráfico.
+*/
+
+.final-graphic {
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    width: min(112vw, 1850px);
+    height: 72%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    user-select: none;
+}
+
+.final-doodle {
+    position: absolute;
+    display: block;
+    max-width: none;
+    height: auto;
+    margin: 0;
+    pointer-events: none;
+    user-select: none;
+}
+
+
+/*
+   Estas cuatro posiciones pertenecen al mismo sistema
+   de coordenadas. Si movemos o escalamos .final-graphic,
+   todo el dibujo se mueve y escala junto.
+*/
+
+.doodle-1 {
+    width: 31%;
+    left: 0;
+    top: 10%;
+}
+
+.doodle-2 {
+    width: 35%;
+    left: 22%;
+    top: 0;
+}
+
+.doodle-3 {
+    width: 42%;
+    left: 38%;
+    top: 29%;
+}
+
+.doodle-4 {
+    width: 39%;
+    right: 0;
+    top: 35%;
+}
+
+
+/* niña: pequeña, como recorte secundario */
+
+.final-girl {
+    position: absolute;
+    z-index: 3;
+    left: 8%;
+    top: 43%;
+    width: clamp(72px, 8.5vw, 135px);
+    height: auto;
+    user-select: none;
+}
+
+
+/* scan: pieza protagonista de la composición */
+
+.final-scan {
+    position: absolute;
+    z-index: 4;
+    top: 15%;
+    right: 7%;
+    width: clamp(430px, 38vw, 680px);
+    height: auto;
+    margin: 0;
+    filter: drop-shadow(0 10px 24px rgba(0, 0, 0, .15));
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 980px) {
+    .revista-final-collage {
+        min-height: 135vh;
+    }
+
+    .final-graphic {
+        top: 53%;
+        width: 135vw;
+        height: 68%;
+    }
+
+    .final-girl {
+        left: 7%;
+        top: 46%;
+        width: clamp(68px, 10vw, 105px);
+    }
+
+    .final-scan {
+        top: 14%;
+        right: 5%;
+        width: min(50vw, 530px);
+    }
+}
+
+
+/* =========================================================
+   MÓVIL
+========================================================= */
+
+@media (max-width: 640px) {
+    .revista-final-collage {
+        min-height: 125vh;
+    }
+
+    .final-graphic {
+        left: 47%;
+        top: 57%;
+        width: 185vw;
+        height: 62%;
+    }
+
+    .final-girl {
+        left: 6%;
+        top: 50%;
+        width: clamp(60px, 17vw, 82px);
+    }
+
+    .final-scan {
+        top: 12%;
+        right: 4%;
+        width: 72vw;
+        max-width: 430px;
+    }
 }

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nudo — Desorden Social</title>
+
+    <link rel="stylesheet" href="nudo.css">
+</head>
+
+<body class="node-detail-page">
+
+    <a
+        class="node-detail-back"
+        href="cara.html"
+        aria-label="Volver a Desorden"
+    >←</a>
+
+    <main
+        class="node-detail"
+        id="nodeDetail"
+        aria-live="polite"
+    >
+        <p class="node-detail-loading" id="nodeLoading">
+            abriendo nudo...
+        </p>
+    </main>
+
+
+    <!-- ==========================================
+         CURSOR PERSONALIZADO
+    =========================================== -->
+
+    <div
+        class="site-cursor"
+        id="siteCursor"
+        aria-hidden="true"
+    >
+        <img
+            src="assets/cursor/cursor.svg"
+            alt=""
+        >
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="nudo.js"></script>
+
+</body>
+</html>

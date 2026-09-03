@@ -139,35 +139,25 @@ if (creatorIds.length > 0) {
         */
 
         const element =
-            document.createElement(
-                node.external_url
-                    ? "a"
-                    : "div"
-            );
+           document.createElement("a");
 
+       element.className =
+           "user-node";
 
-        element.className =
-            "user-node";
+       element.dataset.nodeId =
+           node.id;
 
-        element.dataset.nodeId =
-            node.id;
+       element.dataset.nodeSlug =
+           node.slug || "";
 
-        element.dataset.nodeSlug =
-            node.slug || "";
+       const nodeQuery =
+           node.slug
+               ? `slug=${encodeURIComponent(node.slug)}`
+               : `id=${encodeURIComponent(node.id)}`;
 
+       element.href =
+           `nudo.html?${nodeQuery}`;
 
-        if (node.external_url) {
-
-            element.href =
-                node.external_url;
-
-            element.target =
-                "_blank";
-
-            element.rel =
-                "noopener noreferrer";
-
-        }
 
 
         /*

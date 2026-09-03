@@ -133,17 +133,17 @@ button {
 
     transform-origin: center;
 
+    scale: 1;
+
     transition:
-        transform 0.3s cubic-bezier(.2, .8, .2, 1),
-        filter 0.3s ease;
+    scale 0.3s cubic-bezier(.2, .8, .2, 1),
+    filter 0.3s ease;
 }
 
 .node:hover {
     z-index: 30;
 
-    transform:
-        translateY(-3px)
-        scale(1.035);
+    scale: 1.035;
 
     filter:
         drop-shadow(
@@ -2740,4 +2740,45 @@ button {
         z-index: 50 !important;
     }
 
+}
+
+/* =========================================================
+   FIX FINAL — NUDOS DE USUARIOS NO SE MUEVEN
+========================================================= */
+
+.user-node {
+    transform: translate(-50%, -50%) !important;
+    scale: 1;
+
+    transition:
+        scale 0.28s cubic-bezier(.2,.8,.2,1),
+        filter 0.28s ease,
+        opacity 0.28s ease !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+    .user-node:hover,
+    .user-node.is-unconnected-node:hover {
+        transform: translate(-50%, -50%) !important;
+        scale: 1.06 !important;
+
+        filter:
+            brightness(1.08)
+            drop-shadow(
+                0 10px 16px
+                rgba(0,0,0,.08)
+            );
+    }
+}
+
+.user-node.is-connection-origin,
+.user-node.is-mobile-node-armed {
+    transform: translate(-50%, -50%) !important;
+    scale: 1.06 !important;
+}
+
+.user-node.is-connected-highlight {
+    transform: translate(-50%, -50%) !important;
+    scale: 1.13 !important;
 }

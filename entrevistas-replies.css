@@ -1,0 +1,360 @@
+/* =========================================================
+   DESORDEN SOCIAL — RESPUESTAS EN ???
+   Archivo adicional: entrevistas-replies.css
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   REFERENCIA A UN MENSAJE ANTERIOR
+--------------------------------------------------------- */
+
+.chat-reply-context {
+    display:
+        block;
+
+    width:
+        min(
+            100%,
+            34ch
+        );
+
+    margin:
+        0
+        0
+        9px;
+
+    padding:
+        0
+        0
+        0
+        9px;
+
+    border:
+        0;
+
+    border-left:
+        1px solid
+        currentColor;
+
+    background:
+        transparent;
+
+    color:
+        var(--red);
+
+    font:
+        inherit;
+
+    text-align:
+        left;
+
+    opacity:
+        0.48;
+}
+
+.chat-reply-context-name {
+    display:
+        block;
+
+    margin-bottom:
+        3px;
+
+    font-size:
+        10px;
+
+    line-height:
+        1;
+
+    letter-spacing:
+        0.035em;
+
+    text-transform:
+        lowercase;
+}
+
+.chat-reply-context-quote {
+    display:
+        block;
+
+    font-size:
+        clamp(
+            11px,
+            0.88vw,
+            14px
+        );
+
+    line-height:
+        1.05;
+
+    overflow-wrap:
+        anywhere;
+}
+
+
+/* ---------------------------------------------------------
+   BOTÓN RESPONDER
+
+   deliberadamente pequeño:
+   no convertimos el chat en una app de burbujas.
+--------------------------------------------------------- */
+
+.chat-reply-button {
+    margin:
+        8px
+        0
+        0;
+
+    padding:
+        0;
+
+    border:
+        0;
+
+    outline:
+        0;
+
+    background:
+        transparent;
+
+    color:
+        var(--red);
+
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size:
+        10px;
+
+    line-height:
+        1;
+
+    letter-spacing:
+        0.025em;
+
+    text-transform:
+        lowercase;
+
+    opacity:
+        0.22;
+
+    transition:
+        opacity
+        .18s
+        ease;
+}
+
+.chat-entry:hover
+.chat-reply-button {
+    opacity:
+        0.72;
+}
+
+
+/* ---------------------------------------------------------
+   MENSAJE AL QUE HEMOS SALTADO
+--------------------------------------------------------- */
+
+.chat-entry.is-reply-target {
+    filter:
+        brightness(0.92);
+
+    opacity:
+        0.62;
+}
+
+
+/* ---------------------------------------------------------
+   PREVIEW DE "RESPONDIENDO A..."
+--------------------------------------------------------- */
+
+.reply-compose {
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+    width:
+        100%;
+
+    margin-bottom:
+        12px;
+
+    padding:
+        0
+        0
+        10px;
+
+    border-bottom:
+        1px solid
+        rgba(
+            215,
+            58,
+            47,
+            0.28
+        );
+
+    color:
+        var(--red);
+}
+
+.reply-compose[hidden] {
+    display:
+        none;
+}
+
+.reply-compose-text {
+    min-width:
+        0;
+}
+
+.reply-compose-label {
+    display:
+        block;
+
+    margin-bottom:
+        4px;
+
+    font-size:
+        10px;
+
+    line-height:
+        1;
+
+    letter-spacing:
+        0.035em;
+
+    text-transform:
+        lowercase;
+
+    opacity:
+        0.7;
+}
+
+.reply-compose-quote {
+    display:
+        block;
+
+    max-width:
+        55ch;
+
+    font-size:
+        12px;
+
+    line-height:
+        1.08;
+
+    opacity:
+        0.48;
+
+    white-space:
+        nowrap;
+
+    overflow:
+        hidden;
+
+    text-overflow:
+        ellipsis;
+}
+
+.reply-compose-cancel {
+    flex:
+        0 0 auto;
+
+    margin:
+        -5px
+        0
+        0;
+
+    padding:
+        0;
+
+    border:
+        0;
+
+    background:
+        transparent;
+
+    color:
+        var(--red);
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size:
+        25px;
+
+    line-height:
+        1;
+
+    opacity:
+        0.5;
+}
+
+
+/* ---------------------------------------------------------
+   RATÓN
+--------------------------------------------------------- */
+
+@media (hover: hover) and (pointer: fine) {
+
+    .chat-reply-context,
+    .chat-reply-button,
+    .reply-compose-cancel {
+        cursor:
+            none;
+    }
+
+    .chat-reply-context:hover {
+        opacity:
+            0.78;
+    }
+
+    .reply-compose-cancel:hover {
+        opacity:
+            1;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   MÓVIL / TABLET
+--------------------------------------------------------- */
+
+@media (hover: none),
+       (pointer: coarse) {
+
+    .chat-reply-button {
+        opacity:
+            0.56;
+
+        font-size:
+            11px;
+    }
+
+    .chat-reply-context {
+        opacity:
+            0.58;
+    }
+
+    .reply-compose {
+        gap:
+            12px;
+    }
+
+    .reply-compose-quote {
+        max-width:
+            68vw;
+    }
+}
